@@ -1,0 +1,126 @@
+/* CATÁLOGO DE PRODUTOS */
+
+.catalogo {
+    padding: 60px 7%;
+    background-color: #fffdfb;
+}
+
+/* TÍTULO DO CATÁLOGO */
+
+.catalogo-titulo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.catalogo-titulo span {
+    color: #a77b70;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.catalogo-titulo h2 {
+    font-family: Georgia, serif;
+    color: #59443d;
+    font-size: 36px;
+    margin: 12px 0;
+}
+
+.catalogo-titulo p {
+    color: #8b7770;
+    font-size: 15px;
+}
+
+/* ÁREA PRINCIPAL */
+
+.catalogo-conteudo {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* BARRA LATERAL */
+
+.categorias-lateral {
+    background-color: #fffaf5;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.categorias-lateral h3 {
+    font-family: Georgia, serif;
+    color: #59443d;
+    font-size: 21px;
+    margin-bottom: 22px;
+}
+
+/* MENU DE CATEGORIAS */
+
+.categorias-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.categoria-link {
+    display: block;
+    padding: 12px 14px;
+    color: #795f55;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.categoria-link:hover {
+    background-color: #f3e6df;
+    color: #895f55;
+}
+
+.categoria-link.ativa {
+    background-color: #a77b70;
+    color: white;
+}
+
+/* INFORMAÇÕES DOS PRODUTOS */
+
+.catalogo-info {
+    margin-bottom: 25px;
+}
+
+.catalogo-info h3 {
+    font-family: Georgia, serif;
+    color: #59443d;
+    font-size: 23px;
+    margin-bottom: 7px;
+}
+
+.catalogo-info p {
+    color: #8b7770;
+    font-size: 14px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+    .catalogo-conteudo {
+        grid-template-columns: 190px 1fr;
+        gap: 25px;
+    }
+}
+
+@media (max-width: 650px) {
+    .catalogo-conteudo {
+        grid-template-columns: 1fr;
+    }
+
+    .categorias-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .catalogo-titulo h2 {
+        font-size: 29px;
+    }
+}

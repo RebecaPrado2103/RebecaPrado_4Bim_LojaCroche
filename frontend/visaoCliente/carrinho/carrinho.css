@@ -1,0 +1,155 @@
+/* PÁGINA DO CARRINHO */
+.pagina-carrinho {
+    padding: 60px 8%;
+    background-color: #fffdfb;
+    min-height: 500px;
+}
+
+/* TÍTULO */
+.titulo-carrinho {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.titulo-carrinho span {
+    color: #a77b70;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.titulo-carrinho h1 {
+    font-family: Georgia, serif;
+    color: #59443d;
+    font-size: 36px;
+    margin: 12px 0;
+}
+
+.titulo-carrinho p {
+    color: #8b7770;
+    font-size: 15px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.conteudo-carrinho {
+    display: grid;
+    grid-template-columns: 1fr 330px;
+    gap: 35px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* LISTA DE PRODUTOS */
+.lista-carrinho {
+    background-color: #fffaf5;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    min-height: 180px;
+}
+
+/* RESUMO */
+.resumo-carrinho {
+    background-color: #fffaf5;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.resumo-carrinho h2 {
+    font-family: Georgia, serif;
+    color: #59443d;
+    font-size: 21px;
+    margin-bottom: 25px;
+}
+
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    color: #795f55;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.resumo-linha.total {
+    border-top: 1px solid #e5d6ce;
+    padding-top: 18px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #59443d;
+}
+
+/* BOTÃO FINALIZAR */
+.botao-finalizar {
+    width: 100%;
+    padding: 14px;
+    background-color: #a77b70;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao-finalizar:hover:not(:disabled) {
+    background-color: #895f55;
+}
+
+.botao-finalizar:disabled {
+    background-color: #cbb5ad;
+    cursor: not-allowed;
+}
+
+/* CONTINUAR COMPRANDO */
+.continuar-comprando {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #a77b70;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.continuar-comprando:hover {
+    color: #795548;
+}
+
+/* RODAPÉ */
+.rodape {
+    background-color: #795f55;
+    color: #fffaf5;
+    padding: 30px 8%;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.rodape p {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    line-height: 1.8;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 850px) {
+    .conteudo-carrinho {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .pagina-carrinho {
+        padding: 40px 5%;
+    }
+
+    .titulo-carrinho h1 {
+        font-size: 29px;
+    }
+
+    .lista-carrinho,
+    .resumo-carrinho {
+        padding: 18px;
+    }
+}

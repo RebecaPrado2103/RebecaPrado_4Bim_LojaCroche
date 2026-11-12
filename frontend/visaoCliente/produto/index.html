@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produtos | Entre Laços</title>
+
+    <link rel="stylesheet" href="../inicio/inicio.css">
+    <link rel="stylesheet" href="produto.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+
+    <header class="cabecalho">
+
+        <!-- Identidade da loja -->
+        <div class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </div>
+
+        <!-- Área de pesquisa e acesso -->
+        <div class="acoes">
+
+            <input type="text" placeholder="O que você procura?">
+
+            <a href="#">Minha conta</a>
+
+            <button type="button" class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+            </button>
+        </div>
+
+    </header>
+
+    <!-- FUNDO ESCURO DO CARRINHO -->
+    <div class="fundo-carrinho" id="fundo-carrinho"></div>
+
+    <!-- BARRA LATERAL DO CARRINHO -->
+    <aside class="carrinho-lateral" id="carrinho-lateral">
+
+        <div class="carrinho-cabecalho">
+            <h2>Meu carrinho</h2>
+
+            <button type="button" class="fechar-carrinho" id="fechar-carrinho" aria-label="Fechar carrinho">
+                &times;
+            </button>
+        </div>
+
+        <div class="carrinho-itens" id="itens-carrinho">
+            <p>Seu carrinho está vazio.</p>
+        </div>
+
+        <div class="carrinho-rodape">
+
+            <div class="carrinho-total">
+                <span>Total:</span>
+                <strong id="total-carrinho">R$ 0,00</strong>
+            </div>
+
+            <button type="button" class="botao-comprar">Comprar</button>
+            <button type="button" class="botao-cancelar">Cancelar</button>
+
+        </div>
+
+    </aside>
+
+    <!-- CATÁLOGO DE PRODUTOS -->
+
+    <main class="catalogo">
+
+        <!-- Título da página -->
+        <section class="catalogo-titulo">
+            <span>EXPLORE NOSSA COLEÇÃO</span>
+            <h2>Nossos produtos</h2>
+            <p>Peças artesanais feitas com carinho em cada detalhe.</p>
+        </section>
+
+        <!-- Área principal do catálogo -->
+        <div class="catalogo-conteudo">
+
+            <!-- BARRA LATERAL DE CATEGORIAS -->
+            <aside class="categorias-lateral">
+
+                <h3>Categorias</h3>
+
+                <nav class="categorias-menu">
+                    <a href="#" class="categoria-link ativa" data-categoria="todos">
+                        Todos os produtos
+                    </a>
+
+                    <a href="#" class="categoria-link" data-categoria="Bolsas">
+                        Bolsas
+                    </a>
+
+                    <a href="#" class="categoria-link" data-categoria="Amigurumis">
+                        Amigurumis
+                    </a>
+
+                    <a href="#" class="categoria-link" data-categoria="Decoração">
+                        Decoração
+                    </a>
+
+                    <a href="#" class="categoria-link" data-categoria="Acessórios">
+                        Acessórios
+                    </a>
+
+                    <a href="#" class="categoria-link" data-categoria="Roupas">
+                        Roupas
+                    </a>
+                </nav>
+
+            </aside>
+
+            <!-- LISTAGEM DOS PRODUTOS -->
+            <section class="catalogo-produtos">
+
+                <div class="catalogo-info">
+                    <h3>Todos os produtos</h3>
+                    <p>Encontre sua próxima peça favorita.</p>
+                </div>
+
+                <div class="lista-produtos" id="lista-produtos">
+                    <p>Carregando produtos...</p>
+                </div>
+
+            </section>
+
+        </div>
+
+        <script src="produto.js"></script>
+        <script src="../carrinho/carrinho.js"></script>
+
+    </main>
+
+</body>
+
+</html>
