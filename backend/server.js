@@ -8,6 +8,7 @@ const { query } = require('./database');
 
 // Importa as rotas
 const produtoRoutes = require('./routes/produtoRoutes');
+const cadastroRoutes = require('./routes/cadastroRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Definir rotas
 app.use('/api/produtos', produtoRoutes);
+app.use('/api/cadastro', cadastroRoutes);
 
 // Rota inicial de teste
 app.get('/', (req, res) => {

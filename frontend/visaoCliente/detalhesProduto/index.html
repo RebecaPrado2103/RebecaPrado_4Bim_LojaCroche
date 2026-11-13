@@ -26,10 +26,55 @@
         </nav>
 
         <div class="acoes">
-            <a href="../carrinho/index.html">Carrinho</a>
+
+            <button type="button" class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
+
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+
+                </svg>
+
+            </button>
+
         </div>
 
     </header>
+
+    <!-- FUNDO ESCURO DO CARRINHO -->
+    <div class="fundo-carrinho" id="fundo-carrinho"></div>
+
+    <!-- BARRA LATERAL DO CARRINHO -->
+    <aside class="carrinho-lateral" id="carrinho-lateral">
+
+        <div class="carrinho-cabecalho">
+            <h2>Meu carrinho</h2>
+
+            <button type="button" class="fechar-carrinho" id="fechar-carrinho" aria-label="Fechar carrinho">
+                &times;
+            </button>
+        </div>
+
+        <div class="carrinho-itens" id="itens-carrinho">
+            <p>Seu carrinho está vazio.</p>
+        </div>
+
+        <div class="carrinho-rodape">
+
+            <div class="carrinho-total">
+                <span>Total:</span>
+                <strong id="total-carrinho">R$ 0,00</strong>
+            </div>
+
+            <button type="button" class="botao-comprar">Comprar</button>
+            <button type="button" class="botao-cancelar">Cancelar</button>
+
+        </div>
+
+    </aside>
 
     <!-- DETALHES DO PRODUTO -->
     <main class="detalhes-produto">
@@ -50,6 +95,7 @@
     </footer>
 
     <script src="detalhesProduto.js"></script>
+    <script src="../carrinho/carrinho.js"></script>
 
 </body>
 

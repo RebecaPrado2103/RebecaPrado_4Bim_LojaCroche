@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Entre Laços</title>
+
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <main class="pagina-login">
+
+        <section class="cartao-login">
+
+            <!-- IDENTIDADE DA LOJA -->
+            <div class="logo">
+                <h1>Entre Laços</h1>
+                <p>Feito à mão, com carinho.</p>
+            </div>
+
+            <!-- TÍTULO -->
+            <div class="titulo-login">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Entre na sua conta para continuar suas compras.</p>
+            </div>
+
+            <!-- FORMULÁRIO -->
+            <form id="form-login">
+
+                <div id="mensagem-login" class="mensagem-login" role="status"></div>
+
+                <div class="grupo-campo">
+                    <label for="cpf">CPF</label>
+                    <input
+                        type="text"
+                        id="cpf"
+                        name="cpf"
+                        placeholder="Digite seu CPF"
+                        required
+                    >
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="botao-entrar">
+                    Entrar
+                </button>
+
+            </form>
+
+            <!-- LINK PARA CADASTRO -->
+            <div class="link-cadastro">
+                <p>Ainda não possui uma conta?</p>
+                <a href="../cadastro/index.html">Crie sua conta</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="login.js"></script>
+
+</body>
+</html>

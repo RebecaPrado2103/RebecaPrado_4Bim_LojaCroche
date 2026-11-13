@@ -39,9 +39,9 @@ async function carregarDetalhesProduto() {
 
                     <p class="produto-detalhe-preco">
                         ${Number(produto.preco_unitario_produto).toLocaleString(
-                            'pt-BR',
-                            { style: 'currency', currency: 'BRL' }
-                        )}
+            'pt-BR',
+            { style: 'currency', currency: 'BRL' }
+        )}
                     </p>
 
                     <p class="produto-detalhe-estoque">
@@ -68,6 +68,38 @@ async function carregarDetalhesProduto() {
 
             </div>
         `;
+
+        // BOTÃO ADICIONAR AO CARRINHO
+        const botaoAdicionar = document.querySelector(
+            '.botao-adicionar-carrinho'
+        );
+
+        botaoAdicionar.addEventListener('click', function () {
+
+            const campoQuantidade = document.getElementById('quantidade');
+            const quantidade = Number(campoQuantidade.value);
+
+            // Verifica a quantidade informada
+            if (
+                !Number.isInteger(quantidade) ||
+                quantidade < 1 ||
+                quantidade > produto.quantidade_estoque_produto
+            ) {
+                alert('Informe uma quantidade válida.');
+                return;
+            }
+
+            // Adiciona o produto ao carrinho
+            const adicionado = window.adicionarProdutoCarrinho(
+                produto,
+                quantidade
+            );
+
+            if (adicionado) {
+                alert('Produto adicionado ao carrinho!');
+            }
+
+        });
 
     } catch (error) {
 

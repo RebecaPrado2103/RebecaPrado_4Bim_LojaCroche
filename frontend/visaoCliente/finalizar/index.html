@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Finalizar compra | Entre Laços</title>
+
+    <link rel="stylesheet" href="finalizar.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </div>
+
+        <a href="../inicio/index.html">Continuar comprando</a>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="conteudo-finalizacao">
+
+        <h1>Finalizar compra</h1>
+        <p class="subtitulo">
+            Estamos quase lá! Confira seu pedido e informe os dados de entrega.
+        </p>
+
+        <!-- RESUMO DO PEDIDO -->
+        <section class="resumo-pedido">
+            <h2>Resumo do pedido</h2>
+
+            <div id="itens-pedido">
+                <!-- Os produtos serão inseridos pelo JavaScript -->
+            </div>
+
+            <div class="valor-total">
+                <span>Total:</span>
+                <strong id="total-pedido">R$ 0,00</strong>
+            </div>
+        </section>
+
+        <!-- DADOS DE ENTREGA -->
+        <section class="dados-entrega">
+            <h2>Dados de entrega</h2>
+
+            <form id="form-entrega">
+
+                <div class="campo">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" required>
+                </div>
+
+                <div class="campo">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" required>
+                </div>
+
+                <div class="campo">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" required>
+                </div>
+
+                <div class="campo">
+                    <label for="numero">Número</label>
+                    <input type="text" id="numero" required>
+                </div>
+
+                <div class="campo">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" id="complemento">
+                </div>
+
+                <div class="campo">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" required>
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado</label>
+                    <input type="text" id="estado" required>
+                </div>
+
+                <button type="submit" class="botao-continuar">
+                    Continuar para pagamento
+                </button>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <p>Entre Laços — Feito à mão, com carinho em cada ponto.</p>
+    </footer>
+
+    <script src="finalizar.js"></script>
+
+</body>
+</html>

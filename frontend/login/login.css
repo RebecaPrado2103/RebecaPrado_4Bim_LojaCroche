@@ -1,0 +1,159 @@
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faf6f3;
+    color: #715b53;
+}
+
+/* PÁGINA DE LOGIN */
+.pagina-login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+/* CARTÃO */
+.cartao-login {
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(113, 91, 83, 0.10);
+}
+
+/* LOGO */
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo h1 {
+    color: #c47b8b;
+    font-size: 34px;
+    margin-bottom: 5px;
+    font-family: Georgia, serif;
+}
+
+.logo p {
+    color: #a58b81;
+    font-size: 14px;
+}
+
+/* TÍTULO */
+.titulo-login {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-login h2 {
+    color: #715b53;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.titulo-login p {
+    color: #a58b81;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* CAMPOS */
+.grupo-campo {
+    margin-bottom: 20px;
+}
+
+.grupo-campo label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.grupo-campo input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #e5d8d2;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    color: #715b53;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.grupo-campo input:focus {
+    border-color: #c47b8b;
+    box-shadow: 0 0 0 3px rgba(196, 123, 139, 0.12);
+}
+
+.grupo-campo input::placeholder {
+    color: #b9aaa4;
+}
+
+/* BOTÃO */
+.botao-entrar {
+    width: 100%;
+    padding: 14px;
+    background-color: #c47b8b;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao-entrar:hover {
+    background-color: #ad6677;
+}
+
+/* LINK PARA CADASTRO */
+.link-cadastro {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.link-cadastro a {
+    color: #c47b8b;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-cadastro a:hover {
+    text-decoration: underline;
+}
+
+/* MENSAGENS */
+.mensagem-login {
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 480px) {
+
+    .cartao-login {
+        padding: 28px 22px;
+    }
+
+    .logo h1 {
+        font-size: 30px;
+    }
+
+    .titulo-login h2 {
+        font-size: 21px;
+    }
+
+}
