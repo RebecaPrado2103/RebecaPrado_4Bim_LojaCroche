@@ -34,7 +34,19 @@
 
             <input type="text" placeholder="O que você procura?">
 
-            <a href="#">Minha conta</a>
+            <div class="area-conta" id="area-conta">
+
+                <a href="../../login/index.html" id="link-login">
+                    Minha conta
+                </a>
+
+                <span id="saudacao-cliente" hidden></span>
+
+                <button type="button" id="botao-sair" hidden>
+                    Sair da conta
+                </button>
+
+            </div>
 
             <button type="button" class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
 
@@ -245,6 +257,7 @@
 
     <script src="inicio.js"></script>
     <script src="../carrinho/carrinho.js"></script>
+    <script src="conta.js"></script>
 
 </body>
 

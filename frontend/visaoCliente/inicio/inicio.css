@@ -682,3 +682,35 @@ main p {
     text-align: center;
     padding: 25px 10px;
 }
+
+/* ÁREA DA CONTA */
+.area-conta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* SAUDAÇÃO DO CLIENTE */
+#saudacao-cliente {
+    color: #715b53;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* BOTÃO SAIR DA CONTA */
+#botao-sair {
+    background-color: #f5e3e2;
+    color: #9b6262;
+    border: 1px solid #e8cccc;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#botao-sair:hover {
+    background-color: #ecd2d0;
+    transform: translateY(-1px);
+}

@@ -1,4 +1,34 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+
+    // VERIFICAR SE O CLIENTE ESTÁ CONECTADO
+    try {
+        const resposta = await fetch(
+            'http://127.0.0.1:3001/api/login/sessao',
+            {
+                credentials: 'include'
+            }
+        );
+
+        if (!resposta.ok) {
+            alert('Você precisa entrar na sua conta para realizar o pagamento!');
+            window.location.href = '../../login/index.html';
+            return;
+        }
+
+        const resultado = await resposta.json();
+
+        if (!resultado.autenticado) {
+            alert('Você precisa entrar na sua conta para realizar o pagamento!');
+            window.location.href = '../../login/index.html';
+            return;
+        }
+
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        alert('Não foi possível verificar sua conta. Tente novamente.');
+        window.location.href = '../../login/index.html';
+        return;
+    }
 
     // ELEMENTOS DA PÁGINA
     const totalPagamento = document.getElementById('total-pagamento');
@@ -6,15 +36,48 @@ document.addEventListener('DOMContentLoaded', function () {
     const mensagemPagamento = document.getElementById('mensagem-pagamento');
     const formPagamento = document.getElementById('form-pagamento');
 
-    // RECUPERA OS PRODUTOS DO CARRINHO
-    const produtosCarrinho = JSON.parse(
-        localStorage.getItem('carrinho') || '[]'
-    );
+    // BUSCAR OS PRODUTOS DO CARRINHO NO BANCO DE DADOS
+    let totalCompra = 0;
 
-    // CALCULA O TOTAL DA COMPRA EM CENTAVOS
-    const totalCompra = produtosCarrinho.reduce(function (total, produto) {
-        return total + Math.round(Number(produto.preco) * 100) * Number(produto.quantidade);
-    }, 0);
+    try {
+        const respostaCarrinho = await fetch(
+            'http://127.0.0.1:3001/api/carrinho',
+            {
+                credentials: 'include'
+            }
+        );
+
+        if (respostaCarrinho.status === 401) {
+            alert('Sua sessão expirou. Entre novamente na sua conta.');
+            window.location.href = '../../login/index.html';
+            return;
+        }
+
+        if (!respostaCarrinho.ok) {
+            throw new Error('Não foi possível carregar o carrinho.');
+        }
+
+        const resultadoCarrinho = await respostaCarrinho.json();
+
+        if (!resultadoCarrinho.sucesso) {
+            throw new Error('Erro ao consultar os produtos do carrinho.');
+        }
+
+        const itensCarrinho = resultadoCarrinho.itens || [];
+
+        // CALCULAR O TOTAL DA COMPRA EM CENTAVOS
+        totalCompra = itensCarrinho.reduce(function (total, produto) {
+            return total +
+                Math.round(Number(produto.preco_unitario_produto) * 100) *
+                Number(produto.quantidade_item_carrinho);
+        }, 0);
+
+    } catch (error) {
+        console.error('Erro ao carregar carrinho:', error);
+        alert('Não foi possível carregar os produtos da sua compra. Tente novamente.');
+        window.location.href = '../carrinho/index.html';
+        return;
+    }
 
     // FORMATA OS VALORES EM REAIS
     function formatarPreco(valor) {
@@ -32,17 +95,20 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             checkbox: 'opcao-pix',
             detalhes: 'detalhes-pix',
-            valor: 'valor-pix'
+            valor: 'valor-pix',
+            formaPagamentoId: 1
         },
         {
             checkbox: 'opcao-credito',
             detalhes: 'detalhes-credito',
-            valor: 'valor-credito'
+            valor: 'valor-credito',
+            formaPagamentoId: 2
         },
         {
             checkbox: 'opcao-debito',
             detalhes: 'detalhes-debito',
-            valor: 'valor-debito'
+            valor: 'valor-debito',
+            formaPagamentoId: 3
         }
     ];
 
@@ -122,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // VALIDAÇÃO E CONFIRMAÇÃO DOS PAGAMENTOS
-    formPagamento.addEventListener('submit', function (event) {
+    formPagamento.addEventListener('submit', async function (event) {
 
         event.preventDefault();
 
@@ -134,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let totalInformado = 0;
         let quantidadeSelecionada = 0;
 
+        // VALIDA AS FORMAS DE PAGAMENTO
         for (const forma of formasPagamento) {
 
             const checkbox = document.getElementById(forma.checkbox);
@@ -196,7 +263,78 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        alert('Os dados do pagamento foram validados com sucesso!');
+        // RECUPERA OS DADOS DE ENTREGA
+        let dadosEntrega;
+
+        try {
+            dadosEntrega = JSON.parse(
+                sessionStorage.getItem('dadosEntrega')
+            );
+        } catch (error) {
+            alert('Não foi possível recuperar os dados de entrega.');
+            window.location.href = '../finalizar/index.html';
+            return;
+        }
+
+        if (!dadosEntrega) {
+            alert('Os dados de entrega não foram encontrados. Preencha-os novamente.');
+            window.location.href = '../finalizar/index.html';
+            return;
+        }
+
+        // ORGANIZA AS FORMAS DE PAGAMENTO SELECIONADAS
+        const pagamentos = formasPagamento
+            .filter(function (forma) {
+                return document.getElementById(forma.checkbox).checked;
+            })
+            .map(function (forma) {
+                return {
+                    formaPagamentoId: forma.formaPagamentoId,
+                    valor: Number(document.getElementById(forma.valor).value)
+                };
+            });
+
+        // ENVIA O PEDIDO PARA O BACKEND
+        try {
+
+            const resposta = await fetch(
+                'http://127.0.0.1:3001/api/pedidos/confirmar',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        dadosEntrega: dadosEntrega,
+                        pagamentos: pagamentos
+                    })
+                }
+            );
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok || !resultado.sucesso) {
+                throw new Error(
+                    resultado.mensagem || 'Não foi possível concluir a compra.'
+                );
+            }
+
+            // LIMPA OS DADOS DE ENTREGA APÓS A COMPRA
+            sessionStorage.removeItem('dadosEntrega');
+
+            alert(resultado.mensagem);
+
+            // VOLTA PARA A PÁGINA INICIAL
+            window.location.href = '../inicio/index.html';
+
+        } catch (error) {
+
+            console.error('Erro ao confirmar pedido:', error);
+
+            alert(error.message || 'Ocorreu um erro ao realizar sua compra. Tente novamente.');
+
+        }
 
     });
 

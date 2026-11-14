@@ -74,7 +74,7 @@ async function carregarDetalhesProduto() {
             '.botao-adicionar-carrinho'
         );
 
-        botaoAdicionar.addEventListener('click', function () {
+        botaoAdicionar.addEventListener('click', async function () {
 
             const campoQuantidade = document.getElementById('quantidade');
             const quantidade = Number(campoQuantidade.value);
@@ -89,14 +89,44 @@ async function carregarDetalhesProduto() {
                 return;
             }
 
-            // Adiciona o produto ao carrinho
-            const adicionado = window.adicionarProdutoCarrinho(
-                produto,
-                quantidade
-            );
+            try {
 
-            if (adicionado) {
+                // Envia o produto para o carrinho no banco de dados
+                const resposta = await fetch(
+                    'http://127.0.0.1:3001/api/carrinho/itens',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            idProduto: produto.id_produto,
+                            quantidade: quantidade
+                        })
+                    }
+                );
+
+                const resultado = await resposta.json();
+
+                // Verifica se o cliente está conectado
+                if (resposta.status === 401) {
+                    alert('Entre na sua conta para adicionar produtos ao carrinho!');
+                    window.location.href = '../../login/index.html';
+                    return;
+                }
+
+                if (!resposta.ok || !resultado.sucesso) {
+                    throw new Error(resultado.mensagem);
+                }
+
                 alert('Produto adicionado ao carrinho!');
+
+            } catch (error) {
+
+                console.error('Erro ao adicionar produto:', error);
+                alert(error.message || 'Não foi possível adicionar o produto.');
+
             }
 
         });
