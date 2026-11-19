@@ -714,3 +714,106 @@ main p {
     background-color: #ecd2d0;
     transform: translateY(-1px);
 }
+
+/* ============================= */
+/* AVISO DE COOKIES */
+/* ============================= */
+
+.aviso-cookies {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+
+    width: min(900px, calc(100% - 40px));
+    padding: 25px;
+
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    background-color: #fffaf6;
+    border: 1px solid #ead8cf;
+    border-radius: 16px;
+
+    box-shadow: 0 5px 25px rgba(80, 50, 40, 0.18);
+}
+
+/* CONTEÚDO */
+
+.cookies-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cookies-icone {
+    font-size: 38px;
+}
+
+.cookies-texto h3 {
+    color: #805b50;
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.cookies-texto p {
+    color: #806f68;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* BOTÕES */
+
+.cookies-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 175px;
+}
+
+.cookies-acoes button {
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+#aceitar-cookies {
+    background-color: #c98f91;
+    color: white;
+}
+
+#aceitar-cookies:hover {
+    background-color: #b8797d;
+}
+
+#somente-necessarios {
+    background-color: #f0e3dc;
+    color: #805b50;
+}
+
+#somente-necessarios:hover {
+    background-color: #e7d4ca;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 650px) {
+
+    .aviso-cookies {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .cookies-acoes {
+        width: 100%;
+    }
+
+}

@@ -60,9 +60,17 @@ async function carregarDetalhesProduto() {
                         >
                     </div>
 
-                    <button class="botao-adicionar-carrinho">
-                        Adicionar ao carrinho
-                    </button>
+                    <div class="botoes-compra">
+
+                        <button class="botao-adicionar-carrinho">
+                            Adicionar ao carrinho
+                        </button>
+
+                        <button class="botao-comprar-agora">
+                            Comprar agora
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -126,6 +134,69 @@ async function carregarDetalhesProduto() {
 
                 console.error('Erro ao adicionar produto:', error);
                 alert(error.message || 'Não foi possível adicionar o produto.');
+
+            }
+
+        });
+
+        // BOTÃO COMPRAR AGORA
+        const botaoComprar = document.querySelector(
+            '.botao-comprar-agora'
+        );
+
+        botaoComprar.addEventListener('click', async function () {
+
+            const campoQuantidade = document.getElementById('quantidade');
+            const quantidade = Number(campoQuantidade.value);
+
+            // VERIFICA A QUANTIDADE INFORMADA
+            if (
+                !Number.isInteger(quantidade) ||
+                quantidade < 1 ||
+                quantidade > produto.quantidade_estoque_produto
+            ) {
+                alert('Informe uma quantidade válida.');
+                return;
+            }
+
+            try {
+
+                // VERIFICA SE O CLIENTE ESTÁ CONECTADO
+                const respostaSessao = await fetch(
+                    'http://127.0.0.1:3001/api/login/sessao',
+                    {
+                        credentials: 'include'
+                    }
+                );
+
+                const resultadoSessao = await respostaSessao.json();
+
+                if (!respostaSessao.ok || !resultadoSessao.autenticado) {
+                    alert('Entre na sua conta para realizar a compra!');
+                    window.location.href = '../../login/index.html';
+                    return;
+                }
+
+                // LIMPA POSSÍVEIS DADOS DE UMA COMPRA ANTERIOR
+                sessionStorage.removeItem('itensCompra');
+
+                // GUARDA OS DADOS DA COMPRA DIRETA
+                sessionStorage.setItem(
+                    'compraDireta',
+                    JSON.stringify({
+                        idProduto: produto.id_produto,
+                        quantidade: quantidade
+                    })
+                );
+
+                // ENCAMINHA PARA A FINALIZAÇÃO
+                window.location.href = '../finalizar/index.html';
+
+            } catch (error) {
+
+                console.error('Erro ao iniciar compra:', error);
+
+                alert('Não foi possível iniciar sua compra. Tente novamente.');
 
             }
 

@@ -245,3 +245,46 @@
     text-align: center;
     padding: 25px 10px;
 }
+
+/* ÁREA DOS BOTÕES DE COMPRA */
+.botoes-compra {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+/* BOTÃO ADICIONAR AO CARRINHO */
+.botao-adicionar-carrinho {
+    width: 100%;
+}
+
+/* BOTÃO COMPRAR AGORA */
+.botao-comprar-agora {
+    width: 100%;
+    padding: 15px 20px;
+
+    background-color: #fff9f4;
+    color: #765449;
+
+    border: 1px solid #ab7d72;
+    border-radius: 12px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* EFEITO AO PASSAR O MOUSE */
+.botao-comprar-agora:hover {
+    background-color: #f3e5dc;
+    border-color: #94695f;
+    transform: translateY(-2px);
+}
+
+/* EFEITO AO CLICAR */
+.botao-comprar-agora:active {
+    transform: scale(0.98);
+}

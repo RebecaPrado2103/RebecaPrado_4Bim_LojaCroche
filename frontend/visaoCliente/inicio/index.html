@@ -22,17 +22,17 @@
 
         <!-- Menu de navegação -->
         <nav class="menu">
-            <a href="#">Início</a>
+            <a href="index.html">Início</a>
             <a href="../produto/index.html">Produtos</a>
-            <a href="#">Bolsas</a>
-            <a href="#">Amigurumis</a>
-            <a href="#">Decoração</a>
+            <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+            <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+            <a href="../produto/index.html?categoria=Decoração">Decoração</a>
         </nav>
 
         <!-- Área de pesquisa e acesso -->
         <div class="acoes">
 
-            <input type="text" placeholder="O que você procura?">
+            <input type="text" id="campo-pesquisa" placeholder="O que você procura?">
 
             <div class="area-conta" id="area-conta">
 
@@ -126,7 +126,7 @@
                     seus momentos ainda mais especiais.
                 </p>
 
-                <a href="#produtos" class="botao-banner">
+                <a href="../produto/index.html" class="botao-banner">
                     Conheça nossos produtos
                 </a>
 
@@ -146,31 +146,31 @@
 
             <div class="categorias-lista">
 
-                <a href="#" class="categoria-card">
+                <a href="../produto/index.html?categoria=Bolsas" class="categoria-card">
                     <div class="categoria-icone">👜</div>
                     <h3>Bolsas</h3>
                     <p>Estilo em cada detalhe</p>
                 </a>
 
-                <a href="#" class="categoria-card">
+                <a href="../produto/index.html?categoria=Amigurumis" class="categoria-card">
                     <div class="categoria-icone">🧸</div>
                     <h3>Amigurumis</h3>
                     <p>Pequenos encantos feitos à mão</p>
                 </a>
 
-                <a href="#" class="categoria-card">
+                <a href="../produto/index.html?categoria=Decoração" class="categoria-card">
                     <div class="categoria-icone">🌷</div>
                     <h3>Decoração</h3>
                     <p>Aconchego para seu espaço</p>
                 </a>
 
-                <a href="#" class="categoria-card">
+                <a href="../produto/index.html?categoria=Acessórios" class="categoria-card">
                     <div class="categoria-icone">🎀</div>
                     <h3>Acessórios</h3>
                     <p>Detalhes que fazem a diferença</p>
                 </a>
 
-                <a href="#" class="categoria-card">
+                <a href="../produto/index.html?categoria=Roupas" class="categoria-card">
                     <div class="categoria-icone">👚</div>
                     <h3>Roupas</h3>
                     <p>Peças únicas para vestir</p>
@@ -207,7 +207,6 @@
             <!-- Identidade da loja -->
             <div class="rodape-marca">
                 <h2>Entre Laços</h2>
-
                 <p>
                     Peças feitas à mão com carinho,
                     criatividade e dedicação.
@@ -218,21 +217,21 @@
             <div class="rodape-links">
                 <h3>Navegação</h3>
 
-                <a href="#">Início</a>
-                <a href="#">Produtos</a>
-                <a href="#">Minha conta</a>
-                <a href="#">Carrinho</a>
+                <a href="index.html">Início</a>
+                <a href="../produto/index.html">Produtos</a>
+                <a href="../../login/index.html">Minha conta</a>
+                <a href="#" id="link-carrinho-rodape">Carrinho</a>
             </div>
 
             <!-- Categorias -->
             <div class="rodape-links">
                 <h3>Categorias</h3>
 
-                <a href="#">Bolsas</a>
-                <a href="#">Amigurumis</a>
-                <a href="#">Decoração</a>
-                <a href="#">Acessórios</a>
-                <a href="#">Roupas</a>
+                <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+                <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+                <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+                <a href="../produto/index.html?categoria=Roupas">Roupas</a>
             </div>
 
             <!-- Contato -->
@@ -246,18 +245,45 @@
         </div>
 
         <div class="rodape-final">
-            <p>
-                © 2026 Entre Laços. Todos os direitos reservados.
-            </p>
-
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
             <p>Feito com carinho para você. ♡</p>
         </div>
 
     </footer>
 
+    <!-- AVISO DE COOKIES -->
+    <div class="aviso-cookies" id="aviso-cookies">
+
+        <div class="cookies-conteudo">
+            <span class="cookies-icone">🍪</span>
+
+            <div class="cookies-texto">
+                <h3>Sua experiência é importante para nós!</h3>
+
+                <p>
+                    A Entre Laços utiliza cookies necessários para
+                    garantir o funcionamento da loja e manter sua
+                    experiência durante a navegação.
+                </p>
+            </div>
+        </div>
+
+        <div class="cookies-acoes">
+            <button type="button" id="aceitar-cookies">
+                Aceitar cookies
+            </button>
+
+            <button type="button" id="somente-necessarios">
+                Somente necessários
+            </button>
+        </div>
+
+    </div>
+
     <script src="inicio.js"></script>
     <script src="../carrinho/carrinho.js"></script>
     <script src="conta.js"></script>
+    <script src="cookies.js"></script>
 
 </body>
 

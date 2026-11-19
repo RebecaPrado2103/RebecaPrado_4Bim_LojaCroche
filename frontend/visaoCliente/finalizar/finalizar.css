@@ -162,10 +162,10 @@ body {
 
 /* RODAPÉ */
 .rodape {
-    background-color: #f3e9e4;
+    background-color: #795d55;
     text-align: center;
     padding: 22px;
-    color: #8c7770;
+    color: #eadbd3;
     font-size: 13px;
 }
 
@@ -225,4 +225,20 @@ body {
     display: block;
     color: #a96f79;
     margin-top: 8px;
+}
+
+.voltar-inicio {
+    display: inline-block;
+    margin-bottom: 15px;
+
+    color: #a8796e;
+    font-size: 14px;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.voltar-inicio:hover {
+    color: #805b50;
+    transform: translateX(-3px);
 }

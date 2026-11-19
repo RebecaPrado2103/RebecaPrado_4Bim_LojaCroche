@@ -275,6 +275,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
+            // LIMPA OS DADOS DE UMA COMPRA DIRETA ANTERIOR
+            sessionStorage.removeItem('compraDireta');
+            sessionStorage.removeItem('itensCompra');
+
+            // ENCAMINHA PARA A FINALIZAÇÃO
             window.location.href = '../finalizar/index.html';
 
         } catch (error) {

@@ -4,7 +4,10 @@ const { pool } = require('../database');
 exports.confirmarPedido = async (req, res) => {
 
     const cpfCliente = req.session.usuario.cpf;
-    const { dadosEntrega, pagamentos } = req.body;
+    const { dadosEntrega, pagamentos, itensCompra } = req.body;
+
+    // IDENTIFICA A ORIGEM DA COMPRA
+    const compraDireta = Array.isArray(itensCompra) && itensCompra.length > 0;
 
     // VERIFICAR DADOS DE ENTREGA
     const camposObrigatorios = [
@@ -64,44 +67,109 @@ exports.confirmarPedido = async (req, res) => {
         // INICIAR TRANSAÇÃO
         await client.query('BEGIN');
 
-        // BUSCAR O CARRINHO DO CLIENTE
-        const resultadoCarrinho = await client.query(
-            `SELECT id_carrinho
+        // BUSCAR OS PRODUTOS DA COMPRA
+        let itensCarrinho = [];
+
+        if (compraDireta) {
+
+            // VALIDAR OS DADOS DA COMPRA DIRETA
+            if (itensCompra.length !== 1) {
+                await client.query('ROLLBACK');
+
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'Dados da compra direta inválidos.'
+                });
+            }
+
+            const idProduto = Number(itensCompra[0].idProduto);
+            const quantidade = Number(itensCompra[0].quantidade);
+
+            if (
+                !Number.isInteger(idProduto) ||
+                idProduto <= 0 ||
+                !Number.isInteger(quantidade) ||
+                quantidade <= 0
+            ) {
+                await client.query('ROLLBACK');
+
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'Produto ou quantidade inválidos.'
+                });
+            }
+
+            // BUSCAR O PRODUTO NO BANCO E BLOQUEAR SEU REGISTRO
+            const resultadoProduto = await client.query(
+                `SELECT
+            id_produto,
+            nome_produto,
+            preco_unitario_produto,
+            quantidade_estoque_produto,
+            ativo_produto
+        FROM produto
+        WHERE id_produto = $1
+        FOR UPDATE`,
+                [idProduto]
+            );
+
+            if (resultadoProduto.rows.length === 0) {
+                await client.query('ROLLBACK');
+
+                return res.status(404).json({
+                    sucesso: false,
+                    mensagem: 'Produto não encontrado.'
+                });
+            }
+
+            const produto = resultadoProduto.rows[0];
+
+            // ORGANIZAR NO MESMO FORMATO DOS ITENS DO CARRINHO
+            itensCarrinho = [{
+                ...produto,
+                quantidade_item_carrinho: quantidade
+            }];
+
+        } else {
+
+            // BUSCAR O CARRINHO DO CLIENTE
+            const resultadoCarrinho = await client.query(
+                `SELECT id_carrinho
          FROM carrinho
          WHERE cliente_cpf = $1`,
-            [cpfCliente]
-        );
+                [cpfCliente]
+            );
 
-        if (resultadoCarrinho.rows.length === 0) {
-            await client.query('ROLLBACK');
+            if (resultadoCarrinho.rows.length === 0) {
+                await client.query('ROLLBACK');
 
-            return res.status(400).json({
-                sucesso: false,
-                mensagem: 'Seu carrinho está vazio.'
-            });
-        }
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'Seu carrinho está vazio.'
+                });
+            }
 
-        const idCarrinho = resultadoCarrinho.rows[0].id_carrinho;
+            const idCarrinho = resultadoCarrinho.rows[0].id_carrinho;
 
-        // BUSCAR OS PRODUTOS DO CARRINHO
-        // E BLOQUEAR SEUS REGISTROS DURANTE A COMPRA
-        const resultadoItens = await client.query(
-            `SELECT
-        p.id_produto,
-        p.nome_produto,
-        p.preco_unitario_produto,
-        p.quantidade_estoque_produto,
-        p.ativo_produto,
-        ic.quantidade_item_carrinho
+            // BUSCAR OS PRODUTOS DO CARRINHO
+            const resultadoItens = await client.query(
+                `SELECT
+            p.id_produto,
+            p.nome_produto,
+            p.preco_unitario_produto,
+            p.quantidade_estoque_produto,
+            p.ativo_produto,
+            ic.quantidade_item_carrinho
         FROM item_carrinho ic
         INNER JOIN produto p
-        ON p.id_produto = ic.produto_id
+            ON p.id_produto = ic.produto_id
         WHERE ic.carrinho_id = $1
         FOR UPDATE OF p`,
-            [idCarrinho]
-        );
+                [idCarrinho]
+            );
 
-        const itensCarrinho = resultadoItens.rows;
+            itensCarrinho = resultadoItens.rows;
+        }
 
         // VERIFICAR SE EXISTEM PRODUTOS INATIVOS
         const produtoInativo = itensCarrinho.find(
@@ -273,12 +341,27 @@ exports.confirmarPedido = async (req, res) => {
 
         }
 
-        // ESVAZIAR O CARRINHO APÓS A COMPRA
-        await client.query(
-            `DELETE FROM item_carrinho
-            WHERE carrinho_id = $1`,
-            [idCarrinho]
-        );
+        // ESVAZIAR O CARRINHO SOMENTE QUANDO A COMPRA VIER DELE
+        if (!compraDireta) {
+
+            const resultadoCarrinho = await client.query(
+                `SELECT id_carrinho
+         FROM carrinho
+         WHERE cliente_cpf = $1`,
+                [cpfCliente]
+            );
+
+            if (resultadoCarrinho.rows.length > 0) {
+
+                await client.query(
+                    `DELETE FROM item_carrinho
+             WHERE carrinho_id = $1`,
+                    [resultadoCarrinho.rows[0].id_carrinho]
+                );
+
+            }
+
+        }
 
         // CONFIRMAR A TRANSAÇÃO
         await client.query('COMMIT');

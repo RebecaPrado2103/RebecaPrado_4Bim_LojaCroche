@@ -56,7 +56,7 @@ async function carregarProdutos() {
             const botao = document.createElement('a');
             botao.classList.add('produto-botao');
             botao.textContent = 'Ver produto';
-            botao.href = '#';
+            botao.href = `../detalhesProduto/index.html?id=${produto.id_produto}`;
 
             // Organiza as informações
             informacoes.appendChild(categoria);
@@ -115,8 +115,39 @@ botaoCancelar.addEventListener('click', fecharCarrinho);
 fundoCarrinho.addEventListener('click', fecharCarrinho);
 
 // FECHAR AO PRESSIONAR ESC
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         fecharCarrinho();
     }
+});
+
+// LINK DO CARRINHO NO RODAPÉ
+const linkCarrinhoRodape = document.getElementById('link-carrinho-rodape');
+
+linkCarrinhoRodape.addEventListener('click', function (event) {
+    event.preventDefault();
+    abrirCarrinho();
+});
+
+// BARRA DE PESQUISA
+const campoPesquisa = document.getElementById('campo-pesquisa');
+
+campoPesquisa.addEventListener('keydown', function (event) {
+
+    // Pesquisa ao pressionar Enter
+    if (event.key === 'Enter') {
+
+        const termoPesquisa = campoPesquisa.value.trim();
+
+        if (termoPesquisa === '') {
+            alert('Digite o nome de um produto para pesquisar.');
+            return;
+        }
+
+        // Envia o termo para o catálogo
+        window.location.href =
+            `../produto/index.html?busca=${encodeURIComponent(termoPesquisa)}`;
+
+    }
+
 });

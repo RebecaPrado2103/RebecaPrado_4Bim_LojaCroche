@@ -35,24 +35,12 @@
 
                 <div class="grupo-campo">
                     <label for="cpf">CPF</label>
-                    <input
-                        type="text"
-                        id="cpf"
-                        name="cpf"
-                        placeholder="Digite seu CPF"
-                        required
-                    >
+                    <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
                 </div>
 
                 <div class="grupo-campo">
                     <label for="senha">Senha</label>
-                    <input
-                        type="password"
-                        id="senha"
-                        name="senha"
-                        placeholder="Digite sua senha"
-                        required
-                    >
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
                 </div>
 
                 <button type="submit" class="botao-entrar">
@@ -60,6 +48,36 @@
                 </button>
 
             </form>
+
+            <!-- ESCOLHA DO TIPO DE ACESSO -->
+            <section id="escolha-acesso" class="escolha-acesso" hidden>
+
+                <div class="titulo-login">
+                    <h2>Que bom ter você aqui!</h2>
+                    <p>Como deseja acessar a Entre Laços?</p>
+                </div>
+
+                <div class="opcoes-acesso">
+
+                    <button type="button" id="entrar-cliente" class="botao-acesso">
+                        <span class="icone-acesso">♡</span>
+                        <span>
+                            <strong>Entrar como cliente</strong>
+                            <small>Explore nossos produtos e faça suas compras.</small>
+                        </span>
+                    </button>
+
+                    <button type="button" id="entrar-funcionario" class="botao-acesso">
+                        <span class="icone-acesso">✿</span>
+                        <span>
+                            <strong>Entrar como funcionário</strong>
+                            <small>Acesse as funcionalidades de gerenciamento.</small>
+                        </span>
+                    </button>
+
+                </div>
+
+            </section>
 
             <!-- LINK PARA CADASTRO -->
             <div class="link-cadastro">
@@ -74,4 +92,5 @@
     <script src="login.js"></script>
 
 </body>
+
 </html>

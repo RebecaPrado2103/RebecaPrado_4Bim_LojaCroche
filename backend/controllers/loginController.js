@@ -1,7 +1,8 @@
 const { query } = require('../database');
 const bcrypt = require('bcrypt');
 
-// REALIZAR LOGIN DO CLIENTE
+
+// REALIZAR LOGIN
 exports.entrar = async (req, res) => {
     try {
         const { cpf, senha } = req.body;
@@ -14,17 +15,28 @@ exports.entrar = async (req, res) => {
             });
         }
 
-        // Buscar o cliente no banco de dados
+        // Buscar a pessoa e verificar seus cadastros
         const resultado = await query(
-            `SELECT p.cpf_pessoa, p.nome_pessoa, p.senha_pessoa
+            `SELECT
+                p.cpf_pessoa,
+                p.nome_pessoa,
+                p.senha_pessoa,
+                c.pessoa_cpf_pessoa AS cpf_cliente,
+                f.pessoa_cpf_pessoa AS cpf_funcionario,
+                f.cargo_id_cargo,
+                cg.nome_cargo
              FROM pessoa p
-             INNER JOIN cliente c
-             ON c.pessoa_cpf_pessoa = p.cpf_pessoa
+             LEFT JOIN cliente c
+                ON c.pessoa_cpf_pessoa = p.cpf_pessoa
+             LEFT JOIN funcionario f
+                ON f.pessoa_cpf_pessoa = p.cpf_pessoa
+             LEFT JOIN cargo cg
+                ON cg.id_cargo = f.cargo_id_cargo
              WHERE p.cpf_pessoa = $1`,
             [cpf]
         );
 
-        // Verificar se o cliente existe
+        // Verificar se a pessoa existe
         if (resultado.rows.length === 0) {
             return res.status(401).json({
                 sucesso: false,
@@ -32,12 +44,12 @@ exports.entrar = async (req, res) => {
             });
         }
 
-        const cliente = resultado.rows[0];
+        const pessoa = resultado.rows[0];
 
-        // Comparar a senha digitada com o hash armazenado
+        // Verificar a senha
         const senhaCorreta = await bcrypt.compare(
             senha,
-            cliente.senha_pessoa
+            pessoa.senha_pessoa
         );
 
         if (!senhaCorreta) {
@@ -47,11 +59,45 @@ exports.entrar = async (req, res) => {
             });
         }
 
-        // Criar a sessão do cliente
+        // Identificar os cadastros da pessoa
+        const ehCliente = pessoa.cpf_cliente !== null;
+        const ehFuncionario = pessoa.cpf_funcionario !== null;
+        const ehGerente = ehFuncionario &&
+            pessoa.cargo_id_cargo === 1;
+
+        // Definir as opções de acesso
+        let opcoesAcesso = [];
+
+        if (ehGerente) {
+            opcoesAcesso = ['cliente', 'funcionario'];
+        } else {
+            if (ehCliente) {
+                opcoesAcesso.push('cliente');
+            }
+
+            if (ehFuncionario) {
+                opcoesAcesso.push('funcionario');
+            }
+        }
+
+        // Impedir acesso de pessoas sem cadastro válido
+        if (opcoesAcesso.length === 0) {
+            return res.status(403).json({
+                sucesso: false,
+                mensagem: 'Esta pessoa não possui um cadastro autorizado.'
+            });
+        }
+
+        // Criar a sessão com os dados da pessoa
         req.session.usuario = {
-            cpf: cliente.cpf_pessoa,
-            nome: cliente.nome_pessoa,
-            tipo: 'cliente'
+            cpf: pessoa.cpf_pessoa,
+            nome: pessoa.nome_pessoa,
+            ehCliente,
+            ehFuncionario,
+            ehGerente,
+            cargoId: pessoa.cargo_id_cargo,
+            cargo: pessoa.nome_cargo,
+            opcoesAcesso
         };
 
         // Salvar a sessão antes de responder
@@ -69,7 +115,8 @@ exports.entrar = async (req, res) => {
                 sucesso: true,
                 mensagem: 'Login realizado com sucesso!',
                 usuario: {
-                    nome: cliente.nome_pessoa
+                    nome: pessoa.nome_pessoa,
+                    opcoesAcesso
                 }
             });
         });
@@ -82,6 +129,50 @@ exports.entrar = async (req, res) => {
             mensagem: 'Ocorreu um erro ao tentar realizar o login.'
         });
     }
+};
+
+
+ // ESCOLHER O TIPO DE ACESSO
+exports.selecionarAcesso = (req, res) => {
+
+    const { tipo } = req.body;
+    const usuario = req.session.usuario;
+
+    // Verificar se existe uma sessão
+    if (!usuario) {
+        return res.status(401).json({
+            sucesso: false,
+            mensagem: 'Você precisa realizar o login novamente.'
+        });
+    }
+
+    // Verificar se a opção escolhida está autorizada
+    if (!usuario.opcoesAcesso.includes(tipo)) {
+        return res.status(403).json({
+            sucesso: false,
+            mensagem: 'Você não possui permissão para acessar essa área.'
+        });
+    }
+
+    // Registrar a escolha na sessão
+    usuario.tipo = tipo;
+
+    req.session.save((erro) => {
+        if (erro) {
+            console.error('Erro ao salvar a escolha de acesso:', erro);
+
+            return res.status(500).json({
+                sucesso: false,
+                mensagem: 'Não foi possível selecionar o acesso.'
+            });
+        }
+
+        return res.status(200).json({
+            sucesso: true,
+            mensagem: 'Acesso selecionado com sucesso!',
+            tipo: usuario.tipo
+        });
+    });
 };
 
 // VERIFICAR SE EXISTE UMA SESSÃO ATIVA

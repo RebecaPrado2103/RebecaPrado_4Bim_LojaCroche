@@ -26,8 +26,8 @@ async function carregarProdutos() {
             produto => produto.categoria_produto
         ));
 
-        // Exibe todos os produtos inicialmente
-        exibirProdutos(produtos);
+        // Aplica a categoria recebida pela URL
+        aplicarCategoriaDaURL();
 
     } catch (error) {
         console.error('Erro:', error);
@@ -129,6 +129,88 @@ function filtrarCategoria(categoriaSelecionada) {
     }
 }
 
+// APLICA A CATEGORIA OU A PESQUISA RECEBIDA PELA URL
+function aplicarCategoriaDaURL() {
+
+    const parametros = new URLSearchParams(window.location.search);
+
+    const categoriaURL = parametros.get('categoria');
+    const termoPesquisa = parametros.get('busca');
+
+    const categorias = document.querySelectorAll('.categoria-link');
+    const titulo = document.querySelector('.catalogo-info h3');
+
+    // NORMALIZA OS TEXTOS PARA IGNORAR ACENTOS E MAIÚSCULAS
+    function normalizarTexto(texto) {
+        return String(texto)
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+    }
+
+    // SE EXISTIR UMA PESQUISA, ELA TEM PRIORIDADE
+    if (termoPesquisa) {
+
+        const termoNormalizado = normalizarTexto(termoPesquisa);
+
+        // Remove a seleção visual das categorias
+        categorias.forEach(link => {
+            link.classList.remove('ativa');
+        });
+
+        // Procura produtos pelo nome ou categoria
+        const produtosEncontrados = produtos.filter(produto => {
+
+            const nome = normalizarTexto(produto.nome_produto);
+            const categoria = normalizarTexto(produto.categoria_produto);
+
+            return nome.includes(termoNormalizado) ||
+                categoria.includes(termoNormalizado);
+        });
+
+        titulo.textContent = `Resultados para: ${termoPesquisa}`;
+
+        exibirProdutos(produtosEncontrados);
+
+        return;
+    }
+
+    // SE NÃO HOUVER PESQUISA, VERIFICA A CATEGORIA
+    if (!categoriaURL) {
+        categorias.forEach(link => {
+            link.classList.remove('ativa');
+        });
+
+        document.querySelector('[data-categoria="todos"]')
+            ?.classList.add('ativa');
+
+        titulo.textContent = 'Todos os produtos';
+
+        exibirProdutos(produtos);
+        return;
+    }
+
+    const linkSelecionado = Array.from(categorias).find(
+        link => link.dataset.categoria === categoriaURL
+    );
+
+    if (!linkSelecionado) {
+        exibirProdutos(produtos);
+        return;
+    }
+
+    categorias.forEach(link => {
+        link.classList.remove('ativa');
+    });
+
+    linkSelecionado.classList.add('ativa');
+
+    titulo.textContent = categoriaURL;
+
+    filtrarCategoria(categoriaURL);
+}
+
 // Configura os cliques nas categorias
 function configurarFiltros() {
     const categorias = document.querySelectorAll('.categoria-link');
@@ -169,3 +251,25 @@ function configurarFiltros() {
 // Configura os filtros e carrega os produtos
 configurarFiltros();
 carregarProdutos();
+
+// BARRA DE PESQUISA DO CATÁLOGO
+
+const campoPesquisa = document.getElementById('campo-pesquisa');
+
+campoPesquisa.addEventListener('keydown', function (event) {
+
+    if (event.key === 'Enter') {
+
+        const termoPesquisa = campoPesquisa.value.trim();
+
+        if (termoPesquisa === '') {
+            alert('Digite o nome de um produto para pesquisar.');
+            return;
+        }
+
+        window.location.href =
+            `index.html?busca=${encodeURIComponent(termoPesquisa)}`;
+
+    }
+
+});

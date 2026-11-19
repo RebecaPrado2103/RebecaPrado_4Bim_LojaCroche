@@ -25,6 +25,10 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo-finalizacao">
 
+        <a href="../inicio/index.html" class="voltar-inicio">
+            ← Voltar ao início
+        </a>
+
         <h1>Finalizar compra</h1>
         <p class="subtitulo">
             Estamos quase lá! Confira seu pedido e informe os dados de entrega.
@@ -82,7 +86,7 @@
 
                 <div class="campo">
                     <label for="estado">Estado</label>
-                    <input type="text" id="estado" required>
+                    <input type="text" id="estado" name="estado" maxlength="2" placeholder="Ex.: PR" required>
                 </div>
 
                 <button type="submit" class="botao-continuar">
@@ -102,4 +106,5 @@
     <script src="finalizar.js"></script>
 
 </body>
+
 </html>

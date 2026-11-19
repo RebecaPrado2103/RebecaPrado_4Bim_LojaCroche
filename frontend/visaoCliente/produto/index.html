@@ -26,7 +26,7 @@
         <!-- Área de pesquisa e acesso -->
         <div class="acoes">
 
-            <input type="text" placeholder="O que você procura?">
+            <input type="text" id="campo-pesquisa" placeholder="O que você procura?">
 
             <a href="#">Minha conta</a>
 
@@ -80,9 +80,17 @@
 
         <!-- Título da página -->
         <section class="catalogo-titulo">
+
+            <a href="../inicio/index.html" class="voltar-inicio">
+                ← Voltar ao início
+            </a>
+
             <span>EXPLORE NOSSA COLEÇÃO</span>
+
             <h2>Nossos produtos</h2>
+
             <p>Peças artesanais feitas com carinho em cada detalhe.</p>
+
         </section>
 
         <!-- Área principal do catálogo -->
@@ -137,10 +145,58 @@
 
         </div>
 
-        <script src="produto.js"></script>
-        <script src="../carrinho/carrinho.js"></script>
-
     </main>
+
+    <!-- RODAPÉ -->
+
+    <footer class="rodape">
+
+        <div class="rodape-conteudo">
+
+            <div class="rodape-marca">
+                <h2>Entre Laços</h2>
+                <p>
+                    Peças feitas à mão com carinho,
+                    criatividade e dedicação.
+                </p>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Navegação</h3>
+
+                <a href="../inicio/index.html">Início</a>
+                <a href="index.html">Produtos</a>
+                <a href="../../login/index.html">Minha conta</a>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Categorias</h3>
+
+                <a href="index.html?categoria=Bolsas">Bolsas</a>
+                <a href="index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="index.html?categoria=Decoração">Decoração</a>
+                <a href="index.html?categoria=Acessórios">Acessórios</a>
+                <a href="index.html?categoria=Roupas">Roupas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h3>Fale conosco</h3>
+
+                <p>Entre em contato com nossa equipe!</p>
+                <p>Atendimento ao cliente</p>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
+            <p>Feito com carinho para você. ♡</p>
+        </div>
+
+    </footer>
+
+    <script src="produto.js"></script>
+    <script src="../carrinho/carrinho.js"></script>
 
 </body>
 

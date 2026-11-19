@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
 
     // VERIFICAR SE O CLIENTE ESTÁ CONECTADO
     try {
@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // PRODUTOS DO CARRINHO
     let produtosCarrinho = [];
+
+    // IDENTIFICA SE A COMPRA VEIO DO BOTÃO "COMPRAR AGORA"
+    let compraDireta = null;
 
     // FORMATA OS VALORES EM REAIS
     function formatarPreco(valor) {
@@ -87,6 +90,59 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
+    // BUSCA O PRODUTO DE UMA COMPRA DIRETA
+    async function carregarCompraDireta() {
+
+        try {
+
+            // RECUPERA OS DADOS SALVOS NA PÁGINA DE DETALHES
+            compraDireta = JSON.parse(
+                sessionStorage.getItem('compraDireta')
+            );
+
+            if (!compraDireta) {
+                throw new Error('Dados da compra direta não encontrados.');
+            }
+
+            // BUSCA O PRODUTO NO BANCO DE DADOS
+            const resposta = await fetch(
+                `http://127.0.0.1:3001/api/produtos/${compraDireta.idProduto}`
+            );
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok || !resultado.sucesso) {
+                throw new Error('Não foi possível encontrar o produto.');
+            }
+
+            const produto = resultado.produto;
+
+            // MONTA A LISTA COM O PRODUTO ESCOLHIDO
+            produtosCarrinho = [{
+                id: produto.id_produto,
+                nome: produto.nome_produto,
+                preco: Number(produto.preco_unitario_produto),
+                quantidade: Number(compraDireta.quantidade)
+            }];
+
+            return true;
+
+        } catch (error) {
+
+            console.error('Erro ao carregar compra direta:', error);
+
+            itensPedido.innerHTML = `
+            <p>Não foi possível carregar o produto escolhido.</p>
+        `;
+
+            totalPedido.textContent = formatarPreco(0);
+
+            alert('Não foi possível carregar sua compra. Tente novamente.');
+
+            return false;
+        }
+    }
+
     // EXIBE O RESUMO DO PEDIDO
     function exibirResumoPedido() {
 
@@ -131,8 +187,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         totalPedido.textContent = formatarPreco(total);
     }
 
-    // CARREGA O CARRINHO AO ABRIR A PÁGINA
-    const carregamentoConcluido = await carregarCarrinho();
+    // CARREGA OS PRODUTOS AO ABRIR A PÁGINA
+    let carregamentoConcluido;
+
+    if (sessionStorage.getItem('compraDireta')) {
+
+        // VEIO DO BOTÃO "COMPRAR AGORA"
+        carregamentoConcluido = await carregarCompraDireta();
+
+    } else {
+
+        // VEIO DO CARRINHO
+        carregamentoConcluido = await carregarCarrinho();
+
+    }
 
     if (!carregamentoConcluido) {
         return;
@@ -141,7 +209,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     exibirResumoPedido();
 
     // FORMULÁRIO DE ENTREGA
-    formEntrega.addEventListener('submit', function(event) {
+    formEntrega.addEventListener('submit', function (event) {
 
         event.preventDefault();
 
@@ -167,6 +235,24 @@ document.addEventListener('DOMContentLoaded', async function() {
             'dadosEntrega',
             JSON.stringify(dadosEntrega)
         );
+
+        // PREPARA OS DADOS DA COMPRA DIRETA, SE NECESSÁRIO
+        if (compraDireta) {
+
+            sessionStorage.setItem(
+                'itensCompra',
+                JSON.stringify([{
+                    idProduto: compraDireta.idProduto,
+                    quantidade: compraDireta.quantidade
+                }])
+            );
+
+        } else {
+
+            // GARANTE QUE UMA COMPRA PELO CARRINHO NÃO USE DADOS ANTIGOS
+            sessionStorage.removeItem('itensCompra');
+
+        }
 
         alert('Dados de entrega registrados com sucesso!');
 
