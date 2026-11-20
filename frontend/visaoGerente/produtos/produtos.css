@@ -1,0 +1,112 @@
+
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faf6f2;
+    color: #59443f;
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background-color: #ead5d0;
+    padding: 25px 40px;
+    border-bottom: 1px solid #dfc2bb;
+}
+
+.cabecalho h1 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: #795d55;
+}
+
+.cabecalho p {
+    margin-top: 5px;
+    color: #795d55;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.conteudo {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 30px;
+}
+
+/* TÍTULO DA PÁGINA */
+.titulo-pagina {
+    margin-bottom: 25px;
+}
+
+.titulo-pagina h2 {
+    font-family: Georgia, serif;
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.titulo-pagina p {
+    color: #89756f;
+}
+
+/* BOTÃO DE CADASTRO */
+.acoes-produtos {
+    margin-bottom: 30px;
+}
+
+#botao-cadastrar {
+    background-color: #a97970;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#botao-cadastrar:hover {
+    background-color: #895e56;
+}
+
+/* LISTAGEM DE PRODUTOS */
+.listagem-produtos {
+    background-color: #ffffff;
+    padding: 25px;
+    border: 1px solid #eadbd5;
+    border-radius: 12px;
+}
+
+.listagem-produtos h3 {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    margin-bottom: 20px;
+}
+
+/* CARTÃO DE CADA PRODUTO */
+.produto-item {
+    background-color: #fdf9f7;
+    border: 1px solid #eee1dc;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.produto-item:last-child {
+    margin-bottom: 0;
+}
+
+.produto-item h4 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: #795d55;
+}
+
+.produto-item p {
+    margin-top: 6px;
+    color: #76635d;
+    font-size: 14px;
+}

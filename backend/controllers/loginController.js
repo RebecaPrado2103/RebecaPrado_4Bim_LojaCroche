@@ -132,48 +132,78 @@ exports.entrar = async (req, res) => {
 };
 
 
- // ESCOLHER O TIPO DE ACESSO
-exports.selecionarAcesso = (req, res) => {
+ 
+// ESCOLHER O TIPO DE ACESSO
+exports.selecionarAcesso = async (req, res) => {
 
-    const { tipo } = req.body;
-    const usuario = req.session.usuario;
+    try {
+        const { tipo } = req.body;
+        const usuario = req.session.usuario;
 
-    // Verificar se existe uma sessão
-    if (!usuario) {
-        return res.status(401).json({
-            sucesso: false,
-            mensagem: 'Você precisa realizar o login novamente.'
-        });
-    }
-
-    // Verificar se a opção escolhida está autorizada
-    if (!usuario.opcoesAcesso.includes(tipo)) {
-        return res.status(403).json({
-            sucesso: false,
-            mensagem: 'Você não possui permissão para acessar essa área.'
-        });
-    }
-
-    // Registrar a escolha na sessão
-    usuario.tipo = tipo;
-
-    req.session.save((erro) => {
-        if (erro) {
-            console.error('Erro ao salvar a escolha de acesso:', erro);
-
-            return res.status(500).json({
+        // Verificar se existe uma sessão
+        if (!usuario) {
+            return res.status(401).json({
                 sucesso: false,
-                mensagem: 'Não foi possível selecionar o acesso.'
+                mensagem: 'Você precisa realizar o login novamente.'
             });
         }
 
-        return res.status(200).json({
-            sucesso: true,
-            mensagem: 'Acesso selecionado com sucesso!',
-            tipo: usuario.tipo
+        // Verificar se a opção escolhida está autorizada
+        if (!usuario.opcoesAcesso.includes(tipo)) {
+            return res.status(403).json({
+                sucesso: false,
+                mensagem: 'Você não possui permissão para acessar essa área.'
+            });
+        }
+
+        // Criar cadastro de cliente para o gerente, se necessário
+        if (tipo === 'cliente' && usuario.ehGerente) {
+
+            await query(
+                `INSERT INTO cliente
+                    (pessoa_cpf_pessoa, data_cadastro_cliente)
+                 VALUES ($1, CURRENT_DATE)
+                 ON CONFLICT (pessoa_cpf_pessoa) DO NOTHING`,
+                [usuario.cpf]
+            );
+
+            // Atualizar a informação na sessão
+            usuario.ehCliente = true;
+        }
+
+        // Registrar a escolha na sessão
+        usuario.tipo = tipo;
+
+        // Salvar a sessão antes de responder
+        req.session.save((erro) => {
+
+            if (erro) {
+                console.error('Erro ao salvar a escolha de acesso:', erro);
+
+                return res.status(500).json({
+                    sucesso: false,
+                    mensagem: 'Não foi possível selecionar o acesso.'
+                });
+            }
+
+            return res.status(200).json({
+                sucesso: true,
+                mensagem: 'Acesso selecionado com sucesso!',
+                tipo: usuario.tipo
+            });
         });
-    });
+
+    } catch (error) {
+
+        console.error('Erro ao selecionar o acesso:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Não foi possível selecionar o acesso.'
+        });
+    }
 };
+
 
 // VERIFICAR SE EXISTE UMA SESSÃO ATIVA
 exports.verificarSessao = (req, res) => {
