@@ -5,99 +5,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Gerenciar produtos | Entre Laços</title>
+    <title>Gerenciamento de Produtos | Entre Laços</title>
 
     <link rel="stylesheet" href="produtos.css">
 </head>
 
-<body>
+<body onload="inicializar()">
 
     <!-- CABEÇALHO -->
-    <header class="cabecalho">
+    <header>
         <h1>Entre Laços</h1>
-        <p>Painel de gerenciamento</p>
+        <p>Gerencie os produtos da nossa loja.</p>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="conteudo">
+    <main class="container-master">
 
-        <section class="titulo-pagina">
-            <h2>Gerenciamento de produtos</h2>
-            <p>Visualize e organize os produtos da loja.</p>
-        </section>
+        <!-- ÁREA PRINCIPAL -->
+        <div class="conteudo-principal">
 
-        <!-- AÇÕES -->
-        <section class="acoes-produtos">
-            <button id="botao-cadastrar">
-                Cadastrar produto
-            </button>
-        </section>
+            <!-- FORMULÁRIO À ESQUERDA -->
+            <section class="form-esquerda">
 
+                <h2>Dados do Produto</h2>
 
-        <!-- FORMULÁRIO DE CADASTRO -->
-        <section class="formulario-produto" id="formulario-produto" hidden>
+                <label for="inputId_produto">ID do Produto</label>
 
-            <h3>Cadastrar novo produto</h3>
+                <div class="linha-id">
+                    <input type="text" id="inputId_produto" placeholder="Ex: 1">
 
-            <form id="form-cadastro-produto">
-
-                <!-- NOME -->
-                <div class="campo-formulario">
-                    <label for="nome-produto">Nome do produto:</label>
-                    <input type="text" id="nome-produto" name="nome_produto" required>
+                    <input type="button" value="Procure" id="btProcure">
+                    <input type="button" value="Inserir" id="btInserir">
+                    <input type="button" value="Alterar" id="btAlterar">
+                    <input type="button" value="Desativar" id="btDesativar">
+                    <input type="button" value="Reativar" id="btReativar">
                 </div>
 
-                <!-- QUANTIDADE -->
-                <div class="campo-formulario">
-                    <label for="quantidade-produto">Quantidade em estoque:</label>
-                    <input type="number" id="quantidade-produto" name="quantidade_estoque_produto" min="0" step="1"
-                        required>
+                <label for="inputNome_produto">Nome do Produto</label>
+                <input type="text" id="inputNome_produto">
+
+                <label for="inputQuantidade_produto">Quantidade em Estoque</label>
+                <input type="number" id="inputQuantidade_produto" min="0">
+
+                <label for="inputPreco_produto">Preço Unitário (R$)</label>
+                <input type="number" id="inputPreco_produto" min="0.01" step="0.01">
+
+                <label for="inputCategoria_produto">Categoria</label>
+                <input type="text" id="inputCategoria_produto">
+
+                <label>
+                    <input type="checkbox" id="inputDestaque_produto">
+                    Produto em destaque
+                </label>
+
+                <div id="divAviso">
+                    Informe o ID e clique em Procure.
                 </div>
 
-                <!-- PREÇO -->
-                <div class="campo-formulario">
-                    <label for="preco-produto">Preço unitário (R$):</label>
-                    <input type="number" id="preco-produto" name="preco_unitario_produto" min="0.01" step="0.01"
-                        required>
+                <div class="botoes-acao">
+                    <input type="button" value="Salvar" id="btSalvar">
+                    <input type="button" value="Cancelar" id="btCancelar">
                 </div>
 
-                <!-- CATEGORIA -->
-                <div class="campo-formulario">
-                    <label for="categoria-produto">Categoria:</label>
-                    <input type="text" id="categoria-produto" name="categoria_produto">
+            </section>
+
+            <!-- IMAGEM À DIREITA -->
+            <aside class="form-direita">
+
+                <h2>Imagem do Produto</h2>
+
+                <p class="instrucao-imagem">
+                    Clique na imagem para selecionar uma PNG.
+                </p>
+
+                <div class="img-container">
+
+                    <img id="imgProduto" src="http://127.0.0.1:3001/imagens/silhueta.png" alt="Imagem do produto">
+
+                    <input type="file" id="inputImagem" accept="image/png" hidden>
+
                 </div>
 
-                <!-- IMAGEM -->
-                <div class="campo-formulario">
-                    <label for="imagem-produto">Imagem do produto (PNG):</label>
-                    <input type="file" id="imagem-produto" name="imagem" accept="image/png" required>
-                </div>
+            </aside>
 
-                <!-- DESTAQUE -->
-                <div class="campo-formulario">
-                    <label>
-                        <input type="checkbox" id="destaque-produto" name="destaque_produto" value="true">
-                        Exibir como produto em destaque
-                    </label>
-                </div>
-
-                <!-- BOTÕES -->
-                <div class="botoes-formulario">
-                    <button type="submit">Salvar produto</button>
-                    <button type="button" id="botao-cancelar">Cancelar</button>
-                </div>
-
-            </form>
-
-        </section>
-
+        </div>
 
         <!-- LISTAGEM -->
-        <section class="listagem-produtos">
+        <section class="lista-produtos">
 
-            <h3>Produtos cadastrados</h3>
+            <h3>Produtos Cadastrados</h3>
 
-            <div id="lista-produtos">
+            <div id="outputSaida">
                 Carregando produtos...
             </div>
 

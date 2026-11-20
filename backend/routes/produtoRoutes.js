@@ -24,11 +24,36 @@ router.post(
     produtoController.cadastrarProduto
 );
 
+// ALTERAR UM PRODUTO
+router.put(
+    '/gerenciar/alterar/:id',
+    verificarFuncionario,
+    verificarPermissao('produtos_editar'),
+    uploadProduto.single('imagem'),
+    produtoController.alterarProduto
+);
+
+// ADMIN: REATIVAR
+router.patch(
+    '/gerenciar/reativar/:id',
+    verificarFuncionario,
+    verificarPermissao('produtos_desativar'),
+    produtoController.reativarProduto
+);
+
 // Rota para listar os produtos
 router.get('/listar', produtoController.listarProdutos);
 // Rota para listar os produtos em destaque
 router.get('/destaques', produtoController.listarDestaques);
 // Rota para buscar um produto específico pelo ID
 router.get('/:id', produtoController.buscarProdutoPorId);
+
+// DESATIVAR UM PRODUTO
+router.patch(
+    '/gerenciar/desativar/:id',
+    verificarFuncionario,
+    verificarPermissao('produtos_desativar'),
+    produtoController.desativarProduto
+);
 
 module.exports = router;
