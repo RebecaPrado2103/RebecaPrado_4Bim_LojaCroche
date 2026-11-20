@@ -1,3 +1,4 @@
+console.log('Arquivo produtos.js carregado!');
 
 const URL_API = 'http://127.0.0.1:3001';
 
@@ -39,8 +40,7 @@ function carregarImagem(id) {
 
 // SELECIONAR UMA IMAGEM
 function acionarUpload() {
-
-    console.log('Operação atual:', oQueEstaFazendo);
+    alert('A função acionarUpload foi chamada!');
 
     if (
         oQueEstaFazendo !== 'inserindo' &&
@@ -416,7 +416,7 @@ document.getElementById('btAlterar').addEventListener('click', alterar);
 
 document.getElementById('btDesativar').addEventListener('click', desativar);
 
-document.getElementById('imgProduto').addEventListener('click', acionarUpload);
+document.querySelector('.img-container').addEventListener('click', acionarUpload);
 
 document.getElementById('inputImagem').addEventListener('change', previewImagem);
 
