@@ -26,7 +26,11 @@ async function carregarDetalhesProduto() {
             <div class="produto-detalhe-card">
 
                 <div class="produto-detalhe-imagem">
-                    Foto do produto
+                    <img
+                        id="imagem-detalhe"
+                        src="http://127.0.0.1:3001/imagens/produto/${produto.id_produto}.png"
+                        alt="${produto.nome_produto}"
+                    >
                 </div>
 
                 <div class="produto-detalhe-informacoes">
@@ -76,6 +80,14 @@ async function carregarDetalhesProduto() {
 
             </div>
         `;
+
+        // CONFIGURA A IMAGEM PADRÃO
+        const imagemDetalhe = document.getElementById('imagem-detalhe');
+
+        imagemDetalhe.onerror = function () {
+            this.onerror = null;
+            this.src = 'http://127.0.0.1:3001/imagens/silhueta.png';
+        };
 
         // BOTÃO ADICIONAR AO CARRINHO
         const botaoAdicionar = document.querySelector(

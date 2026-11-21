@@ -299,13 +299,17 @@ main p {
 
 .produto-imagem {
     width: 100%;
-    height: 230px;
-    background-color: #f3e8df;
+    height: 220px;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #a77b70;
-    font-size: 14px;
+}
+
+.produto-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* INFORMAÇÕES */

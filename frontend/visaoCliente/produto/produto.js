@@ -57,7 +57,17 @@ function exibirProdutos(lista) {
         // Espaço da imagem
         const imagem = document.createElement('div');
         imagem.classList.add('produto-imagem');
-        imagem.textContent = 'Foto do produto';
+
+        const foto = document.createElement('img');
+        foto.src = `http://127.0.0.1:3001/imagens/produto/${produto.id_produto}.png`;
+        foto.alt = produto.nome_produto;
+
+        foto.onerror = function () {
+            this.onerror = null;
+            this.src = 'http://127.0.0.1:3001/imagens/silhueta.png';
+        };
+
+        imagem.appendChild(foto);
 
         // Informações
         const informacoes = document.createElement('div');
