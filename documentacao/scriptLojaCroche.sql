@@ -466,3 +466,42 @@ FROM (
 ) AS v(devolucao_id, pedido_id, nome_produto, quantidade, condicao)
 INNER JOIN produto p
     ON p.nome_produto = v.nome_produto;
+
+
+-- =========================================
+-- 9. TABELA DE MOVIMENTAÇÕES DE ESTOQUE
+-- =========================================
+
+CREATE TABLE movimentacao_estoque (
+    id_movimentacao SERIAL PRIMARY KEY,
+
+    produto_id INTEGER NOT NULL,
+    funcionario_cpf VARCHAR(11),
+    pedido_id INTEGER,
+
+    tipo_movimentacao VARCHAR(20) NOT NULL,
+    quantidade_movimentacao INTEGER NOT NULL,
+
+    data_movimentacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    observacao_movimentacao VARCHAR(200),
+
+    FOREIGN KEY (produto_id)
+        REFERENCES produto(id_produto),
+
+    FOREIGN KEY (funcionario_cpf)
+        REFERENCES funcionario(pessoa_cpf_pessoa),
+
+    FOREIGN KEY (pedido_id)
+        REFERENCES pedido(id_pedido),
+
+    CHECK (quantidade_movimentacao > 0),
+
+    CHECK (
+        tipo_movimentacao IN (
+            'Entrada',
+            'Saída',
+            'Venda'
+        )
+    )
+);

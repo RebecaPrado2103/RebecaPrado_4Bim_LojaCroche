@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Estoque | Entre Laços</title>
+    <link rel="stylesheet" href="estoque.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <div class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </div>
+
+        <div class="informacoes-pagina">
+            <h2>Gerenciamento de Estoque</h2>
+            <p>Controle as quantidades dos nossos produtos.</p>
+        </div>
+
+        <a href="../menu/index.html" class="voltar-menu">
+            Voltar ao menu
+        </a>
+    </header>
+
+    <main class="container-principal">
+
+        <section class="resumo-estoque">
+            <div class="card-resumo">
+                <h3>Total de produtos</h3>
+                <p id="total-produtos">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Estoque baixo</h3>
+                <p id="produtos-estoque-baixo">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Sem estoque</h3>
+                <p id="produtos-sem-estoque">0</p>
+            </div>
+        </section>
+
+        <!-- REGISTRO DE MOVIMENTAÇÕES -->
+        <section class="area-movimentacoes">
+
+            <div class="titulo-secao">
+                <h2>Movimentações de estoque</h2>
+                <p>Registre entradas e saídas de produtos.</p>
+            </div>
+
+            <div class="formularios-movimentacao">
+
+                <!-- FORMULÁRIO DE ENTRADA -->
+                <form id="form-entrada" class="formulario-movimentacao">
+
+                    <h3>Registrar entrada</h3>
+                    <p>Adicione unidades ao estoque.</p>
+
+                    <label for="produto-entrada">Produto</label>
+                    <select id="produto-entrada" required>
+                        <option value="">Selecione um produto</option>
+                    </select>
+
+                    <label for="quantidade-entrada">Quantidade</label>
+                    <input type="number" id="quantidade-entrada" min="1" step="1" required>
+
+                    <label for="observacao-entrada">Observação (opcional)</label>
+                    <textarea id="observacao-entrada" maxlength="200"
+                        placeholder="Ex.: Reposição de produtos"></textarea>
+
+                    <button type="submit">Registrar entrada</button>
+
+                </form>
+
+                <!-- FORMULÁRIO DE SAÍDA -->
+                <form id="form-saida" class="formulario-movimentacao">
+
+                    <h3>Registrar saída</h3>
+                    <p>Retire unidades do estoque.</p>
+
+                    <label for="produto-saida">Produto</label>
+                    <select id="produto-saida" required>
+                        <option value="">Selecione um produto</option>
+                    </select>
+
+                    <label for="quantidade-saida">Quantidade</label>
+                    <input type="number" id="quantidade-saida" min="1" step="1" required>
+
+                    <label for="observacao-saida">Observação (opcional)</label>
+                    <textarea id="observacao-saida" maxlength="200"
+                        placeholder="Ex.: Retirada para ajuste de estoque"></textarea>
+
+                    <button type="submit">Registrar saída</button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <section class="area-estoque">
+
+            <div class="titulo-secao">
+                <h2>Produtos em estoque</h2>
+                <p>Consulte e atualize as quantidades disponíveis.</p>
+            </div>
+
+            <div class="filtros">
+                <input type="text" id="pesquisa-produto" placeholder="Pesquisar produto pelo nome ou código...">
+
+                <select id="filtro-estoque">
+                    <option value="todos">Todos os produtos</option>
+                    <option value="baixo">Estoque baixo</option>
+                    <option value="zerado">Sem estoque</option>
+                </select>
+            </div>
+
+            <div id="lista-produtos">
+                <!-- Os produtos serão carregados pelo JavaScript -->
+            </div>
+
+        </section>
+
+        <!-- HISTÓRICO DE MOVIMENTAÇÕES -->
+        <section class="area-historico">
+
+            <div class="titulo-secao">
+                <h2>Histórico de movimentações</h2>
+                <p>Acompanhe todas as entradas e saídas realizadas no estoque.</p>
+            </div>
+
+            <div class="tabela-historico">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Data</th>
+                            <th>Responsável</th>
+                            <th>Observação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-movimentacoes">
+                        <!-- As movimentações serão carregadas pelo JavaScript -->
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="estoque.js"></script>
+
+</body>
+
+</html>

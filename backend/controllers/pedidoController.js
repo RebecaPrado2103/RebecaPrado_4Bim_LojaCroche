@@ -322,11 +322,11 @@ exports.confirmarPedido = async (req, res) => {
 
             const resultadoEstoque = await client.query(
                 `UPDATE produto
-         SET quantidade_estoque_produto =
-             quantidade_estoque_produto - $1
-         WHERE id_produto = $2
-         AND quantidade_estoque_produto >= $1
-         RETURNING id_produto`,
+                    SET quantidade_estoque_produto =
+                    quantidade_estoque_produto - $1
+                     WHERE id_produto = $2
+                    AND quantidade_estoque_produto >= $1
+                    RETURNING id_produto`,
                 [
                     item.quantidade_item_carrinho,
                     item.id_produto
@@ -338,6 +338,25 @@ exports.confirmarPedido = async (req, res) => {
                     `Não foi possível atualizar o estoque de ${item.nome_produto}.`
                 );
             }
+
+            // REGISTRAR A VENDA NO HISTÓRICO DO ESTOQUE
+            await client.query(
+                `INSERT INTO movimentacao_estoque (
+                    produto_id,
+                    funcionario_cpf,
+                    pedido_id,
+                    tipo_movimentacao,
+                    quantidade_movimentacao,
+                    observacao_movimentacao
+                )
+                VALUES ($1, NULL, $2, 'Venda', $3, $4)`,
+                [
+                    item.id_produto,
+                    idPedido,
+                    item.quantidade_item_carrinho,
+                    'Venda realizada pelo cliente'
+                ]
+            );
 
         }
 
@@ -392,3 +411,440 @@ exports.confirmarPedido = async (req, res) => {
     }
 
 };
+
+
+// LISTAR PEDIDOS PARA O GERENTE
+exports.listarPedidos = async (req, res) => {
+
+    try {
+
+        const resultado = await pool.query(
+            `SELECT
+                p.id_pedido,
+                p.data_pedido,
+                p.valor_total,
+                p.status_pedido,
+                pe.nome_pessoa AS nome_cliente
+             FROM pedido p
+             INNER JOIN pessoa pe
+                ON pe.cpf_pessoa = p.cliente_cpf
+             ORDER BY p.data_pedido DESC`
+        );
+
+        return res.status(200).json({
+            sucesso: true,
+            pedidos: resultado.rows
+        });
+
+    } catch (error) {
+
+        console.error('Erro ao listar pedidos:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Não foi possível carregar os pedidos.'
+        });
+
+    }
+
+};
+
+
+// BUSCAR DETALHES DE UM PEDIDO
+exports.buscarDetalhesPedido = async (req, res) => {
+
+    try {
+
+        const idPedido = Number(req.params.id);
+
+        if (!Number.isInteger(idPedido) || idPedido <= 0) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Identificador do pedido inválido.'
+            });
+        }
+
+        // BUSCAR DADOS PRINCIPAIS DO PEDIDO
+        const resultadoPedido = await pool.query(
+            `SELECT
+                p.id_pedido,
+                p.data_pedido,
+                p.valor_total,
+                p.status_pedido,
+                pe.nome_pessoa AS nome_cliente,
+                p.nome_entrega,
+                p.cep_entrega,
+                p.endereco_entrega,
+                p.numero_entrega,
+                p.complemento_entrega,
+                p.cidade_entrega,
+                p.estado_entrega
+             FROM pedido p
+             INNER JOIN pessoa pe
+                ON pe.cpf_pessoa = p.cliente_cpf
+             WHERE p.id_pedido = $1`,
+            [idPedido]
+        );
+
+        if (resultadoPedido.rows.length === 0) {
+            return res.status(404).json({
+                sucesso: false,
+                mensagem: 'Pedido não encontrado.'
+            });
+        }
+
+        // BUSCAR PRODUTOS DO PEDIDO
+        const resultadoItens = await pool.query(
+            `SELECT
+                pr.id_produto,
+                pr.nome_produto,
+                ip.quantidade_item_pedido,
+                ip.preco_unitario_item_pedido
+             FROM item_pedido ip
+             INNER JOIN produto pr
+                ON pr.id_produto = ip.produto_id
+             WHERE ip.pedido_id = $1`,
+            [idPedido]
+        );
+
+        // BUSCAR FORMAS DE PAGAMENTO
+        const resultadoPagamentos = await pool.query(
+            `SELECT
+                fp.nome_forma_pagamento,
+                pg.valor_pagamento,
+                pg.status_pagamento
+             FROM pagamento pg
+             INNER JOIN forma_pagamento fp
+                ON fp.id_forma_pagamento = pg.forma_pagamento_id
+             WHERE pg.pedido_id = $1`,
+            [idPedido]
+        );
+
+        return res.status(200).json({
+            sucesso: true,
+            pedido: resultadoPedido.rows[0],
+            itens: resultadoItens.rows,
+            pagamentos: resultadoPagamentos.rows
+        });
+
+    } catch (error) {
+
+        console.error('Erro ao buscar detalhes do pedido:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Não foi possível carregar os detalhes do pedido.'
+        });
+
+    }
+
+};
+
+
+// ATUALIZAR STATUS DO PEDIDO
+exports.atualizarStatusPedido = async (req, res) => {
+
+    let conexao;
+
+    try {
+
+        const idPedido = Number(req.params.id);
+        const { status } = req.body;
+
+        // VERIFICAR O ID DO PEDIDO
+        if (!Number.isInteger(idPedido) || idPedido <= 0) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Identificador do pedido inválido.'
+            });
+        }
+
+        // DEFINIR AS TRANSIÇÕES PERMITIDAS
+        const transicoes = {
+            'Pagamento aprovado': ['Em preparação'],
+            'Em preparação': ['Enviado'],
+            'Enviado': ['Entregue'],
+            'Entregue': [],
+            'Cancelado': []
+        };
+
+        // CANCELAMENTO SERÁ IMPLEMENTADO COM A DEVOLUÇÃO DO ESTOQUE
+        if (status === 'Cancelado') {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'O cancelamento será disponibilizado após implementarmos a devolução ao estoque.'
+            });
+        }
+
+        // VERIFICAR SE O NOVO STATUS É VÁLIDO
+        const statusPermitidos = [
+            'Em preparação',
+            'Enviado',
+            'Entregue'
+        ];
+
+        if (!statusPermitidos.includes(status)) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Status do pedido inválido.'
+            });
+        }
+
+        // INICIAR A CONEXÃO E A TRANSAÇÃO
+        conexao = await pool.connect();
+
+        await conexao.query('BEGIN');
+
+        // BUSCAR O STATUS ATUAL E BLOQUEAR O PEDIDO DURANTE A OPERAÇÃO
+        const resultadoAtual = await conexao.query(
+            `SELECT status_pedido
+             FROM pedido
+             WHERE id_pedido = $1
+             FOR UPDATE`,
+            [idPedido]
+        );
+
+        // VERIFICAR SE O PEDIDO EXISTE
+        if (resultadoAtual.rowCount === 0) {
+
+            await conexao.query('ROLLBACK');
+
+            return res.status(404).json({
+                sucesso: false,
+                mensagem: 'Pedido não encontrado.'
+            });
+        }
+
+        const statusAtual = resultadoAtual.rows[0].status_pedido;
+
+        // VERIFICAR SE A TRANSIÇÃO É PERMITIDA
+        if (!transicoes[statusAtual]?.includes(status)) {
+
+            await conexao.query('ROLLBACK');
+
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: `Não é possível alterar o pedido de "${statusAtual}" para "${status}".`
+            });
+        }
+
+        // ATUALIZAR O STATUS
+        const resultado = await conexao.query(
+            `UPDATE pedido
+             SET status_pedido = $1
+             WHERE id_pedido = $2
+             RETURNING id_pedido, status_pedido`,
+            [status, idPedido]
+        );
+
+        // CONFIRMAR A TRANSAÇÃO
+        await conexao.query('COMMIT');
+
+        return res.status(200).json({
+            sucesso: true,
+            mensagem: 'Status do pedido atualizado com sucesso!',
+            pedido: resultado.rows[0]
+        });
+
+    } catch (error) {
+
+        // DESFAZER A TRANSAÇÃO EM CASO DE ERRO
+        if (conexao) {
+            try {
+                await conexao.query('ROLLBACK');
+            } catch (erroRollback) {
+                console.error('Erro ao desfazer a transação:', erroRollback);
+            }
+        }
+
+        console.error('Erro ao atualizar status do pedido:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Não foi possível atualizar o status do pedido.'
+        });
+
+    } finally {
+
+        // LIBERAR A CONEXÃO
+        if (conexao) {
+            conexao.release();
+        }
+
+    }
+
+};
+
+
+// CANCELAR PEDIDO E DEVOLVER PRODUTOS AO ESTOQUE
+exports.cancelarPedido = async (req, res) => {
+
+    let conexao;
+
+    try {
+
+        const idPedido = Number(req.params.id);
+        const cpfFuncionario = req.session.usuario.cpf;
+
+        // VERIFICAR O ID DO PEDIDO
+        if (!Number.isInteger(idPedido) || idPedido <= 0) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Identificador do pedido inválido.'
+            });
+        }
+
+        // INICIAR CONEXÃO E TRANSAÇÃO
+        conexao = await pool.connect();
+
+        await conexao.query('BEGIN');
+
+        // BUSCAR E BLOQUEAR O PEDIDO
+        const resultadoPedido = await conexao.query(
+            `SELECT id_pedido, status_pedido
+             FROM pedido
+             WHERE id_pedido = $1
+             FOR UPDATE`,
+            [idPedido]
+        );
+
+        if (resultadoPedido.rowCount === 0) {
+
+            await conexao.query('ROLLBACK');
+
+            return res.status(404).json({
+                sucesso: false,
+                mensagem: 'Pedido não encontrado.'
+            });
+        }
+
+        const pedido = resultadoPedido.rows[0];
+
+        // VERIFICAR SE O PEDIDO PODE SER CANCELADO
+        if (!['Pagamento aprovado', 'Em preparação'].includes(pedido.status_pedido)) {
+
+            await conexao.query('ROLLBACK');
+
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Este pedido não pode mais ser cancelado.'
+            });
+        }
+
+        // BUSCAR OS PRODUTOS DO PEDIDO
+        const resultadoItens = await conexao.query(
+            `SELECT produto_id, quantidade_item_pedido
+             FROM item_pedido
+             WHERE pedido_id = $1
+             FOR UPDATE`,
+            [idPedido]
+        );
+
+        if (resultadoItens.rowCount === 0) {
+
+            await conexao.query('ROLLBACK');
+
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Este pedido não possui produtos para devolver ao estoque.'
+            });
+        }
+
+        // DEVOLVER CADA PRODUTO AO ESTOQUE
+        for (const item of resultadoItens.rows) {
+
+            const resultadoEstoque = await conexao.query(
+                `UPDATE produto
+                SET quantidade_estoque_produto =
+                    quantidade_estoque_produto + $1
+                WHERE id_produto = $2
+                RETURNING id_produto`,
+                [
+                    item.quantidade_item_pedido,
+                    item.produto_id
+                ]
+            );
+
+            // VERIFICAR SE O ESTOQUE FOI DEVOLVIDO
+            if (resultadoEstoque.rowCount === 0) {
+                throw new Error(
+                    `Não foi possível devolver o produto ${item.produto_id} ao estoque.`
+                );
+            }
+
+            // REGISTRAR A DEVOLUÇÃO NO HISTÓRICO
+            await conexao.query(
+                `INSERT INTO movimentacao_estoque (
+                    produto_id,
+                    funcionario_cpf,
+                    pedido_id,
+                    tipo_movimentacao,
+                    quantidade_movimentacao,
+                    observacao_movimentacao
+                )
+                VALUES ($1, $2, $3, 'Cancelamento', $4, $5)`,
+                [
+                    item.produto_id,
+                    cpfFuncionario,
+                    idPedido,
+                    item.quantidade_item_pedido,
+                    'Devolução de estoque por cancelamento do pedido'
+                ]
+            );
+
+        }
+
+        // ATUALIZAR OS PAGAMENTOS SIMULADOS
+        await conexao.query(
+            `UPDATE pagamento
+             SET status_pagamento = 'Cancelado'
+             WHERE pedido_id = $1`,
+            [idPedido]
+        );
+
+        // ATUALIZAR O STATUS DO PEDIDO
+        const resultadoAtualizacao = await conexao.query(
+            `UPDATE pedido
+             SET status_pedido = 'Cancelado'
+             WHERE id_pedido = $1
+             RETURNING id_pedido, status_pedido`,
+            [idPedido]
+        );
+
+        // CONFIRMAR TODAS AS ALTERAÇÕES
+        await conexao.query('COMMIT');
+
+        return res.status(200).json({
+            sucesso: true,
+            mensagem: 'Pedido cancelado e estoque devolvido com sucesso!',
+            pedido: resultadoAtualizacao.rows[0]
+        });
+
+    } catch (error) {
+
+        // DESFAZER TODAS AS ALTERAÇÕES EM CASO DE ERRO
+        if (conexao) {
+            try {
+                await conexao.query('ROLLBACK');
+            } catch (erroRollback) {
+                console.error('Erro ao desfazer a transação:', erroRollback);
+            }
+        }
+
+        console.error('Erro ao cancelar pedido:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Não foi possível cancelar o pedido.'
+        });
+
+    } finally {
+
+        if (conexao) {
+            conexao.release();
+        }
+
+    }
+
+};
+

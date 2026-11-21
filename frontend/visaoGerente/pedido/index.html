@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gerenciar Pedidos | Entre Laços</title>
+
+    <link rel="stylesheet" href="pedido.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div>
+            <h1>Entre Laços</h1>
+            <p>Gerenciamento de pedidos</p>
+        </div>
+
+        <a href="../menu/index.html">Voltar ao menu</a>
+    </header>
+
+    <main class="conteudo">
+
+        <!-- APRESENTAÇÃO -->
+        <section class="apresentacao">
+            <h2>Pedidos</h2>
+            <p>Acompanhe e organize os pedidos realizados na loja.</p>
+        </section>
+
+        <!-- RESUMO DOS PEDIDOS -->
+        <section class="resumo">
+
+            <div class="card-resumo">
+                <h3>Total de pedidos</h3>
+                <p id="total-pedidos">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Em andamento</h3>
+                <p id="pedidos-andamento">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Entregues</h3>
+                <p id="pedidos-entregues">0</p>
+            </div>
+
+        </section>
+
+        <!-- PESQUISA E FILTRO -->
+        <section class="filtros">
+
+            <input type="text" id="pesquisa-pedido" placeholder="Pesquisar por número ou cliente...">
+
+            <select id="filtro-status">
+                <option value="">Todos os status</option>
+                <option value="Pagamento aprovado">Pagamento aprovado</option>
+                <option value="Em preparação">Em preparação</option>
+                <option value="Enviado">Enviado</option>
+                <option value="Entregue">Entregue</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+
+        </section>
+
+        <!-- LISTA DE PEDIDOS -->
+        <section class="lista-pedidos">
+
+            <h2>Pedidos realizados</h2>
+
+            <div id="mensagem-pedidos"></div>
+
+            <div id="lista-pedidos">
+                <!-- Os pedidos serão carregados pelo JavaScript -->
+            </div>
+
+        </section>
+
+
+        <!-- DETALHES DO PEDIDO -->
+        <section id="detalhes-pedido" hidden>
+
+            <h2>Detalhes do pedido</h2>
+
+            <div id="conteudo-detalhes-pedido">
+                <!-- Os detalhes serão carregados pelo JavaScript -->
+            </div>
+
+        </section>
+
+
+    </main>
+
+    <script src="pedido.js"></script>
+
+</body>
+
+</html>

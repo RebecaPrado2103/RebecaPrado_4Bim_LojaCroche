@@ -1,0 +1,337 @@
+
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f3ef;
+    color: #59443e;
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background-color: #795d55;
+    color: #fffaf6;
+    padding: 25px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.logo h1 {
+    font-size: 28px;
+}
+
+.logo p {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.informacoes-pagina h2 {
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.informacoes-pagina p {
+    font-size: 14px;
+}
+
+.voltar-menu {
+    color: #795d55;
+    background-color: #fffaf6;
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.container-principal {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+/* RESUMO DO ESTOQUE */
+.resumo-estoque {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.card-resumo {
+    background-color: #fffaf6;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(89, 68, 62, 0.08);
+    text-align: center;
+}
+
+.card-resumo h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.card-resumo p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #b77d83;
+}
+
+/* ÁREA DE ESTOQUE */
+.area-estoque {
+    background-color: #fffaf6;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(89, 68, 62, 0.08);
+}
+
+.titulo-secao {
+    margin-bottom: 22px;
+}
+
+.titulo-secao h2 {
+    font-size: 22px;
+    margin-bottom: 7px;
+}
+
+.titulo-secao p {
+    font-size: 14px;
+    color: #927c73;
+}
+
+/* PESQUISA E FILTROS */
+.filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 12px;
+    border: 1px solid #d9c8bd;
+    border-radius: 8px;
+    background-color: white;
+    color: #59443e;
+    font-size: 14px;
+}
+
+.filtros input {
+    flex: 1;
+}
+
+.filtros select {
+    min-width: 190px;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+    outline: none;
+    border-color: #b77d83;
+}
+
+/* PRODUTOS */
+.produto-estoque {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    border-bottom: 1px solid #eaded6;
+}
+
+.produto-estoque h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.produto-estoque p {
+    font-size: 13px;
+    color: #927c73;
+    margin-bottom: 5px;
+}
+
+.produto-estoque strong {
+    font-size: 20px;
+    color: #a66e76;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 700px) {
+    .resumo-estoque {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros select {
+        width: 100%;
+    }
+
+    .produto-estoque {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .area-estoque {
+        padding: 18px;
+    }
+}
+
+
+/* ÁREA DE MOVIMENTAÇÕES */
+.area-movimentacoes {
+    margin-bottom: 40px;
+}
+
+.formularios-movimentacao {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* CARTÕES DOS FORMULÁRIOS */
+.formulario-movimentacao {
+    background-color: #fffaf7;
+    padding: 28px;
+    border: 1px solid #eadbd4;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(121, 93, 85, 0.07);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formulario-movimentacao h3 {
+    color: #795d55;
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.formulario-movimentacao p {
+    color: #927b72;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* CAMPOS */
+.formulario-movimentacao label {
+    color: #795d55;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.formulario-movimentacao input,
+.formulario-movimentacao select,
+.formulario-movimentacao textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dfcec5;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #59453f;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario-movimentacao textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.formulario-movimentacao input:focus,
+.formulario-movimentacao select:focus,
+.formulario-movimentacao textarea:focus {
+    border-color: #c58f9b;
+    box-shadow: 0 0 0 3px rgba(197, 143, 155, 0.15);
+}
+
+/* BOTÕES */
+.formulario-movimentacao button {
+    margin-top: 10px;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background-color: #a96f7d;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.formulario-movimentacao button:hover {
+    background-color: #925967;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 750px) {
+    .formularios-movimentacao {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ÁREA DO HISTÓRICO */
+.area-historico {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.tabela-historico {
+    margin-top: 25px;
+    background-color: #fffaf7;
+    border: 1px solid #eadbd4;
+    border-radius: 14px;
+    overflow-x: auto;
+    box-shadow: 0 3px 10px rgba(121, 93, 85, 0.07);
+}
+
+.tabela-historico table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.tabela-historico th {
+    background-color: #eadbd4;
+    color: #795d55;
+    padding: 16px 14px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tabela-historico td {
+    padding: 15px 14px;
+    color: #59453f;
+    font-size: 14px;
+    border-bottom: 1px solid #f0e5df;
+}
+
+.tabela-historico tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-historico tbody tr:hover {
+    background-color: #fdf1f0;
+}
+
+.tabela-historico td:nth-child(2) {
+    font-weight: 600;
+}

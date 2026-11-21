@@ -14,6 +14,7 @@ const cadastroRoutes = require('./routes/cadastroRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const carrinhoRoutes = require('./routes/carrinhoRoutes');
 const pedidoRoutes = require('./routes/pedidoRoutes');
+const estoqueRoutes = require('./routes/estoqueRoutes');
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use('/api/cadastro', cadastroRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/carrinho', carrinhoRoutes);
 app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/estoque', estoqueRoutes);
 
 // Rota inicial de teste
 app.get('/', (req, res) => {

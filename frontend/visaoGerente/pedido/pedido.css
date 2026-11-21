@@ -1,0 +1,323 @@
+
+/* =====================================
+   CONFIGURAÇÕES GERAIS
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #faf5f1;
+    color: #765b53;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* =====================================
+   CABEÇALHO
+===================================== */
+
+.cabecalho {
+    background: linear-gradient(110deg, #795d55, #96776d);
+    color: #fffaf7;
+    padding: 25px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(90, 60, 50, 0.12);
+}
+
+.cabecalho h1 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.cabecalho p {
+    color: #f2e3dc;
+    font-size: 14px;
+}
+
+.cabecalho a {
+    color: #fffaf7;
+    text-decoration: none;
+    padding: 11px 19px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 9px;
+    transition: 0.3s;
+}
+
+.cabecalho a:hover {
+    background: #fffaf7;
+    color: #795d55;
+}
+
+/* =====================================
+   CONTEÚDO PRINCIPAL
+===================================== */
+
+.conteudo {
+    width: 88%;
+    max-width: 1250px;
+    margin: 45px auto;
+}
+
+/* =====================================
+   APRESENTAÇÃO
+===================================== */
+
+.apresentacao {
+    margin-bottom: 32px;
+}
+
+.apresentacao h2 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    margin-bottom: 9px;
+    color: #795d55;
+}
+
+.apresentacao p {
+    color: #a18a80;
+    font-size: 15px;
+}
+
+/* =====================================
+   CARTÕES DE RESUMO
+===================================== */
+
+.resumo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 35px;
+}
+
+.card-resumo {
+    background: #fffdfb;
+    padding: 27px;
+    border: 1px solid #f0e4dd;
+    border-radius: 15px;
+    box-shadow: 0 5px 16px rgba(121, 93, 85, 0.06);
+    transition: 0.3s;
+}
+
+.card-resumo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(121, 93, 85, 0.11);
+}
+
+.card-resumo h3 {
+    color: #a18479;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 13px;
+}
+
+.card-resumo p {
+    color: #795d55;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* =====================================
+   PESQUISA E FILTROS
+===================================== */
+
+.filtros {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 14px 16px;
+    border: 1px solid #eadbd3;
+    border-radius: 10px;
+    background: #fffdfb;
+    color: #795d55;
+    outline: none;
+    transition: 0.3s;
+}
+
+.filtros input {
+    flex: 1;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+    border-color: #c58f9d;
+    box-shadow: 0 0 0 3px rgba(197, 143, 157, 0.13);
+}
+
+/* =====================================
+   LISTA DE PEDIDOS
+===================================== */
+
+.lista-pedidos {
+    background: #fffdfb;
+    padding: 28px;
+    border: 1px solid #f0e4dd;
+    border-radius: 15px;
+    box-shadow: 0 5px 16px rgba(121, 93, 85, 0.06);
+}
+
+.lista-pedidos h2,
+#detalhes-pedido > h2 {
+    font-family: Georgia, serif;
+    font-size: 23px;
+    margin-bottom: 23px;
+    color: #795d55;
+}
+
+#lista-pedidos {
+    display: grid;
+    gap: 16px;
+}
+
+#lista-pedidos article {
+    background: #fffbf8;
+    border: 1px solid #efe1da;
+    border-left: 4px solid #d6a6b1;
+    border-radius: 11px;
+    padding: 21px;
+    transition: 0.3s;
+}
+
+#lista-pedidos article:hover {
+    border-color: #d6a6b1;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(121, 93, 85, 0.08);
+}
+
+#lista-pedidos article h3 {
+    color: #795d55;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+#lista-pedidos article p {
+    color: #92786e;
+    font-size: 14px;
+    margin: 7px 0;
+}
+
+/* =====================================
+   BOTÃO DE DETALHES
+===================================== */
+
+.botao-detalhes {
+    margin-top: 14px;
+    padding: 10px 19px;
+    border: none;
+    border-radius: 8px;
+    background: #c58f9d;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.botao-detalhes:hover {
+    background: #ad7485;
+    transform: translateY(-1px);
+}
+
+/* =====================================
+   ÁREA DE DETALHES
+===================================== */
+
+#detalhes-pedido {
+    margin-top: 30px;
+    padding: 30px;
+    background: #fffdfb;
+    border: 1px solid #f0e4dd;
+    border-radius: 15px;
+    box-shadow: 0 5px 16px rgba(121, 93, 85, 0.06);
+}
+
+#detalhes-pedido[hidden] {
+    display: none;
+}
+
+#conteudo-detalhes-pedido h3 {
+    color: #795d55;
+    font-size: 17px;
+    margin: 23px 0 12px;
+}
+
+#conteudo-detalhes-pedido p {
+    color: #92786e;
+    font-size: 14px;
+    margin: 9px 0;
+    line-height: 1.6;
+}
+
+#conteudo-detalhes-pedido > div {
+    background: #fffbf8;
+    border: 1px solid #efe1da;
+    border-radius: 9px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+#conteudo-detalhes-pedido > div p {
+    margin: 5px 0;
+}
+
+/* =====================================
+   MENSAGENS
+===================================== */
+
+#mensagem-pedidos {
+    color: #a18479;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+#conteudo-detalhes-pedido {
+    overflow-wrap: anywhere;
+}
+
+/* =====================================
+   RESPONSIVIDADE
+===================================== */
+
+@media (max-width: 750px) {
+
+    .cabecalho {
+        padding: 22px 5%;
+        gap: 18px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .conteudo {
+        width: 92%;
+        margin: 30px auto;
+    }
+
+    .resumo {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .lista-pedidos,
+    #detalhes-pedido {
+        padding: 20px;
+    }
+
+}
