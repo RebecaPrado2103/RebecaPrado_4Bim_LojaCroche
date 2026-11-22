@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const valorRestante = document.getElementById('valor-restante');
     const mensagemPagamento = document.getElementById('mensagem-pagamento');
     const formPagamento = document.getElementById('form-pagamento');
+    const listaFormasPagamento = document.getElementById('lista-formas-pagamento');
 
     // IDENTIFICA O TIPO DE COMPRA
     const itensCompraDireta = sessionStorage.getItem('itensCompra');
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         if (itensCompraDireta) {
 
-            // COMPRA DIRETA: RECUPERA O PRODUTO ESCOLHIDO
+            // COMPRA DIRETA
             const itens = JSON.parse(itensCompraDireta);
 
             if (!Array.isArray(itens) || itens.length !== 1) {
@@ -144,50 +145,146 @@ document.addEventListener('DOMContentLoaded', async function () {
     // EXIBE O TOTAL DA COMPRA
     totalPagamento.textContent = formatarPreco(totalCompra);
 
-    // FORMAS DE PAGAMENTO E SEUS CAMPOS
-    const formasPagamento = [
-        {
-            checkbox: 'opcao-pix',
-            detalhes: 'detalhes-pix',
-            valor: 'valor-pix',
-            formaPagamentoId: 1
-        },
-        {
-            checkbox: 'opcao-credito',
-            detalhes: 'detalhes-credito',
-            valor: 'valor-credito',
-            formaPagamentoId: 2
-        },
-        {
-            checkbox: 'opcao-debito',
-            detalhes: 'detalhes-debito',
-            valor: 'valor-debito',
-            formaPagamentoId: 3
-        }
-    ];
+    // FORMAS DE PAGAMENTO RECEBIDAS DO BANCO
+    let formasPagamento = [];
 
-    // MOSTRA OU ESCONDE OS CAMPOS
-    formasPagamento.forEach(function (forma) {
+    // EVITA INSERIR HTML INDESEJADO NOS NOMES
+    function escaparHTML(texto) {
+        return String(texto).replace(/[&<>"']/g, function (caractere) {
+            const caracteres = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
 
-        const checkbox = document.getElementById(forma.checkbox);
-        const detalhes = document.getElementById(forma.detalhes);
-        const campoValor = document.getElementById(forma.valor);
+            return caracteres[caractere];
+        });
+    }
 
-        checkbox.addEventListener('change', function () {
+    // CARREGAR FORMAS DE PAGAMENTO ATIVAS
+    async function carregarFormasPagamento() {
 
-            detalhes.hidden = !checkbox.checked;
+        try {
 
-            if (!checkbox.checked) {
-                campoValor.value = '';
+            const resposta = await fetch(
+                'http://127.0.0.1:3001/api/formas-pagamento/cliente/ativas'
+            );
+
+            const resultado = await resposta.json();
+
+            if (!resposta.ok || !resultado.sucesso) {
+                throw new Error('Não foi possível carregar as formas de pagamento.');
             }
 
-            atualizarValores();
+            formasPagamento = resultado.formasPagamento.map(function (forma) {
+                return {
+                    id: Number(forma.id_forma_pagamento),
+                    nome: forma.nome_forma_pagamento,
+                    checkbox: `opcao-forma-${forma.id_forma_pagamento}`,
+                    detalhes: `detalhes-forma-${forma.id_forma_pagamento}`,
+                    valor: `valor-forma-${forma.id_forma_pagamento}`
+                };
+            });
 
-        });
+            // VERIFICAR SE EXISTEM FORMAS ATIVAS
+            if (formasPagamento.length === 0) {
 
-    });
+                listaFormasPagamento.innerHTML = `
+                    <p>Nenhuma forma de pagamento está disponível no momento.</p>
+                `;
 
-    // CALCULA OS VALORES DOS PAGAMENTOS
+                mensagemPagamento.textContent =
+                    'Entre em contato com a loja para obter mais informações.';
+
+                return false;
+            }
+
+            // CRIAR AS OPÇÕES NA PÁGINA
+            listaFormasPagamento.innerHTML = formasPagamento.map(function (forma) {
+
+                return `
+                    <div class="opcao-pagamento">
+
+                        <label for="${forma.checkbox}">
+
+                            <input
+                                type="checkbox"
+                                name="formasPagamento"
+                                id="${forma.checkbox}"
+                            >
+
+                            <strong>${escaparHTML(forma.nome)}</strong>
+
+                        </label>
+
+                        <div
+                            class="detalhes-pagamento"
+                            id="${forma.detalhes}"
+                            hidden
+                        >
+
+                            <label for="${forma.valor}">
+                                Valor a pagar
+                            </label>
+
+                            <input
+                                type="number"
+                                id="${forma.valor}"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="Informe o valor"
+                            >
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join('');
+
+            // CONFIGURAR OS EVENTOS DAS OPÇÕES
+            formasPagamento.forEach(function (forma) {
+
+                const checkbox = document.getElementById(forma.checkbox);
+                const detalhes = document.getElementById(forma.detalhes);
+                const campoValor = document.getElementById(forma.valor);
+
+                checkbox.addEventListener('change', function () {
+
+                    detalhes.hidden = !checkbox.checked;
+
+                    if (!checkbox.checked) {
+                        campoValor.value = '';
+                    }
+
+                    atualizarValores();
+
+                });
+
+                campoValor.addEventListener('input', atualizarValores);
+
+            });
+
+            return true;
+
+        } catch (error) {
+
+            console.error('Erro ao carregar formas de pagamento:', error);
+
+            listaFormasPagamento.innerHTML = `
+                <p>Não foi possível carregar as formas de pagamento.</p>
+            `;
+
+            mensagemPagamento.textContent =
+                'Atualize a página ou tente novamente mais tarde.';
+
+            return false;
+        }
+    }
+
+    // CALCULAR OS VALORES DOS PAGAMENTOS
     function atualizarValores() {
 
         let totalInformado = 0;
@@ -197,7 +294,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const checkbox = document.getElementById(forma.checkbox);
             const campoValor = document.getElementById(forma.valor);
 
-            if (checkbox.checked) {
+            if (checkbox && checkbox.checked) {
 
                 const valor = Number(campoValor.value);
 
@@ -214,32 +311,44 @@ document.addEventListener('DOMContentLoaded', async function () {
         valorRestante.textContent = formatarPreco(restante);
 
         if (totalCompra <= 0) {
+
             mensagemPagamento.textContent =
                 'Não há produtos nesta compra. Volte à loja e escolha seus produtos.';
+
         } else if (totalInformado === 0) {
+
             mensagemPagamento.textContent =
                 'Informe o valor de pelo menos uma forma de pagamento.';
+
         } else if (restante > 0) {
+
             mensagemPagamento.textContent =
                 'Ainda falta informar parte do valor da compra.';
+
         } else if (restante < 0) {
+
             mensagemPagamento.textContent =
                 'O valor informado ultrapassa o total da compra.';
+
         } else {
+
             mensagemPagamento.textContent =
                 'Os valores dos pagamentos correspondem ao total da compra!';
+
         }
 
     }
 
-    // ATUALIZA OS CÁLCULOS QUANDO OS VALORES MUDAM
-    formasPagamento.forEach(function (forma) {
+    // CARREGAR AS FORMAS ANTES DE PERMITIR O PAGAMENTO
+    const formasCarregadas = await carregarFormasPagamento();
 
-        const campoValor = document.getElementById(forma.valor);
+    // CÁLCULO INICIAL
+    atualizarValores();
 
-        campoValor.addEventListener('input', atualizarValores);
-
-    });
+    // NÃO PERMITIR PAGAMENTO SE NÃO HOUVER FORMAS DISPONÍVEIS
+    if (!formasCarregadas) {
+        return;
+    }
 
     // VALIDAÇÃO E CONFIRMAÇÃO DOS PAGAMENTOS
     formPagamento.addEventListener('submit', async function (event) {
@@ -276,35 +385,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             totalInformado += Math.round(valor * 100);
 
-            // VERIFICA OS DADOS FICTÍCIOS DOS CARTÕES
-            if (forma.checkbox === 'opcao-credito' ||
-                forma.checkbox === 'opcao-debito') {
-
-                const tipo = forma.checkbox === 'opcao-credito'
-                    ? 'credito'
-                    : 'debito';
-
-                const camposCartao = [
-                    `nome-${tipo}`,
-                    `numero-${tipo}`,
-                    `validade-${tipo}`,
-                    `codigo-${tipo}`
-                ];
-
-                for (const id of camposCartao) {
-
-                    const campo = document.getElementById(id);
-
-                    if (!campo.value.trim()) {
-                        alert('Preencha todos os campos fictícios do cartão.');
-                        campo.focus();
-                        return;
-                    }
-
-                }
-
-            }
-
         }
 
         if (quantidadeSelecionada === 0) {
@@ -321,13 +401,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         let dadosEntrega;
 
         try {
+
             dadosEntrega = JSON.parse(
                 sessionStorage.getItem('dadosEntrega')
             );
+
         } catch (error) {
+
             alert('Não foi possível recuperar os dados de entrega.');
             window.location.href = '../finalizar/index.html';
             return;
+
         }
 
         if (!dadosEntrega) {
@@ -336,19 +420,19 @@ document.addEventListener('DOMContentLoaded', async function () {
             return;
         }
 
-        // ORGANIZA AS FORMAS DE PAGAMENTO SELECIONADAS
+        // ORGANIZAR AS FORMAS DE PAGAMENTO SELECIONADAS
         const pagamentos = formasPagamento
             .filter(function (forma) {
                 return document.getElementById(forma.checkbox).checked;
             })
             .map(function (forma) {
                 return {
-                    formaPagamentoId: forma.formaPagamentoId,
+                    formaPagamentoId: forma.id,
                     valor: Number(document.getElementById(forma.valor).value)
                 };
             });
 
-        // ENVIA O PEDIDO PARA O BACKEND
+        // ENVIAR O PEDIDO PARA O BACKEND
         try {
 
             const resposta = await fetch(
@@ -377,16 +461,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                 );
             }
 
-            // LIMPA OS DADOS DE ENTREGA APÓS A COMPRA
+            // LIMPAR OS DADOS DE ENTREGA
             sessionStorage.removeItem('dadosEntrega');
 
-            // LIMPA OS DADOS DA COMPRA DIRETA, SE EXISTIREM
+            // LIMPAR OS DADOS DA COMPRA DIRETA
             sessionStorage.removeItem('itensCompra');
             sessionStorage.removeItem('compraDireta');
 
             alert(resultado.mensagem);
 
-            // VOLTA PARA A PÁGINA INICIAL
+            // VOLTAR PARA A PÁGINA INICIAL
             window.location.href = '../inicio/index.html';
 
         } catch (error) {
@@ -398,8 +482,5 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
 
     });
-
-    // CÁLCULO INICIAL
-    atualizarValores();
 
 });

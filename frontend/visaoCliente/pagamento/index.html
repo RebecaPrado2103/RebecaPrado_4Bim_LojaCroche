@@ -50,153 +50,10 @@
 
             <form id="form-pagamento">
 
-                <!-- PIX -->
-                <div class="opcao-pagamento">
+                <!-- FORMAS CARREGADAS DO BANCO DE DADOS -->
+                <div id="lista-formas-pagamento">
 
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="formasPagamento"
-                            value="Pix"
-                            id="opcao-pix"
-                        >
-
-                        <strong>Pix</strong>
-                    </label>
-
-                    <div class="detalhes-pagamento" id="detalhes-pix" hidden>
-
-                        <label for="valor-pix">Valor pelo Pix</label>
-
-                        <input
-                            type="number"
-                            id="valor-pix"
-                            min="0.01"
-                            step="0.01"
-                            placeholder="Informe o valor"
-                        >
-
-                    </div>
-
-                </div>
-
-                <!-- CARTÃO DE CRÉDITO -->
-                <div class="opcao-pagamento">
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="formasPagamento"
-                            value="Cartão de crédito"
-                            id="opcao-credito"
-                        >
-
-                        <strong>Cartão de crédito</strong>
-                    </label>
-
-                    <div class="detalhes-pagamento" id="detalhes-credito" hidden>
-
-                        <label for="valor-credito">Valor no crédito</label>
-
-                        <input
-                            type="number"
-                            id="valor-credito"
-                            min="0.01"
-                            step="0.01"
-                            placeholder="Informe o valor"
-                        >
-
-                        <h3>Dados fictícios do cartão</h3>
-
-                        <label for="nome-credito">Nome do titular</label>
-                        <input
-                            type="text"
-                            id="nome-credito"
-                            placeholder="Ex.: Maria da Silva"
-                        >
-
-                        <label for="numero-credito">Número do cartão</label>
-                        <input
-                            type="text"
-                            id="numero-credito"
-                            placeholder="0000 0000 0000 0000"
-                        >
-
-                        <label for="validade-credito">Validade</label>
-                        <input
-                            type="text"
-                            id="validade-credito"
-                            placeholder="MM/AA"
-                        >
-
-                        <label for="codigo-credito">Código de segurança fictício</label>
-                        <input
-                            type="text"
-                            id="codigo-credito"
-                            placeholder="000"
-                        >
-
-                    </div>
-
-                </div>
-
-                <!-- CARTÃO DE DÉBITO -->
-                <div class="opcao-pagamento">
-
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="formasPagamento"
-                            value="Cartão de débito"
-                            id="opcao-debito"
-                        >
-
-                        <strong>Cartão de débito</strong>
-                    </label>
-
-                    <div class="detalhes-pagamento" id="detalhes-debito" hidden>
-
-                        <label for="valor-debito">Valor no débito</label>
-
-                        <input
-                            type="number"
-                            id="valor-debito"
-                            min="0.01"
-                            step="0.01"
-                            placeholder="Informe o valor"
-                        >
-
-                        <h3>Dados fictícios do cartão</h3>
-
-                        <label for="nome-debito">Nome do titular</label>
-                        <input
-                            type="text"
-                            id="nome-debito"
-                            placeholder="Ex.: Maria da Silva"
-                        >
-
-                        <label for="numero-debito">Número do cartão</label>
-                        <input
-                            type="text"
-                            id="numero-debito"
-                            placeholder="0000 0000 0000 0000"
-                        >
-
-                        <label for="validade-debito">Validade</label>
-                        <input
-                            type="text"
-                            id="validade-debito"
-                            placeholder="MM/AA"
-                        >
-
-                        <label for="codigo-debito">Código de segurança fictício</label>
-                        <input
-                            type="text"
-                            id="codigo-debito"
-                            placeholder="000"
-                        >
-
-                    </div>
+                    <p>Carregando formas de pagamento...</p>
 
                 </div>
 
@@ -237,4 +94,5 @@
     <script src="pagamento.js"></script>
 
 </body>
+
 </html>

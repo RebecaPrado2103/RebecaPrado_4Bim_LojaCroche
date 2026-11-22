@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +9,17 @@
 
     <link rel="stylesheet" href="formaPagamento.css">
 </head>
+
 <body>
 
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
+
         <div class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
         </div>
+
     </header>
 
     <main class="conteudo">
@@ -24,31 +28,33 @@
             ← Voltar ao menu
         </a>
 
+        <!-- INTRODUÇÃO -->
         <section class="introducao">
+
             <h2>Gerenciamento das formas de pagamento</h2>
 
             <p>
-                Cadastre, edite e controle as formas de pagamento
+                Cadastre, pesquise e controle as formas de pagamento
                 disponíveis na loja.
             </p>
+
         </section>
 
-        <!-- CADASTRO DE FORMAS DE PAGAMENTO -->
+        <!-- CADASTRO -->
         <section class="cadastro">
+
             <h3>Cadastrar forma de pagamento</h3>
 
             <form id="form-cadastro">
 
                 <div class="campo">
-                    <label for="nome-forma">Nome da forma de pagamento</label>
 
-                    <input
-                        type="text"
-                        id="nome-forma"
-                        name="nome"
-                        placeholder="Ex.: PIX"
-                        required
-                    >
+                    <label for="nome-forma">
+                        Nome da forma de pagamento
+                    </label>
+
+                    <input type="text" id="nome-forma" name="nome" placeholder="Ex.: PIX" required>
+
                 </div>
 
                 <button type="submit" class="botao-cadastrar">
@@ -56,36 +62,96 @@
                 </button>
 
             </form>
+
         </section>
 
-        <!-- LISTAGEM DAS FORMAS DE PAGAMENTO -->
+        <!-- EDIÇÃO -->
+        <section class="edicao" id="area-edicao" hidden>
+
+            <h3>Editar forma de pagamento</h3>
+
+            <form id="form-edicao">
+
+                <div class="campo">
+
+                    <label for="nome-forma-edicao">
+                        Nome da forma de pagamento
+                    </label>
+
+                    <input type="text" id="nome-forma-edicao" required>
+
+                </div>
+
+                <div class="acoes-edicao">
+
+                    <button type="submit" class="botao-salvar">
+                        Salvar alterações
+                    </button>
+
+                    <button type="button" id="cancelar-edicao" class="botao-cancelar">
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- LISTAGEM -->
         <section class="lista-formas">
+
             <h3>Formas de pagamento cadastradas</h3>
 
-            <p id="total-formas">Total de formas cadastradas: 0</p>
+            <p id="total-formas">
+                Total de formas cadastradas: 0
+            </p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Forma de pagamento</th>
-                        <th>Situação</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
+            <!-- PESQUISA -->
+            <div class="campo pesquisa">
 
-                <tbody id="tabela-formas">
-                    <tr>
-                        <td colspan="4">
-                            Carregando formas de pagamento...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <label for="pesquisa-forma">
+                    Pesquisar forma de pagamento
+                </label>
+
+                <input type="search" id="pesquisa-forma" placeholder="Digite o nome da forma de pagamento...">
+
+            </div>
+
+            <!-- TABELA -->
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Forma de pagamento</th>
+                            <th>Situação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabela-formas">
+
+                        <tr>
+                            <td colspan="4">
+                                Carregando formas de pagamento...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </section>
 
     </main>
 
     <script src="formaPagamento.js"></script>
+
 </body>
+
 </html>

@@ -13,7 +13,13 @@ const permissoes = {
         // Gerenciamento de funcionários
         'funcionarios_visualizar',
         'funcionarios_cadastrar',
-        'funcionarios_editar'
+        'funcionarios_editar',
+
+        // Gerenciamento de formas de pagamento
+        'formas_pagamento_visualizar',
+        'formas_pagamento_cadastrar',
+        'formas_pagamento_editar',
+        'formas_pagamento_desativar',
     ],
 
     2: ['produtos_visualizar', 'estoque_visualizar'],

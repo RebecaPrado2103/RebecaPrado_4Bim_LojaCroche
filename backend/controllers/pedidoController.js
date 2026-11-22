@@ -36,15 +36,13 @@ exports.confirmarPedido = async (req, res) => {
         });
     }
 
-    // VALIDAR CADA FORMA DE PAGAMENTO
-    const formasPermitidas = [1, 2, 3];
-
+    // VALIDAR OS DADOS DE CADA PAGAMENTO
     for (const pagamento of pagamentos) {
 
         const formaId = Number(pagamento.formaPagamentoId);
         const valor = Number(pagamento.valor);
 
-        if (!formasPermitidas.includes(formaId)) {
+        if (!Number.isInteger(formaId) || formaId <= 0) {
             return res.status(400).json({
                 sucesso: false,
                 mensagem: 'Forma de pagamento inválida.'
@@ -66,6 +64,35 @@ exports.confirmarPedido = async (req, res) => {
 
         // INICIAR TRANSAÇÃO
         await client.query('BEGIN');
+
+        // BUSCAR AS FORMAS DE PAGAMENTO ATIVAS
+        const resultadoFormas = await client.query(
+            `SELECT id_forma_pagamento
+     FROM forma_pagamento
+     WHERE ativo_forma_pagamento = TRUE
+     FOR SHARE`
+        );
+
+        const formasAtivas = resultadoFormas.rows.map(
+            forma => forma.id_forma_pagamento
+        );
+
+        // VERIFICAR SE TODAS AS FORMAS ESCOLHIDAS ESTÃO ATIVAS
+        for (const pagamento of pagamentos) {
+
+            const formaId = Number(pagamento.formaPagamentoId);
+
+            if (!formasAtivas.includes(formaId)) {
+
+                await client.query('ROLLBACK');
+
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'Uma das formas de pagamento selecionadas não está disponível. Escolha outra opção.'
+                });
+
+            }
+        }
 
         // BUSCAR OS PRODUTOS DA COMPRA
         let itensCarrinho = [];
