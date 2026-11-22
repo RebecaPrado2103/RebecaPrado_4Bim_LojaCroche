@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devoluções | Entre Laços</title>
+
+    <link rel="stylesheet" href="devolucao.css">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <div class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <a href="../menu/index.html" class="botao-voltar">
+            ← Voltar ao menu
+        </a>
+
+        <section class="introducao">
+            <h2>Gerenciamento de devoluções</h2>
+            <p>
+                Consulte e gerencie as solicitações de devolução
+                realizadas pelos clientes.
+            </p>
+        </section>
+
+        <section class="resumo">
+            <h3>Resumo das devoluções</h3>
+
+            <div class="indicadores">
+                <div class="indicador">
+                    <h4>Em análise</h4>
+                    <p id="total-em-analise">0</p>
+                </div>
+
+                <div class="indicador">
+                    <h4>Aprovadas</h4>
+                    <p id="total-aprovadas">0</p>
+                </div>
+
+                <div class="indicador">
+                    <h4>Recusadas</h4>
+                    <p id="total-recusadas">0</p>
+                </div>
+
+                <div class="indicador">
+                    <h4>Concluídas</h4>
+                    <p id="total-concluidas">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="lista-devolucoes">
+            <h3>Solicitações de devolução</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº devolução</th>
+                        <th>Nº pedido</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabela-devolucoes">
+                    <tr>
+                        <td colspan="6">
+                            Carregando devoluções...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="detalhes-devolucao" class="detalhes-devolucao">
+            <h3>Detalhes da devolução</h3>
+
+            <div id="informacoes-devolucao">
+                <p>Selecione uma devolução para visualizar seus detalhes.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="devolucao.js"></script>
+</body>
+</html>

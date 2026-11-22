@@ -1,0 +1,504 @@
+
+/* ========================================
+   IDENTIDADE VISUAL - ENTRE LAÇOS
+======================================== */
+
+:root {
+    --rosa: #d99a9d;
+    --rosa-claro: #f8e9e7;
+    --rosa-escuro: #bd777c;
+    --creme: #fffaf5;
+    --bege: #f1e5d8;
+    --marrom: #795d55;
+    --marrom-escuro: #59443e;
+    --texto: #51423d;
+    --branco: #ffffff;
+    --verde-claro: #e4f1e5;
+    --verde-escuro: #527c59;
+    --cinza: #817873;
+    --sombra: 0 4px 16px rgba(89, 68, 62, 0.08);
+}
+
+/* ========================================
+   CONFIGURAÇÕES GERAIS
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--creme);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.cabecalho {
+    background-color: var(--marrom);
+    color: var(--branco);
+    text-align: center;
+    padding: 28px 20px;
+    box-shadow: var(--sombra);
+}
+
+.cabecalho h1 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.cabecalho p {
+    font-size: 1rem;
+    color: #f5e8df;
+}
+
+/* ========================================
+   CONTEÚDO PRINCIPAL
+======================================== */
+
+.conteudo {
+    width: min(1200px, 92%);
+    margin: 40px auto;
+}
+
+.introducao {
+    margin-bottom: 28px;
+}
+
+.introducao h2 {
+    color: var(--marrom-escuro);
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.introducao p {
+    color: var(--cinza);
+}
+
+/* ========================================
+   PESQUISA E AÇÕES
+======================================== */
+
+.acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.pesquisa {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+    max-width: 450px;
+}
+
+.pesquisa label,
+.campo label {
+    font-weight: 600;
+    color: var(--marrom-escuro);
+    font-size: 0.92rem;
+}
+
+.pesquisa input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--bege);
+    border-radius: 9px;
+    background-color: var(--branco);
+    color: var(--texto);
+    outline: none;
+}
+
+.pesquisa input:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px var(--rosa-claro);
+}
+
+/* BOTÃO CADASTRAR */
+
+.botao-cadastrar {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 9px;
+    background-color: var(--rosa);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.botao-cadastrar:hover {
+    background-color: var(--rosa-escuro);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   RESUMO DE FUNCIONÁRIOS
+======================================== */
+
+.resumo {
+    background-color: var(--rosa-claro);
+    border: 1px solid #f0d8d6;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+}
+
+.resumo p {
+    color: var(--marrom-escuro);
+}
+
+.resumo strong {
+    color: var(--rosa-escuro);
+    font-size: 1.15rem;
+    margin-left: 5px;
+}
+
+
+/* ========================================
+   FORMULÁRIO DE CADASTRO
+======================================== */
+
+.formulario-funcionario,
+#formulario-edicao-funcionario {
+    background-color: var(--branco);
+    padding: 28px;
+    margin: 25px 0;
+    border: 1px solid var(--bege);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.formulario-funcionario h3,
+.detalhes-funcionario h3 {
+    color: var(--marrom-escuro);
+    font-size: 1.35rem;
+    margin-bottom: 22px;
+}
+
+.formulario-funcionario h4,
+#formulario-edicao-funcionario h4 {
+    color: var(--rosa-escuro);
+    font-size: 1.05rem;
+    margin: 22px 0 14px;
+}
+
+/* ORGANIZAÇÃO DOS CAMPOS */
+
+.grupo-campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--bege);
+    border-radius: 8px;
+    background-color: var(--creme);
+    color: var(--texto);
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px var(--rosa-claro);
+}
+
+.campo input[readonly] {
+    background-color: #f1eeeb;
+    color: var(--cinza);
+    cursor: not-allowed;
+}
+
+/* BOTÕES DOS FORMULÁRIOS */
+
+.botoes-formulario {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.botao-salvar {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--rosa);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.botao-salvar:hover {
+    background-color: var(--rosa-escuro);
+}
+
+.botoes-formulario button[type="button"] {
+    padding: 11px 20px;
+    border: 1px solid var(--bege);
+    border-radius: 8px;
+    background-color: var(--creme);
+    color: var(--marrom);
+}
+
+.botoes-formulario button[type="button"]:hover {
+    background-color: var(--bege);
+}
+
+/* MENSAGENS DOS FORMULÁRIOS */
+
+#mensagem-cadastro-funcionario,
+#mensagem-edicao-funcionario {
+    margin-top: 15px;
+    font-size: 0.92rem;
+}
+
+/* ========================================
+   LISTA DE FUNCIONÁRIOS
+======================================== */
+
+.lista-funcionarios {
+    background-color: var(--branco);
+    padding: 25px;
+    margin-top: 25px;
+    border: 1px solid var(--bege);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.lista-funcionarios h3 {
+    color: var(--marrom-escuro);
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+}
+
+/* ÁREA DE ROLAGEM DA TABELA */
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+/* TABELA */
+
+.tabela-container table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabela-container thead {
+    background-color: var(--rosa-claro);
+}
+
+.tabela-container th {
+    padding: 14px 12px;
+    color: var(--marrom-escuro);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.tabela-container td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #f0e9e3;
+    color: var(--texto);
+    font-size: 0.9rem;
+}
+
+.tabela-container tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.tabela-container tbody tr:hover {
+    background-color: #fffaf8;
+}
+
+.tabela-container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* SITUAÇÃO DO FUNCIONÁRIO */
+
+.tabela-container td:nth-child(5) {
+    font-weight: 600;
+}
+
+/* BOTÕES DE AÇÃO */
+
+.botao-detalhes,
+.botao-desativar,
+.botao-reativar {
+    padding: 8px 12px;
+    margin: 3px;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.botao-detalhes {
+    background-color: var(--bege);
+    color: var(--marrom-escuro);
+}
+
+.botao-detalhes:hover {
+    background-color: #e6d4c4;
+}
+
+.botao-desativar {
+    background-color: var(--rosa-claro);
+    color: var(--rosa-escuro);
+}
+
+.botao-desativar:hover {
+    background-color: #f1d5d3;
+}
+
+.botao-reativar {
+    background-color: var(--verde-claro);
+    color: var(--verde-escuro);
+}
+
+.botao-reativar:hover {
+    background-color: #d0e7d2;
+}
+
+.situacao-ativa {
+    color: var(--verde-escuro) !important;
+}
+
+.situacao-inativa {
+    color: var(--rosa-escuro) !important;
+}
+
+/* ========================================
+   DETALHES DO FUNCIONÁRIO
+======================================== */
+
+.detalhes-funcionario {
+    background-color: var(--branco);
+    padding: 28px;
+    margin-top: 30px;
+    border: 1px solid var(--bege);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.detalhes-funcionario h3 {
+    color: var(--marrom-escuro);
+    font-size: 1.4rem;
+    margin-bottom: 22px;
+}
+
+/* INFORMAÇÕES DO FUNCIONÁRIO */
+
+#informacoes-funcionario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#informacoes-funcionario p {
+    background-color: var(--creme);
+    border: 1px solid var(--bege);
+    border-radius: 9px;
+    padding: 13px 15px;
+    color: var(--texto);
+    overflow-wrap: anywhere;
+}
+
+#informacoes-funcionario strong {
+    color: var(--marrom-escuro);
+}
+
+/* BOTÃO EDITAR */
+
+.botao-editar {
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 11px 20px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--rosa);
+    color: var(--branco);
+    font-weight: 600;
+}
+
+.botao-editar:hover {
+    background-color: var(--rosa-escuro);
+    transform: translateY(-2px);
+}
+
+/* BOTÃO FECHAR DETALHES */
+
+#fechar-detalhes-funcionario {
+    padding: 11px 20px;
+    margin-top: 20px;
+    border: 1px solid var(--bege);
+    border-radius: 8px;
+    background-color: var(--creme);
+    color: var(--marrom);
+}
+
+#fechar-detalhes-funcionario:hover {
+    background-color: var(--bege);
+}
+/* ========================================
+   BOTÃO VOLTAR AO MENU
+======================================== */
+
+.botao-voltar {
+    display: inline-block;
+    padding: 10px 17px;
+    margin-bottom: 25px;
+
+    background-color: var(--bege);
+    color: var(--marrom-escuro);
+
+    text-decoration: none;
+    font-weight: 600;
+
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.botao-voltar:hover {
+    background-color: #e6d4c4;
+    transform: translateX(-3px);
+}

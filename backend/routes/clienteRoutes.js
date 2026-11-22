@@ -6,6 +6,15 @@ const clienteController = require('../controllers/clienteController');
 
 const verificarFuncionario = require('../middlewares/verificarFuncionario');
 const verificarPermissao = require('../middlewares/verificarPermissao');
+const cadastroController = require('../controllers/cadastroController');
+
+// CADASTRAR CLIENTE PELA VISÃO DO GERENTE
+router.post(
+    '/gerenciar/cadastrar',
+    verificarFuncionario,
+    verificarPermissao('clientes_visualizar'),
+    cadastroController.cadastrarCliente
+);
 
 // LISTAR TODOS OS CLIENTES
 router.get(

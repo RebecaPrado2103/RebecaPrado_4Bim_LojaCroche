@@ -1,5 +1,4 @@
 // PERMISSÕES DOS CARGOS
-// PERMISSÕES DOS CARGOS
 const permissoes = {
     1: [
         'produtos_visualizar',
@@ -9,7 +8,12 @@ const permissoes = {
         'estoque_visualizar',
         'estoque_atualizar',
         'pedidos_atualizar',
-        'clientes_visualizar'
+        'clientes_visualizar',
+
+        // Gerenciamento de funcionários
+        'funcionarios_visualizar',
+        'funcionarios_cadastrar',
+        'funcionarios_editar'
     ],
 
     2: ['produtos_visualizar', 'estoque_visualizar'],

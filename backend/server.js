@@ -15,6 +15,8 @@ const loginRoutes = require('./routes/loginRoutes');
 const carrinhoRoutes = require('./routes/carrinhoRoutes');
 const pedidoRoutes = require('./routes/pedidoRoutes');
 const estoqueRoutes = require('./routes/estoqueRoutes');
+const clienteRoutes = require('./routes/clienteRoutes');
+const funcionarioRoutes = require('./routes/funcionarioRoutes');
 
 const app = express();
 
@@ -58,6 +60,8 @@ app.use('/api/login', loginRoutes);
 app.use('/api/carrinho', carrinhoRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/estoque', estoqueRoutes);
+app.use('/api/clientes', clienteRoutes);
+app.use('/api/funcionarios', funcionarioRoutes);
 
 // Rota inicial de teste
 app.get('/', (req, res) => {

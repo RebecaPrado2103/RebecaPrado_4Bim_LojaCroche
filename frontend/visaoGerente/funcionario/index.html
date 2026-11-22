@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Funcionários | Entre Laços</title>
+
+    <link rel="stylesheet" href="funcionario.css">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <h1>Entre Laços</h1>
+        <p>Gerenciamento de funcionários</p>
+    </header>
+
+    <main class="conteudo">
+
+        <a href="../menu/index.html" class="botao-voltar">
+            ← Voltar ao menu
+        </a>
+
+        <section class="introducao">
+            <h2>Funcionários</h2>
+            <p>Gerencie as pessoas que fazem parte da nossa equipe.</p>
+        </section>
+
+        <section class="acoes">
+
+            <div class="pesquisa">
+                <label for="pesquisa-funcionario">
+                    Pesquisar funcionário
+                </label>
+
+                <input type="text" id="pesquisa-funcionario" placeholder="Digite um nome ou CPF...">
+            </div>
+
+            <button type="button" id="abrir-formulario-funcionario" class="botao-cadastrar">
+                Cadastrar funcionário
+            </button>
+
+        </section>
+
+
+        <!-- FORMULÁRIO DE CADASTRO -->
+        <section id="formulario-funcionario" class="formulario-funcionario" hidden>
+
+            <h3>Cadastrar novo funcionário</h3>
+
+            <form id="form-cadastro-funcionario">
+
+                <h4>Dados pessoais</h4>
+
+                <div class="grupo-campos">
+
+                    <div class="campo">
+                        <label for="nome-funcionario">Nome completo *</label>
+                        <input type="text" id="nome-funcionario" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cpf-funcionario">CPF *</label>
+                        <input type="text" id="cpf-funcionario" maxlength="11" inputmode="numeric" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="nascimento-funcionario">Data de nascimento</label>
+                        <input type="date" id="nascimento-funcionario">
+                    </div>
+
+                    <div class="campo">
+                        <label for="email-funcionario">E-mail *</label>
+                        <input type="email" id="email-funcionario" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="endereco-funcionario">Endereço</label>
+                        <input type="text" id="endereco-funcionario">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha-funcionario">Senha inicial *</label>
+                        <input type="password" id="senha-funcionario" minlength="8" required>
+                    </div>
+
+                </div>
+
+                <h4>Informações profissionais</h4>
+
+                <div class="grupo-campos">
+
+                    <div class="campo">
+                        <label for="cargo-funcionario">Cargo *</label>
+                        <select id="cargo-funcionario" required>
+                            <option value="">Carregando cargos...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="salario-funcionario">Salário (R$) *</label>
+                        <input type="number" id="salario-funcionario" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="comissao-funcionario">Comissão (%) *</label>
+                        <input type="number" id="comissao-funcionario" min="0" max="100" step="0.01" required>
+                    </div>
+
+                </div>
+
+                <div class="botoes-formulario">
+
+                    <button type="submit" class="botao-salvar">
+                        Cadastrar funcionário
+                    </button>
+
+                    <button type="button" id="cancelar-cadastro-funcionario">
+                        Cancelar
+                    </button>
+
+                </div>
+
+                <p id="mensagem-cadastro-funcionario"></p>
+
+            </form>
+
+        </section>
+
+
+        <section class="resumo">
+            <p>
+                Total de funcionários:
+                <strong id="total-funcionarios">0</strong>
+            </p>
+        </section>
+
+        <section class="lista-funcionarios">
+
+            <h3>Equipe Entre Laços</h3>
+
+            <div class="tabela-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>E-mail</th>
+                            <th>Cargo</th>
+                            <th>Situação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista-funcionarios">
+                        <!-- Funcionários serão inseridos pelo JavaScript -->
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- DETALHES DO FUNCIONÁRIO -->
+        <section id="detalhes-funcionario" class="detalhes-funcionario" hidden>
+
+            <h3>Detalhes do funcionário</h3>
+
+            <div id="informacoes-funcionario">
+                <!-- Informações inseridas pelo JavaScript -->
+            </div>
+
+            <!-- FORMULÁRIO DE EDIÇÃO -->
+            <section id="formulario-edicao-funcionario" hidden>
+
+                <h4>Editar informações do funcionário</h4>
+
+                <form id="form-edicao-funcionario">
+
+                    <div class="grupo-campos">
+
+                        <div class="campo">
+                            <label for="edicao-nome-funcionario">Nome completo *</label>
+                            <input type="text" id="edicao-nome-funcionario" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-cpf-funcionario">CPF</label>
+                            <input type="text" id="edicao-cpf-funcionario" readonly>
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-nascimento-funcionario">Data de nascimento</label>
+                            <input type="date" id="edicao-nascimento-funcionario">
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-email-funcionario">E-mail *</label>
+                            <input type="email" id="edicao-email-funcionario" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-endereco-funcionario">Endereço</label>
+                            <input type="text" id="edicao-endereco-funcionario">
+                        </div>
+
+                    </div>
+
+                    <h4>Informações profissionais</h4>
+
+                    <div class="grupo-campos">
+
+                        <div class="campo">
+                            <label for="edicao-cargo-funcionario">Cargo *</label>
+                            <select id="edicao-cargo-funcionario" required>
+                                <option value="">Carregando cargos...</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-salario-funcionario">Salário (R$) *</label>
+                            <input type="number" id="edicao-salario-funcionario" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="edicao-comissao-funcionario">Comissão (%) *</label>
+                            <input type="number" id="edicao-comissao-funcionario" min="0" max="100" step="0.01"
+                                required>
+                        </div>
+
+                    </div>
+
+                    <div class="botoes-formulario">
+
+                        <button type="submit" class="botao-salvar">
+                            Salvar alterações
+                        </button>
+
+                        <button type="button" id="cancelar-edicao-funcionario">
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                    <p id="mensagem-edicao-funcionario"></p>
+
+                </form>
+
+            </section>
+
+            <button type="button" id="fechar-detalhes-funcionario">
+                Fechar detalhes
+            </button>
+
+        </section>
+
+    </main>
+
+    <script src="funcionario.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formas de pagamento | Entre Laços</title>
+
+    <link rel="stylesheet" href="formaPagamento.css">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <div class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </div>
+    </header>
+
+    <main class="conteudo">
+
+        <a href="../menu/index.html" class="botao-voltar">
+            ← Voltar ao menu
+        </a>
+
+        <section class="introducao">
+            <h2>Gerenciamento das formas de pagamento</h2>
+
+            <p>
+                Cadastre, edite e controle as formas de pagamento
+                disponíveis na loja.
+            </p>
+        </section>
+
+        <!-- CADASTRO DE FORMAS DE PAGAMENTO -->
+        <section class="cadastro">
+            <h3>Cadastrar forma de pagamento</h3>
+
+            <form id="form-cadastro">
+
+                <div class="campo">
+                    <label for="nome-forma">Nome da forma de pagamento</label>
+
+                    <input
+                        type="text"
+                        id="nome-forma"
+                        name="nome"
+                        placeholder="Ex.: PIX"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="botao-cadastrar">
+                    Cadastrar forma de pagamento
+                </button>
+
+            </form>
+        </section>
+
+        <!-- LISTAGEM DAS FORMAS DE PAGAMENTO -->
+        <section class="lista-formas">
+            <h3>Formas de pagamento cadastradas</h3>
+
+            <p id="total-formas">Total de formas cadastradas: 0</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Forma de pagamento</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabela-formas">
+                    <tr>
+                        <td colspan="4">
+                            Carregando formas de pagamento...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script src="formaPagamento.js"></script>
+</body>
+</html>
