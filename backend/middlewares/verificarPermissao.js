@@ -1,72 +1,81 @@
-// PERMISSÕES DOS CARGOS
-const permissoes = {
-    1: [
-        'produtos_visualizar',
-        'produtos_cadastrar',
-        'produtos_editar',
-        'produtos_desativar',
-        'estoque_visualizar',
-        'estoque_atualizar',
-        'pedidos_atualizar',
-        'clientes_visualizar',
-
-        // Gerenciamento de funcionários
-        'funcionarios_visualizar',
-        'funcionarios_cadastrar',
-        'funcionarios_editar',
-
-        // Gerenciamento de formas de pagamento
-        'formas_pagamento_visualizar',
-        'formas_pagamento_cadastrar',
-        'formas_pagamento_editar',
-        'formas_pagamento_desativar',
-    ],
-
-    2: ['produtos_visualizar', 'estoque_visualizar'],
-
-    3: ['produtos_visualizar', 'estoque_visualizar'],
-
-    4: ['produtos_visualizar', 'estoque_visualizar'],
-
-    5: ['produtos_visualizar', 'estoque_visualizar', 'estoque_atualizar'],
-
-    6: ['produtos_visualizar', 'estoque_visualizar'],
-
-    7: ['produtos_visualizar', 'estoque_visualizar']
-};
+const db = require('../database');
 
 // VERIFICAR SE O FUNCIONÁRIO POSSUI A PERMISSÃO
 function verificarPermissao(permissaoNecessaria) {
 
-    return (req, res, next) => {
+    return async (req, res, next) => {
 
-        // Verificar se existe um funcionário autenticado
-        if (!req.session.usuario ||
-            req.session.usuario.tipo !== 'funcionario') {
+        try {
 
-            return res.status(403).json({
+            // Verificar se existe um funcionário autenticado
+            if (
+                !req.session.usuario ||
+                req.session.usuario.tipo !== 'funcionario'
+            ) {
+                return res.status(403).json({
+                    sucesso: false,
+                    mensagem: 'Acesso permitido somente para funcionários.'
+                });
+            }
+
+            // Identificar o cargo do funcionário
+            const cargoId = Number(req.session.usuario.cargoId);
+
+            // Consultar se o cargo existe e está ativo
+            const resultadoCargo = await db.query(
+                `SELECT ativo_cargo
+                 FROM cargo
+                 WHERE id_cargo = $1`,
+                [cargoId]
+            );
+
+            if (
+                resultadoCargo.rows.length === 0 ||
+                !resultadoCargo.rows[0].ativo_cargo
+            ) {
+                return res.status(403).json({
+                    sucesso: false,
+                    mensagem: 'Este cargo está inativo ou não existe.'
+                });
+            }
+
+            // O gerente possui acesso total ao sistema
+            if (cargoId === 1) {
+                return next();
+            }
+
+            // Consultar as permissões do cargo no banco
+            const resultadoPermissao = await db.query(
+                `SELECT p.id_permissao
+                 FROM cargo_has_permissao cp
+                 JOIN permissao p
+                    ON p.id_permissao = cp.permissao_id_permissao
+                 WHERE cp.cargo_id_cargo = $1
+                   AND p.codigo_permissao = $2`,
+                [cargoId, permissaoNecessaria]
+            );
+
+            // Verificar se a permissão foi encontrada
+            if (resultadoPermissao.rows.length === 0) {
+                return res.status(403).json({
+                    sucesso: false,
+                    mensagem: 'Você não possui permissão para realizar esta operação.'
+                });
+            }
+
+            // Permitir que a requisição continue
+            next();
+
+        } catch (error) {
+
+            console.error('Erro ao verificar permissão:', error);
+
+            return res.status(500).json({
                 sucesso: false,
-                mensagem: 'Acesso permitido somente para funcionários.'
+                mensagem: 'Erro ao verificar as permissões do funcionário.'
             });
+
         }
-
-        // Identificar o cargo do funcionário
-        const cargoId = req.session.usuario.cargoId;
-
-        // Buscar as permissões do cargo
-        const permissoesCargo = permissoes[cargoId] || [];
-
-        // Verificar se a permissão é autorizada
-        if (!permissoesCargo.includes(permissaoNecessaria)) {
-
-            return res.status(403).json({
-                sucesso: false,
-                mensagem: 'Você não possui permissão para realizar esta operação.'
-            });
-        }
-
-        // Permitir que a requisição continue
-        next();
     };
 }
 

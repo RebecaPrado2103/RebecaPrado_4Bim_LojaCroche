@@ -1,0 +1,441 @@
+
+/* =========================================
+   ENTRE LAÇOS — GERENCIAMENTO DE CARGOS
+========================================= */
+
+/* PALETA E CONFIGURAÇÕES GERAIS */
+
+:root {
+    --rosa: #bd858c;
+    --rosa-escuro: #a96f78;
+    --rosa-claro: #f5e8e6;
+    --creme: #fcf8f5;
+    --branco: #ffffff;
+    --marrom: #795d55;
+    --marrom-escuro: #60473f;
+    --texto: #51413d;
+    --texto-suave: #927e77;
+    --borda: #eee2dc;
+    --verde: #63866d;
+    --verde-claro: #eaf2eb;
+    --vermelho: #a85f5f;
+    --vermelho-claro: #f8eaea;
+    --sombra: 0 5px 20px rgba(105, 73, 62, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--creme);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    width: 100%;
+    min-height: 78px;
+    padding: 16px 7%;
+    background: var(--branco);
+    border-bottom: 1px solid var(--borda);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo h1,
+.cabecalho h1 {
+    margin: 0;
+    color: var(--rosa);
+    font-family: Georgia, serif;
+    font-size: 27px;
+}
+
+.logo p {
+    margin: 3px 0 0;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+.cabecalho a {
+    color: var(--marrom);
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.cabecalho a:hover {
+    color: var(--rosa);
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.conteudo {
+    width: min(1100px, 86%);
+    margin: 40px auto 65px;
+}
+
+.introducao {
+    margin-bottom: 30px;
+}
+
+.introducao h2 {
+    margin: 8px 0;
+    color: var(--marrom);
+    font-family: Georgia, serif;
+    font-size: 32px;
+}
+
+.introducao p {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ÁREA DE FILTROS E AÇÕES */
+
+.acoes,
+.filtros,
+.barra-acoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+label {
+    color: var(--marrom);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+select,
+input {
+    min-height: 42px;
+    padding: 10px 13px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: var(--branco);
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:focus,
+input:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px rgba(189, 133, 140, 0.12);
+}
+
+/* BOTÕES */
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+        background 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+#botao-novo-cargo,
+.botao-principal {
+    min-height: 42px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 9px;
+    background: var(--rosa);
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#botao-novo-cargo:hover,
+.botao-principal:hover {
+    background: var(--rosa-escuro);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(169, 111, 120, 0.2);
+}
+
+/* CARTÃO PRINCIPAL */
+
+#container-cargos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+/* CARTÕES INDIVIDUAIS DOS CARGOS */
+
+.cargo-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    background: var(--branco);
+    box-shadow: var(--sombra);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cargo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 25px rgba(105, 73, 62, 0.10);
+}
+
+.cargo-informacoes {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 9px 12px;
+}
+
+.cargo-informacoes h4 {
+    margin: 0;
+    color: var(--marrom-escuro);
+    font-family: Georgia, serif;
+    font-size: 19px;
+    overflow-wrap: anywhere;
+}
+
+.cargo-informacoes p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+/* ETIQUETAS DE STATUS */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.status.ativo {
+    background: var(--verde-claro);
+    color: var(--verde);
+}
+
+.status.inativo {
+    background: var(--vermelho-claro);
+    color: var(--vermelho);
+}
+
+/* BOTÕES DE AÇÃO DOS CARGOS */
+
+.cargo-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.botao-secundario,
+.botao-perigo {
+    min-height: 36px;
+    padding: 0 13px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--rosa-claro);
+    color: var(--marrom);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.botao-secundario:hover {
+    border-color: var(--rosa);
+    background: #f0dcda;
+}
+
+.botao-perigo {
+    border-color: #f0dada;
+    background: var(--vermelho-claro);
+    color: var(--vermelho);
+}
+
+.botao-perigo:hover {
+    background: #f0dada;
+}
+
+/* FORMULÁRIO DE CARGO */
+
+#area-formulario,
+#area-permissoes {
+    margin-top: 22px;
+    padding: 27px;
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    background: var(--branco);
+    box-shadow: var(--sombra);
+}
+
+#area-formulario[hidden],
+#area-permissoes[hidden] {
+    display: none;
+}
+
+#area-formulario h3,
+#area-permissoes h3 {
+    margin: 0 0 20px;
+    color: var(--marrom);
+    font-family: Georgia, serif;
+    font-size: 23px;
+}
+
+#formulario-cargo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#formulario-cargo input {
+    width: 100%;
+}
+
+#salvar-cargo,
+#salvar-permissoes {
+    min-height: 40px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--rosa);
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#salvar-cargo:hover,
+#salvar-permissoes:hover {
+    background: var(--rosa-escuro);
+}
+
+#fechar-formulario,
+#cancelar-formulario,
+#fechar-permissoes {
+    min-height: 38px;
+    padding: 0 15px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--creme);
+    color: var(--marrom);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* GRUPOS DE PERMISSÕES */
+
+#container-permissoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.grupo-permissoes {
+    padding: 18px;
+    border: 1px solid var(--borda);
+    border-radius: 11px;
+    background: var(--creme);
+}
+
+.grupo-permissoes h4 {
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--borda);
+    color: var(--marrom);
+    font-family: Georgia, serif;
+    font-size: 16px;
+}
+
+.permissao-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 11px 0;
+    color: var(--texto);
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.permissao-item input {
+    width: 16px;
+    min-height: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--rosa);
+    cursor: pointer;
+}
+
+/* MENSAGENS E CARREGAMENTO */
+
+.carregando {
+    grid-column: 1 / -1;
+    padding: 25px;
+    color: var(--texto-suave);
+    text-align: center;
+    font-size: 13px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 760px) {
+    .cabecalho {
+        padding: 15px 6%;
+    }
+
+    .conteudo {
+        width: 90%;
+        margin-top: 28px;
+    }
+
+    #container-cargos,
+    #container-permissoes {
+        grid-template-columns: 1fr;
+    }
+
+    .introducao h2 {
+        font-size: 27px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cargo-card {
+        padding: 17px;
+    }
+
+    .cargo-acoes {
+        gap: 6px;
+    }
+
+    .cargo-acoes button {
+        flex: 1;
+    }
+
+    #area-formulario,
+    #area-permissoes {
+        padding: 19px;
+    }
+}

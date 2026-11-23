@@ -188,6 +188,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                         .toLowerCase()
                         .includes('cartão'),
 
+                    ehPix: forma.nome_forma_pagamento
+                        .trim()
+                        .toUpperCase() === 'PIX',
+
                     checkbox: `opcao-forma-${forma.id_forma_pagamento}`,
                     detalhes: `detalhes-forma-${forma.id_forma_pagamento}`,
                     valor: `valor-forma-${forma.id_forma_pagamento}`
@@ -246,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                             ${forma.ehCartao ? `
                                 <div class="dados-cartao">
 
-                                    <h4>Dados fictícios do cartão</h4>
+                                    <h4>Dados do cartão</h4>
 
                                     <label for="titular-${forma.id}">
                                         Nome do titular
@@ -254,7 +258,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     <input
                                         type="text"
                                         id="titular-${forma.id}"
-                                        placeholder="Nome fictício do titular"
+                                        placeholder="Maria da Silva"
+                                        autocomplete="off"
                                     >
 
                                     <label for="numero-cartao-${forma.id}">
@@ -263,8 +268,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     <input
                                         type="text"
                                         id="numero-cartao-${forma.id}"
-                                        placeholder="Somente números fictícios"
+                                        placeholder="0000 0000 0000 0000"
+                                        maxlength="19"
                                         inputmode="numeric"
+                                        autocomplete="off"
                                     >
 
                                     <label for="validade-${forma.id}">
@@ -274,6 +281,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                                         type="text"
                                         id="validade-${forma.id}"
                                         placeholder="MM/AA"
+                                        maxlength="5"
+                                        inputmode="numeric"
+                                        autocomplete="off"
                                     >
 
                                     <label for="seguranca-${forma.id}">
@@ -282,9 +292,51 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     <input
                                         type="text"
                                         id="seguranca-${forma.id}"
-                                        placeholder="Código fictício"
+                                        placeholder="000"
+                                        maxlength="3"
                                         inputmode="numeric"
+                                        autocomplete="off"
                                     >
+
+                                </div>
+                            ` : ''}
+
+                            ${forma.ehPix ? `
+                                <div class="dados-pix">
+
+                                    <h4>Pagamento via PIX</h4>
+
+                                    <p>Escaneie o QR Code demonstrativo ou copie a chave PIX abaixo.</p>
+
+                                    <div class="qrcode-pix">
+                                        <div id="qrcode-${forma.id}"></div>
+                                        <span>QR Code demonstrativo</span>
+                                    </div>
+
+                                    <label for="chave-pix-${forma.id}">
+                                        Chave PIX
+                                    </label>
+
+                                    <div class="campo-chave-pix">
+                                        <input
+                                            type="text"
+                                            id="chave-pix-${forma.id}"
+                                            value="entrelacos@exemplo.com"
+                                            readonly
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="botao-copiar-pix"
+                                            data-chave="chave-pix-${forma.id}"
+                                        >
+                                            Copiar chave
+                                        </button>
+                                    </div>
+
+                                    <p class="aviso-pix">
+                                        Esta é uma demonstração acadêmica. Não realize transferências.
+                                    </p>
 
                                 </div>
                             ` : ''}
@@ -295,6 +347,80 @@ document.addEventListener('DOMContentLoaded', async function () {
                 `;
 
             }).join('');
+
+            // GERAR QR CODE DEMONSTRATIVO DO PIX
+            formasPagamento.forEach(function (forma) {
+
+                if (forma.ehPix) {
+
+                    const elementoQRCode = document.getElementById(
+                        `qrcode-${forma.id}`
+                    );
+
+                    if (elementoQRCode) {
+
+                        new QRCode(elementoQRCode, {
+                            text: 'ENTRE LACOS - PAGAMENTO PIX DEMONSTRATIVO - SEM VALOR FINANCEIRO',
+                            width: 180,
+                            height: 180,
+                            colorDark: '#59443e',
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+
+                    }
+
+                }
+
+            });
+
+            // CONFIGURAR OS CAMPOS DOS CARTÕES
+            formasPagamento.forEach(function (forma) {
+
+                if (!forma.ehCartao) {
+                    return;
+                }
+
+                const numero = document.getElementById(`numero-cartao-${forma.id}`);
+                const validade = document.getElementById(`validade-${forma.id}`);
+                const seguranca = document.getElementById(`seguranca-${forma.id}`);
+
+                // NÚMERO DO CARTÃO: 16 DÍGITOS COM ESPAÇOS AUTOMÁTICOS
+                numero.addEventListener('input', function () {
+
+                    let valor = numero.value.replace(/\D/g, '');
+
+                    valor = valor.slice(0, 16);
+
+                    numero.value = valor.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+                });
+
+                // CÓDIGO DE SEGURANÇA: SOMENTE 3 DÍGITOS
+                seguranca.addEventListener('input', function () {
+
+                    seguranca.value = seguranca.value
+                        .replace(/\D/g, '')
+                        .slice(0, 3);
+
+                });
+
+                // VALIDADE: FORMATO MM/AA
+                validade.addEventListener('input', function () {
+
+                    let valor = validade.value.replace(/\D/g, '');
+
+                    valor = valor.slice(0, 4);
+
+                    if (valor.length >= 3) {
+                        valor = valor.slice(0, 2) + '/' + valor.slice(2);
+                    }
+
+                    validade.value = valor;
+
+                });
+
+            });
 
             // CONFIGURAR OS EVENTOS DAS OPÇÕES
             formasPagamento.forEach(function (forma) {
@@ -316,6 +442,31 @@ document.addEventListener('DOMContentLoaded', async function () {
                 });
 
                 campoValor.addEventListener('input', atualizarValores);
+
+            });
+
+            // COPIAR A CHAVE PIX
+            document.querySelectorAll('.botao-copiar-pix').forEach(function (botao) {
+
+                botao.addEventListener('click', async function () {
+
+                    const idCampo = botao.dataset.chave;
+                    const campoChave = document.getElementById(idCampo);
+
+                    try {
+                        await navigator.clipboard.writeText(campoChave.value);
+
+                        botao.textContent = 'Chave copiada!';
+
+                        setTimeout(() => {
+                            botao.textContent = 'Copiar chave';
+                        }, 2000);
+
+                    } catch (error) {
+                        alert('Não foi possível copiar a chave PIX.');
+                    }
+
+                });
 
             });
 
@@ -435,7 +586,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
-            // VALIDAR OS DADOS FICTÍCIOS DO CARTÃO
+            // VALIDAR OS DADOS DO CARTÃO
             if (forma.ehCartao) {
 
                 const titular = document.getElementById(`titular-${forma.id}`);
@@ -443,15 +594,50 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const validade = document.getElementById(`validade-${forma.id}`);
                 const seguranca = document.getElementById(`seguranca-${forma.id}`);
 
-                if (
-                    !titular.value.trim() ||
-                    !numero.value.trim() ||
-                    !validade.value.trim() ||
-                    !seguranca.value.trim()
-                ) {
-                    alert('Preencha todos os campos fictícios do cartão.');
+                const numeroLimpo = numero.value.replace(/\D/g, '');
+                const codigoLimpo = seguranca.value.replace(/\D/g, '');
+
+                const partesValidade = validade.value.split('/');
+
+                const mes = Number(partesValidade[0]);
+                const ano = Number(partesValidade[1]);
+
+                const agora = new Date();
+                const anoAtual = agora.getFullYear() % 100;
+                const mesAtual = agora.getMonth() + 1;
+
+                const validadeValida =
+                    partesValidade.length === 2 &&
+                    partesValidade[0].length === 2 &&
+                    partesValidade[1].length === 2 &&
+                    mes >= 1 &&
+                    mes <= 12 &&
+                    (ano > anoAtual || (ano === anoAtual && mes >= mesAtual));
+
+                if (!titular.value.trim()) {
+                    alert('Informe o nome do titular.');
+                    titular.focus();
                     return;
                 }
+
+                if (numeroLimpo.length !== 16) {
+                    alert('O número do cartão deve conter 16 dígitos.');
+                    numero.focus();
+                    return;
+                }
+
+                if (!validadeValida) {
+                    alert('Informe uma data de validade válida e futura.');
+                    validade.focus();
+                    return;
+                }
+
+                if (codigoLimpo.length !== 3) {
+                    alert('O código de segurança deve conter 3 dígitos.');
+                    seguranca.focus();
+                    return;
+                }
+
             }
 
             totalInformado += Math.round(valor * 100);

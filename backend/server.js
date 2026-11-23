@@ -17,6 +17,7 @@ const pedidoRoutes = require('./routes/pedidoRoutes');
 const estoqueRoutes = require('./routes/estoqueRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
 const funcionarioRoutes = require('./routes/funcionarioRoutes');
+const cargoRoutes = require('./routes/cargoRoutes');
 const formaPagamentoRoutes = require('./routes/formaPagamentoRoutes');
 
 const app = express();
@@ -63,6 +64,7 @@ app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/estoque', estoqueRoutes);
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/funcionarios', funcionarioRoutes);
+app.use('/api/cargos', cargoRoutes);
 app.use('/api/formas-pagamento', formaPagamentoRoutes);
 
 // Rota inicial de teste

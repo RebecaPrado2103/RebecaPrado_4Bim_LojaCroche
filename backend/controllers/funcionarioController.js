@@ -109,7 +109,7 @@ exports.buscarDetalhesFuncionario = async (req, res) => {
 };
 
 
- // CADASTRAR FUNCIONÁRIO
+// CADASTRAR FUNCIONÁRIO
 exports.cadastrarFuncionario = async (req, res) => {
 
     try {
@@ -182,9 +182,11 @@ exports.cadastrarFuncionario = async (req, res) => {
             });
         }
 
-        // VERIFICAR SE O CARGO EXISTE
+        // VERIFICAR SE O CARGO EXISTE E ESTÁ ATIVO
         const cargoExistente = await query(
-            'SELECT id_cargo FROM cargo WHERE id_cargo = $1',
+            `SELECT id_cargo, ativo_cargo
+            FROM cargo
+            WHERE id_cargo = $1`,
             [cargoNumero]
         );
 
@@ -192,6 +194,22 @@ exports.cadastrarFuncionario = async (req, res) => {
             return res.status(400).json({
                 sucesso: false,
                 mensagem: 'O cargo selecionado não existe.'
+            });
+        }
+
+        // IMPEDIR CADASTRO NO CARGO DE GERENTE
+        if (cargoNumero === 1) {
+            return res.status(403).json({
+                sucesso: false,
+                mensagem: 'O cargo de gerente está reservado.'
+            });
+        }
+
+        // IMPEDIR CADASTRO EM CARGO INATIVO
+        if (!cargoExistente.rows[0].ativo_cargo) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Não é possível cadastrar um funcionário em um cargo inativo.'
             });
         }
 
@@ -373,9 +391,11 @@ exports.editarFuncionario = async (req, res) => {
             });
         }
 
-        // VERIFICAR SE O CARGO EXISTE
+        // VERIFICAR SE O CARGO EXISTE E ESTÁ ATIVO
         const cargoExistente = await query(
-            'SELECT id_cargo FROM cargo WHERE id_cargo = $1',
+            `SELECT id_cargo, ativo_cargo
+            FROM cargo
+            WHERE id_cargo = $1`,
             [cargoNumero]
         );
 
@@ -383,6 +403,14 @@ exports.editarFuncionario = async (req, res) => {
             return res.status(400).json({
                 sucesso: false,
                 mensagem: 'O cargo selecionado não existe.'
+            });
+        }
+
+        // IMPEDIR EDIÇÃO PARA CARGO INATIVO
+        if (!cargoExistente.rows[0].ativo_cargo) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Não é possível atribuir um cargo inativo ao funcionário.'
             });
         }
 
@@ -538,6 +566,8 @@ exports.listarCargos = async (req, res) => {
         const resultado = await query(`
             SELECT id_cargo, nome_cargo
             FROM cargo
+            WHERE ativo_cargo = TRUE
+             AND id_cargo <> 1
             ORDER BY id_cargo ASC;
         `);
 
@@ -574,9 +604,14 @@ exports.reativarFuncionario = async (req, res) => {
         }
 
         const resultado = await query(
-            `SELECT cargo_id_cargo, ativo_funcionario
-             FROM funcionario
-             WHERE pessoa_cpf_pessoa = $1`,
+            `SELECT
+                f.cargo_id_cargo,
+                f.ativo_funcionario,
+                c.ativo_cargo
+            FROM funcionario f
+            INNER JOIN cargo c
+                ON f.cargo_id_cargo = c.id_cargo
+            WHERE f.pessoa_cpf_pessoa = $1`,
             [cpf]
         );
 
@@ -588,6 +623,14 @@ exports.reativarFuncionario = async (req, res) => {
         }
 
         const funcionario = resultado.rows[0];
+
+        // IMPEDIR REATIVAÇÃO SE O CARGO ESTIVER INATIVO
+        if (!funcionario.ativo_cargo) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Não é possível reativar este funcionário porque seu cargo está inativo.'
+            });
+        }
 
         if (funcionario.ativo_funcionario) {
             return res.status(400).json({
