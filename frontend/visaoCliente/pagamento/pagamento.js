@@ -182,6 +182,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return {
                     id: Number(forma.id_forma_pagamento),
                     nome: forma.nome_forma_pagamento,
+
+                    // IDENTIFICAR SE É UMA FORMA DE PAGAMENTO COM CARTÃO
+                    ehCartao: forma.nome_forma_pagamento
+                        .toLowerCase()
+                        .includes('cartão'),
+
                     checkbox: `opcao-forma-${forma.id_forma_pagamento}`,
                     detalhes: `detalhes-forma-${forma.id_forma_pagamento}`,
                     valor: `valor-forma-${forma.id_forma_pagamento}`
@@ -236,6 +242,52 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 step="0.01"
                                 placeholder="Informe o valor"
                             >
+
+                            ${forma.ehCartao ? `
+                                <div class="dados-cartao">
+
+                                    <h4>Dados fictícios do cartão</h4>
+
+                                    <label for="titular-${forma.id}">
+                                        Nome do titular
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="titular-${forma.id}"
+                                        placeholder="Nome fictício do titular"
+                                    >
+
+                                    <label for="numero-cartao-${forma.id}">
+                                        Número do cartão
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="numero-cartao-${forma.id}"
+                                        placeholder="Somente números fictícios"
+                                        inputmode="numeric"
+                                    >
+
+                                    <label for="validade-${forma.id}">
+                                        Data de validade
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="validade-${forma.id}"
+                                        placeholder="MM/AA"
+                                    >
+
+                                    <label for="seguranca-${forma.id}">
+                                        Código de segurança
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="seguranca-${forma.id}"
+                                        placeholder="Código fictício"
+                                        inputmode="numeric"
+                                    >
+
+                                </div>
+                            ` : ''}
 
                         </div>
 
@@ -381,6 +433,25 @@ document.addEventListener('DOMContentLoaded', async function () {
                 alert('Informe um valor válido para cada forma de pagamento selecionada.');
                 campoValor.focus();
                 return;
+            }
+
+            // VALIDAR OS DADOS FICTÍCIOS DO CARTÃO
+            if (forma.ehCartao) {
+
+                const titular = document.getElementById(`titular-${forma.id}`);
+                const numero = document.getElementById(`numero-cartao-${forma.id}`);
+                const validade = document.getElementById(`validade-${forma.id}`);
+                const seguranca = document.getElementById(`seguranca-${forma.id}`);
+
+                if (
+                    !titular.value.trim() ||
+                    !numero.value.trim() ||
+                    !validade.value.trim() ||
+                    !seguranca.value.trim()
+                ) {
+                    alert('Preencha todos os campos fictícios do cartão.');
+                    return;
+                }
             }
 
             totalInformado += Math.round(valor * 100);
