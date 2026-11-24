@@ -138,7 +138,7 @@ exports.registrarDevolucao = async (req, res) => {
 
     try {
         // VALIDAR OS DADOS RECEBIDOS
-                if (
+        if (
             !Number.isInteger(Number(pedido_id)) ||
             Number(pedido_id) <= 0 ||
             typeof motivo_devolucao !== 'string' ||
@@ -263,12 +263,33 @@ exports.registrarDevolucao = async (req, res) => {
 
             // DEVOLVER AO ESTOQUE SOMENTE PRODUTOS EM PERFEITO ESTADO
             if (condicao === 'Em perfeito estado') {
+
+                // ATUALIZAR O ESTOQUE
                 await conexao.query(`
                     UPDATE produto
                     SET quantidade_estoque_produto =
                         quantidade_estoque_produto + $1
                     WHERE id_produto = $2;
                 `, [quantidade, produtoId]);
+
+                // REGISTRAR A MOVIMENTAÇÃO DO ESTOQUE
+                await conexao.query(`
+                    INSERT INTO movimentacao_estoque (
+                        produto_id,
+                        funcionario_cpf,
+                        pedido_id,
+                        tipo_movimentacao,
+                        quantidade_movimentacao,
+                        observacao_movimentacao
+                    )
+                    VALUES ($1, $2, $3, 'Devolução', $4, $5);
+                `, [
+                    produtoId,
+                    req.session.usuario.cpf,
+                    pedido_id,
+                    quantidade,
+                    `Devolução #${devolucaoId} - ${motivo_devolucao.trim()}`
+                ]);
             }
         }
 
@@ -292,5 +313,58 @@ exports.registrarDevolucao = async (req, res) => {
 
     } finally {
         conexao.release();
+    }
+};
+// LISTAR HISTÓRICO DE DEVOLUÇÕES
+exports.listarHistoricoDevolucoes = async (req, res) => {
+    try {
+        const resultado = await query(`
+            SELECT
+                d.id_devolucao,
+                d.pedido_id,
+                d.data_devolucao,
+                d.motivo_devolucao,
+                d.status_devolucao,
+
+                pe.nome_pessoa,
+
+                pr.id_produto,
+                pr.nome_produto,
+
+                idv.quantidade_devolvida,
+                idv.condicao_produto
+
+            FROM devolucao d
+
+            INNER JOIN pedido p
+                ON p.id_pedido = d.pedido_id
+
+            INNER JOIN cliente c
+                ON c.pessoa_cpf_pessoa = p.cliente_cpf
+
+            INNER JOIN pessoa pe
+                ON pe.cpf_pessoa = c.pessoa_cpf_pessoa
+
+            INNER JOIN item_devolucao idv
+                ON idv.devolucao_id = d.id_devolucao
+
+            INNER JOIN produto pr
+                ON pr.id_produto = idv.produto_id
+
+            ORDER BY d.data_devolucao DESC, d.id_devolucao DESC;
+        `);
+
+        return res.status(200).json({
+            sucesso: true,
+            devolucoes: resultado.rows
+        });
+
+    } catch (error) {
+        console.error('Erro ao listar histórico de devoluções:', error);
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao carregar o histórico de devoluções.'
+        });
     }
 };

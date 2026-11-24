@@ -321,3 +321,59 @@ select {
     }
 
 }
+
+/* BOTÕES DE ATUALIZAÇÃO DO PEDIDO */
+
+#atualizacao-status-pedido {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BOTÃO AVANÇAR STATUS */
+
+#avancar-status-pedido {
+    background-color: #a97870;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#avancar-status-pedido:hover {
+    background-color: #8d6861;
+    transform: translateY(-1px);
+}
+
+/* BOTÃO CANCELAR PEDIDO */
+
+#cancelar-pedido {
+    background-color: #fffaf7;
+    color: #a45f59;
+    border: 1px solid #d9aaa3;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#cancelar-pedido:hover {
+    background-color: #f8e9e6;
+    border-color: #c98c84;
+    transform: translateY(-1px);
+}
+
+/* MENSAGEM DE ATUALIZAÇÃO */
+
+#mensagem-atualizacao-status {
+    width: 100%;
+    margin: 0;
+    font-size: 13px;
+}

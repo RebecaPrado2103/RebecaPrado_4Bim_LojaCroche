@@ -30,4 +30,12 @@ router.post(
     devolucaoController.registrarDevolucao
 );
 
+// CONSULTAR HISTÓRICO DE DEVOLUÇÕES
+router.get(
+    '/historico',
+    verificarFuncionario,
+    verificarPermissao('devolucoes_visualizar'),
+    devolucaoController.listarHistoricoDevolucoes
+);
+
 module.exports = router;

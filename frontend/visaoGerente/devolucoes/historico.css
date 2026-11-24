@@ -1,0 +1,156 @@
+/* CONFIGURAÇÕES GERAIS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #faf5f1;
+    font-family: Arial, sans-serif;
+    color: #604c45;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    background-color: #ead8d1;
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo h1 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: #795d55;
+}
+
+.logo p {
+    font-size: 13px;
+    color: #8d7168;
+    margin-top: 5px;
+}
+
+.voltar-devolucoes {
+    text-decoration: none;
+    background-color: #8d6861;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.voltar-devolucoes:hover {
+    background-color: #79554f;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.conteudo {
+    width: 86%;
+    max-width: 1100px;
+    margin: 45px auto;
+}
+
+.introducao {
+    margin-bottom: 35px;
+}
+
+.introducao h2 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: #8d6861;
+    margin-bottom: 10px;
+}
+
+.introducao p {
+    color: #8a7770;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* SEÇÃO DO HISTÓRICO */
+
+.secao-historico {
+    background-color: #ffffff;
+    border: 1px solid #ead8d1;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 4px 15px rgba(112, 79, 68, 0.05);
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    .cabecalho {
+        padding: 20px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .conteudo {
+        width: 90%;
+        margin: 30px auto;
+    }
+
+    .introducao h2 {
+        font-size: 25px;
+    }
+
+    .secao-historico {
+        padding: 18px;
+    }
+}
+
+/* CARTÕES DO HISTÓRICO */
+
+#lista-devolucoes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cartao-devolucao {
+    background-color: #fffaf7;
+    border: 1px solid #ead8d1;
+    border-radius: 14px;
+    padding: 24px;
+    transition: 0.2s;
+}
+
+.cartao-devolucao:hover {
+    border-color: #d9b9af;
+    box-shadow: 0 4px 12px rgba(112, 79, 68, 0.07);
+}
+
+.cartao-devolucao h3 {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    color: #8d6861;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #eaded8;
+}
+
+.cartao-devolucao p {
+    color: #796760;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+    .cartao-devolucao {
+        padding: 18px;
+    }
+
+    .cartao-devolucao h3 {
+        font-size: 19px;
+    }
+}
