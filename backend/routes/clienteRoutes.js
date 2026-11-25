@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -30,6 +29,18 @@ router.get(
     verificarFuncionario,
     verificarPermissao('clientes_visualizar'),
     clienteController.buscarDetalhesCliente
+);
+
+// MINHA CONTA - BUSCAR DADOS
+router.get(
+    '/minha-conta',
+    clienteController.buscarMinhaConta
+);
+
+// MINHA CONTA - ATUALIZAR DADOS
+router.put(
+    '/minha-conta',
+    clienteController.atualizarMinhaConta
 );
 
 module.exports = router;

@@ -221,7 +221,8 @@ exports.verificarSessao = (req, res) => {
         autenticado: true,
         usuario: {
             nome: req.session.usuario.nome,
-            tipo: req.session.usuario.tipo
+            tipo: req.session.usuario.tipo,
+            ehCliente: req.session.usuario.ehCliente
         }
     });
 };

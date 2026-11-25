@@ -85,7 +85,11 @@ exports.cadastrarFormaPagamento = async (req, res) => {
 exports.alterarFormaPagamento = async (req, res) => {
     try {
         const id = Number(req.params.id);
-        const { nome_forma_pagamento } = req.body;
+
+        const {
+            nome_forma_pagamento,
+            max_parcelas_forma_pagamento
+        } = req.body;
 
         // VALIDAR O ID
         if (!Number.isInteger(id) || id <= 0) {
@@ -108,6 +112,38 @@ exports.alterarFormaPagamento = async (req, res) => {
 
         const nome = nome_forma_pagamento.trim();
 
+        // VALIDAR O NÚMERO DE PARCELAS
+        const maxParcelas = Number(max_parcelas_forma_pagamento);
+
+        if (
+            !Number.isInteger(maxParcelas) ||
+            maxParcelas < 1 ||
+            maxParcelas > 12
+        ) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'O máximo de parcelas deve ser entre 1 e 12.'
+            });
+        }
+
+        // IDENTIFICAR SE É CARTÃO DE CRÉDITO
+        const nomeNormalizado = nome
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+
+        const ehCredito =
+            nomeNormalizado.includes('cartao') &&
+            nomeNormalizado.includes('credito');
+
+        // OUTRAS FORMAS DEVEM TER SOMENTE 1 PARCELA
+        if (!ehCredito && maxParcelas !== 1) {
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Somente o cartão de crédito pode ser parcelado.'
+            });
+        }
+
         // VERIFICAR SE O NOME JÁ ESTÁ SENDO UTILIZADO
         const existente = await query(`
             SELECT id_forma_pagamento
@@ -126,10 +162,12 @@ exports.alterarFormaPagamento = async (req, res) => {
         // ATUALIZAR NO BANCO
         const resultado = await query(`
             UPDATE forma_pagamento
-            SET nome_forma_pagamento = $1
-            WHERE id_forma_pagamento = $2
+            SET
+                nome_forma_pagamento = $1,
+                max_parcelas_forma_pagamento = $2
+            WHERE id_forma_pagamento = $3
             RETURNING *
-        `, [nome, id]);
+        `, [nome, maxParcelas, id]);
 
         if (resultado.rowCount === 0) {
             return res.status(404).json({
@@ -243,7 +281,8 @@ exports.listarFormasAtivas = async (req, res) => {
         const resultado = await query(`
             SELECT
                 id_forma_pagamento,
-                nome_forma_pagamento
+                nome_forma_pagamento,
+                max_parcelas_forma_pagamento
             FROM forma_pagamento
             WHERE ativo_forma_pagamento = TRUE
             ORDER BY id_forma_pagamento

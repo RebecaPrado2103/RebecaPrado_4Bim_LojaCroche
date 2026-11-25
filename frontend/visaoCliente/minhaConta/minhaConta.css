@@ -1,0 +1,195 @@
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff8f3;
+    color: #4b342c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background-color: #f3e3d8;
+    padding: 25px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid #e5cfc0;
+}
+
+.logo h1 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: #7b4b3a;
+}
+
+.logo p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #8b6a5c;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #6b4637;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.menu a:hover {
+    color: #b87961;
+}
+
+/* CONTEÚDO */
+.conteudo {
+    flex: 1;
+    width: 100%;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* CARTÃO DA CONTA */
+.cartao-conta {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 650px;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(92, 58, 42, 0.08);
+    border: 1px solid #f0e1d7;
+}
+
+.cartao-conta h2 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: #7b4b3a;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    color: #92786b;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* MENSAGEM */
+#mensagem-conta {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* CAMPOS DO FORMULÁRIO */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.campo label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #6b4637;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dec8b9;
+    border-radius: 9px;
+    background-color: #fffdfb;
+    color: #4b342c;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: #b87961;
+    box-shadow: 0 0 0 3px rgba(184, 121, 97, 0.15);
+}
+
+.campo textarea {
+    resize: vertical;
+}
+
+/* CPF SOMENTE PARA LEITURA */
+.campo input[readonly] {
+    background-color: #f5eee9;
+    color: #8b766b;
+    cursor: not-allowed;
+}
+
+/* BOTÃO */
+#btn-salvar-conta {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    background-color: #9b6651;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#btn-salvar-conta:hover {
+    background-color: #7b4b3a;
+    transform: translateY(-1px);
+}
+
+/* RODAPÉ */
+.rodape {
+    background-color: #f3e3d8;
+    color: #8b6a5c;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+    .cabecalho {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px 6%;
+    }
+
+    .menu {
+        gap: 15px;
+    }
+
+    .conteudo {
+        padding: 30px 15px;
+    }
+
+    .cartao-conta {
+        padding: 25px 20px;
+    }
+
+    .cartao-conta h2 {
+        font-size: 26px;
+    }
+}

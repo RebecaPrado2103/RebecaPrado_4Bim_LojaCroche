@@ -67,22 +67,28 @@ exports.confirmarPedido = async (req, res) => {
 
         // BUSCAR AS FORMAS DE PAGAMENTO ATIVAS
         const resultadoFormas = await client.query(
-            `SELECT id_forma_pagamento
-     FROM forma_pagamento
-     WHERE ativo_forma_pagamento = TRUE
-     FOR SHARE`
+            `SELECT
+            id_forma_pagamento,
+            nome_forma_pagamento,
+            max_parcelas_forma_pagamento
+        FROM forma_pagamento
+        WHERE ativo_forma_pagamento = TRUE
+        FOR SHARE`
         );
 
-        const formasAtivas = resultadoFormas.rows.map(
-            forma => forma.id_forma_pagamento
-        );
 
-        // VERIFICAR SE TODAS AS FORMAS ESCOLHIDAS ESTÃO ATIVAS
+        // VERIFICAR AS FORMAS ESCOLHIDAS E SUAS PARCELAS
         for (const pagamento of pagamentos) {
 
             const formaId = Number(pagamento.formaPagamentoId);
 
-            if (!formasAtivas.includes(formaId)) {
+            // LOCALIZAR A FORMA DE PAGAMENTO NO BANCO
+            const forma = resultadoFormas.rows.find(
+                item => Number(item.id_forma_pagamento) === formaId
+            );
+
+            // VERIFICAR SE A FORMA ESTÁ ATIVA
+            if (!forma) {
 
                 await client.query('ROLLBACK');
 
@@ -92,7 +98,54 @@ exports.confirmarPedido = async (req, res) => {
                 });
 
             }
+
+            // IDENTIFICAR SE É CARTÃO DE CRÉDITO
+            const nomeForma = forma.nome_forma_pagamento
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
+
+            const ehCredito =
+                nomeForma.includes('cartao') &&
+                nomeForma.includes('credito');
+
+            // VALIDAR A QUANTIDADE DE PARCELAS
+            const parcelas = Number(pagamento.parcelas ?? 1);
+
+            const maxParcelas = Number(
+                forma.max_parcelas_forma_pagamento
+            );
+
+            if (
+                !Number.isInteger(parcelas) ||
+                parcelas < 1 ||
+                parcelas > maxParcelas ||
+                parcelas > 12
+            ) {
+
+                await client.query('ROLLBACK');
+
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'A quantidade de parcelas informada é inválida.'
+                });
+
+            }
+
+            // OUTRAS FORMAS DE PAGAMENTO NÃO PODEM SER PARCELADAS
+            if (!ehCredito && parcelas !== 1) {
+
+                await client.query('ROLLBACK');
+
+                return res.status(400).json({
+                    sucesso: false,
+                    mensagem: 'Essa forma de pagamento não permite parcelamento.'
+                });
+
+            }
+
         }
+
 
         // BUSCAR OS PRODUTOS DA COMPRA
         let itensCarrinho = [];
@@ -324,21 +377,25 @@ exports.confirmarPedido = async (req, res) => {
         }
 
         // REGISTRAR AS FORMAS DE PAGAMENTO
+
+        // REGISTRAR AS FORMAS DE PAGAMENTO
         for (const pagamento of pagamentos) {
 
             await client.query(
                 `INSERT INTO pagamento (
-            pedido_id,
-            forma_pagamento_id,
-            valor_pagamento,
-            status_pagamento
-        )
-        VALUES ($1, $2, $3, $4)`,
+                    pedido_id,
+                    forma_pagamento_id,
+                    valor_pagamento,
+                    status_pagamento,
+                    quantidade_parcelas_pagamento
+                )
+                VALUES ($1, $2, $3, $4, $5)`,
                 [
                     idPedido,
                     Number(pagamento.formaPagamentoId),
                     Math.round(Number(pagamento.valor) * 100) / 100,
-                    'Aprovado'
+                    'Aprovado',
+                    Number(pagamento.parcelas ?? 1)
                 ]
             );
 
@@ -566,7 +623,6 @@ exports.buscarDetalhesPedido = async (req, res) => {
     }
 
 };
-
 
 // ATUALIZAR STATUS DO PEDIDO
 exports.atualizarStatusPedido = async (req, res) => {

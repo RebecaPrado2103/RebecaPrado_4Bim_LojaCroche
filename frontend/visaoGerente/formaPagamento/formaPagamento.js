@@ -7,6 +7,9 @@ const campoNome = document.getElementById('nome-forma');
 const formularioEdicao = document.getElementById('form-edicao');
 const areaEdicao = document.getElementById('area-edicao');
 const campoNomeEdicao = document.getElementById('nome-forma-edicao');
+const maxParcelasFormaEdicao = document.getElementById(
+    'max-parcelas-forma-edicao'
+);
 const botaoCancelarEdicao = document.getElementById('cancelar-edicao');
 
 const campoPesquisa = document.getElementById('pesquisa-forma');
@@ -229,6 +232,9 @@ function iniciarEdicao(id) {
 
     campoNomeEdicao.value = forma.nome_forma_pagamento;
 
+    maxParcelasFormaEdicao.value =
+        forma.max_parcelas_forma_pagamento;
+
     areaEdicao.hidden = false;
 
     areaEdicao.scrollIntoView({
@@ -249,8 +255,19 @@ formularioEdicao.addEventListener('submit', async (evento) => {
 
     const novoNome = campoNomeEdicao.value.trim();
 
+    const maxParcelas = Number(maxParcelasFormaEdicao.value);
+
     if (!novoNome) {
         alert('O nome não pode ficar vazio.');
+        return;
+    }
+
+    if (
+        !Number.isInteger(maxParcelas) ||
+        maxParcelas < 1 ||
+        maxParcelas > 12
+    ) {
+        alert('O máximo de parcelas deve ser um número entre 1 e 12.');
         return;
     }
 
@@ -264,7 +281,8 @@ formularioEdicao.addEventListener('submit', async (evento) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    nome_forma_pagamento: novoNome
+                    nome_forma_pagamento: novoNome,
+                    max_parcelas_forma_pagamento: maxParcelas
                 })
             }
         );

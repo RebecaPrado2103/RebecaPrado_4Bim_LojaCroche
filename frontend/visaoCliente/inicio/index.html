@@ -27,6 +27,8 @@
             <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
             <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
             <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+            <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+            <a href="../produto/index.html?categoria=Roupas">Roupas</a>
         </nav>
 
         <!-- Área de pesquisa e acesso -->
@@ -36,15 +38,28 @@
 
             <div class="area-conta" id="area-conta">
 
+                <!-- Cliente ainda não conectado -->
                 <a href="../../login/index.html" id="link-login">
                     Minha conta
                 </a>
 
-                <span id="saudacao-cliente" hidden></span>
-
-                <button type="button" id="botao-sair" hidden>
-                    Sair da conta
+                <!-- Nome do cliente conectado -->
+                <button type="button" id="botao-saudacao" hidden aria-expanded="false">
+                    Olá, <span id="nome-cliente"></span> ▾
                 </button>
+
+                <!-- Menu da conta -->
+                <div class="menu-conta" id="menu-conta" hidden>
+
+                    <a href="../minhaConta/minhaConta.html">
+                        Minha Conta
+                    </a>
+
+                    <button type="button" id="botao-sair">
+                        Sair da conta
+                    </button>
+
+                </div>
 
             </div>
 

@@ -442,3 +442,58 @@ body {
         padding: 15px;
     }
 }
+
+/* ÁREA DE ESCOLHA DAS PARCELAS */
+.campo-parcelas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-top: 16px;
+    padding: 16px;
+
+    background-color: #fff8f5;
+    border: 1px solid #ead5d0;
+    border-radius: 14px;
+}
+
+/* TEXTO DO CAMPO */
+.label-parcelas {
+    color: #755b55;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* SELETOR DE PARCELAS */
+.select-parcelas {
+    width: 100%;
+    padding: 12px 14px;
+
+    background-color: #ffffff;
+    color: #5f4944;
+
+    border: 1px solid #d9bdb6;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    cursor: pointer;
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* DESTAQUE AO CLICAR */
+.select-parcelas:focus {
+    border-color: #b9828c;
+    box-shadow: 0 0 0 3px rgba(185, 130, 140, 0.18);
+}
+
+/* OPÇÕES DO SELETOR */
+.select-parcelas option {
+    color: #5f4944;
+    background-color: #ffffff;
+}

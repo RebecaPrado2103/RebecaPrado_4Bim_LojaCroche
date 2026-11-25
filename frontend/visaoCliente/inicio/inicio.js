@@ -163,3 +163,92 @@ campoPesquisa.addEventListener('keydown', function (event) {
     }
 
 });
+
+ // ELEMENTOS DA CONTA
+const linkLogin = document.getElementById('link-login');
+const botaoSaudacao = document.getElementById('botao-saudacao');
+const nomeCliente = document.getElementById('nome-cliente');
+const menuConta = document.getElementById('menu-conta');
+const botaoSair = document.getElementById('botao-sair');
+
+
+// VERIFICAR SE O CLIENTE ESTÁ CONECTADO
+async function verificarContaCliente() {
+    try {
+        const resposta = await fetch(
+            'http://127.0.0.1:3001/api/login/sessao',
+            {
+                method: 'GET',
+                credentials: 'include'
+            }
+        );
+
+        const dados = await resposta.json();
+
+        // Se não estiver conectado, mantém o link de login
+        if (!resposta.ok || !dados.usuario || !dados.usuario.ehCliente) {
+            linkLogin.hidden = false;
+            botaoSaudacao.hidden = true;
+            menuConta.hidden = true;
+            return;
+        }
+
+        // Cliente conectado: mostra o nome
+        linkLogin.hidden = true;
+        botaoSaudacao.hidden = false;
+
+        nomeCliente.textContent = dados.usuario.nome;
+
+    } catch (error) {
+        console.error('Erro ao verificar a conta:', error);
+
+        linkLogin.hidden = false;
+        botaoSaudacao.hidden = true;
+        menuConta.hidden = true;
+    }
+}
+
+
+// ABRIR E FECHAR O MENU DA CONTA
+botaoSaudacao.addEventListener('click', function () {
+    const menuAberto = !menuConta.hidden;
+
+    menuConta.hidden = menuAberto;
+
+    botaoSaudacao.setAttribute(
+        'aria-expanded',
+        String(!menuAberto)
+    );
+});
+
+
+// ENCERRAR A SESSÃO
+botaoSair.addEventListener('click', async function () {
+    try {
+        const resposta = await fetch(
+            'http://127.0.0.1:3001/api/login/sair',
+            {
+                method: 'POST',
+                credentials: 'include'
+            }
+        );
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            alert(dados.mensagem || 'Não foi possível sair da conta.');
+            return;
+        }
+
+        // Volta para a página inicial sem login
+        window.location.reload();
+
+    } catch (error) {
+        console.error('Erro ao sair da conta:', error);
+        alert('Ocorreu um erro ao encerrar a sessão.');
+    }
+});
+
+
+// EXECUTAR A VERIFICAÇÃO
+verificarContaCliente();

@@ -179,18 +179,31 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             formasPagamento = resultado.formasPagamento.map(function (forma) {
+
+                const nomeForma = forma.nome_forma_pagamento
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '');
+
                 return {
                     id: Number(forma.id_forma_pagamento),
                     nome: forma.nome_forma_pagamento,
 
-                    // IDENTIFICAR SE É UMA FORMA DE PAGAMENTO COM CARTÃO
-                    ehCartao: forma.nome_forma_pagamento
-                        .toLowerCase()
-                        .includes('cartão'),
+                    // IDENTIFICAR SE É CARTÃO
+                    ehCartao: nomeForma.includes('cartao'),
 
-                    ehPix: forma.nome_forma_pagamento
-                        .trim()
-                        .toUpperCase() === 'PIX',
+                    // IDENTIFICAR SE É CARTÃO DE CRÉDITO
+                    ehCredito:
+                        nomeForma.includes('cartao') &&
+                        nomeForma.includes('credito'),
+
+                    // IDENTIFICAR SE É PIX
+                    ehPix: nomeForma.trim() === 'pix',
+
+                    // LIMITE DE PARCELAS RECEBIDO DO BANCO
+                    maxParcelas: Number(
+                        forma.max_parcelas_forma_pagamento
+                    ),
 
                     checkbox: `opcao-forma-${forma.id_forma_pagamento}`,
                     detalhes: `detalhes-forma-${forma.id_forma_pagamento}`,
@@ -246,6 +259,34 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 step="0.01"
                                 placeholder="Informe o valor"
                             >
+
+                            ${forma.ehCredito ? `
+                                <div class="campo-parcelas">
+                                    <label
+                                        class="label-parcelas"
+                                        for="parcelas-forma-${forma.id}"
+                                    >
+                                        Número de parcelas
+                                    </label>
+
+                                    <select
+                                        class="select-parcelas"
+                                        id="parcelas-forma-${forma.id}"
+                                    >
+                                        ${Array.from(
+                                            { length: forma.maxParcelas },
+                                            (_, indice) => indice + 1
+                                        ).map(function (parcela) {
+                                        return `
+                                        <option value="${parcela}">
+                                            ${parcela}x
+                                        </option>
+                                        `;
+                                        }).join('')}
+                                    </select>
+
+                                </div>
+                            ` : ''}
 
                             ${forma.ehCartao ? `
                                 <div class="dados-cartao">
@@ -683,10 +724,26 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return document.getElementById(forma.checkbox).checked;
             })
             .map(function (forma) {
-                return {
+                // DADOS DO PAGAMENTO
+                const pagamento = {
                     formaPagamentoId: forma.id,
-                    valor: Number(document.getElementById(forma.valor).value)
+                    valor: Number(
+                        document.getElementById(forma.valor).value
+                    )
                 };
+
+                // QUANTIDADE DE PARCELAS
+                if (forma.ehCredito) {
+                    pagamento.parcelas = Number(
+                        document.getElementById(
+                            `parcelas-forma-${forma.id}`
+                        ).value
+                    );
+                } else {
+                    pagamento.parcelas = 1;
+                }
+
+                return pagamento;
             });
 
         // ENVIAR O PEDIDO PARA O BACKEND
