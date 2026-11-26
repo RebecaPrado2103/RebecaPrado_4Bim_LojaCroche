@@ -7,6 +7,12 @@
 
     <title>Finalizar compra | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../inicio/inicio.css">
     <link rel="stylesheet" href="finalizar.css">
 </head>
 
@@ -14,93 +20,158 @@
 
     <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <!-- Identidade da loja -->
+        <a href="../inicio/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
+        </a>
+
+        <!-- Menu de navegação (igual ao da página anterior) -->
+        <nav class="menu">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../produto/index.html">Produtos</a>
+            <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+            <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+            <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+            <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+            <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+        </nav>
+
+        <!-- Botão voltar no canto direito (sem ícone do carrinho) -->
+        <div class="acoes">
+            <a href="../inicio/index.html" class="voltar-inicio">
+                ← Voltar ao início
+            </a>
         </div>
 
-        <a href="../inicio/index.html">Continuar comprando</a>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo-finalizacao">
 
-        <a href="../inicio/index.html" class="voltar-inicio">
-            ← Voltar ao início
-        </a>
+        <!-- Cabeçalho da etapa -->
+        <div class="finalizacao-cabecalho">
+            <span>ETAPA DE ENTREGA</span>
+            <h1>Finalizar compra</h1>
+            <p class="subtitulo">
+                Estamos quase lá! Confira seu pedido e informe os dados de entrega.
+            </p>
+        </div>
 
-        <h1>Finalizar compra</h1>
-        <p class="subtitulo">
-            Estamos quase lá! Confira seu pedido e informe os dados de entrega.
-        </p>
+        <div class="finalizacao-container">
 
-        <!-- RESUMO DO PEDIDO -->
-        <section class="resumo-pedido">
-            <h2>Resumo do pedido</h2>
+            <!-- 1. RESUMO DO PEDIDO (EM CIMA) -->
+            <section class="resumo-pedido">
+                <h2>Resumo do pedido</h2>
 
-            <div id="itens-pedido">
-                <!-- Os produtos serão inseridos pelo JavaScript -->
-            </div>
-
-            <div class="valor-total">
-                <span>Total:</span>
-                <strong id="total-pedido">R$ 0,00</strong>
-            </div>
-        </section>
-
-        <!-- DADOS DE ENTREGA -->
-        <section class="dados-entrega">
-            <h2>Dados de entrega</h2>
-
-            <form id="form-entrega">
-
-                <div class="campo">
-                    <label for="nome">Nome completo</label>
-                    <input type="text" id="nome" required>
+                <div id="itens-pedido">
+                    <!-- Os produtos serão inseridos pelo JavaScript -->
                 </div>
 
-                <div class="campo">
-                    <label for="cep">CEP</label>
-                    <input type="text" id="cep" required>
+                <div class="valor-total">
+                    <span>Total do pedido</span>
+                    <strong id="total-pedido">R$ 0,00</strong>
                 </div>
+            </section>
 
-                <div class="campo">
-                    <label for="endereco">Endereço</label>
-                    <input type="text" id="endereco" required>
-                </div>
+            <!-- 2. DADOS DE ENTREGA (EMBAIXO) -->
+            <section class="dados-entrega">
+                <h2>Dados de entrega</h2>
 
-                <div class="campo">
-                    <label for="numero">Número</label>
-                    <input type="text" id="numero" required>
-                </div>
+                <form id="form-entrega">
 
-                <div class="campo">
-                    <label for="complemento">Complemento</label>
-                    <input type="text" id="complemento">
-                </div>
+                    <div class="campo campo-inteiro">
+                        <label for="nome">Nome completo</label>
+                        <input type="text" id="nome" placeholder="Digite seu nome completo" required>
+                    </div>
 
-                <div class="campo">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" id="cidade" required>
-                </div>
+                    <div class="campo">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" placeholder="00000-000" required>
+                    </div>
 
-                <div class="campo">
-                    <label for="estado">Estado</label>
-                    <input type="text" id="estado" name="estado" maxlength="2" placeholder="Ex.: PR" required>
-                </div>
+                    <div class="campo">
+                        <label for="numero">Número</label>
+                        <input type="text" id="numero" placeholder="Ex.: 123" required>
+                    </div>
 
-                <button type="submit" class="botao-continuar">
-                    Continuar para pagamento
-                </button>
+                    <div class="campo campo-inteiro">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" placeholder="Rua, avenida, travessa..." required>
+                    </div>
 
-            </form>
-        </section>
+                    <div class="campo campo-inteiro">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" id="complemento" placeholder="Apartamento, bloco, referência (opcional)">
+                    </div>
+
+                    <div class="campo">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" placeholder="Sua cidade" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="estado">Estado</label>
+                        <input type="text" id="estado" name="estado" maxlength="2" placeholder="Ex.: PR" required>
+                    </div>
+
+                    <button type="submit" class="botao-continuar">
+                        Continuar para pagamento
+                    </button>
+
+                </form>
+            </section>
+
+        </div>
 
     </main>
 
     <!-- RODAPÉ -->
     <footer class="rodape">
-        <p>Entre Laços — Feito à mão, com carinho em cada ponto.</p>
+
+        <div class="rodape-conteudo">
+
+            <div class="rodape-marca">
+                <h2>Entre Laços</h2>
+                <p>
+                    Peças feitas à mão com carinho,
+                    criatividade e dedicação.
+                </p>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Navegação</h3>
+
+                <a href="../inicio/index.html">Início</a>
+                <a href="../produto/index.html">Produtos</a>
+                <a href="../../login/index.html">Minha conta</a>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Categorias</h3>
+
+                <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+                <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+                <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+                <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h3>Fale conosco</h3>
+
+                <p>Entre em contato com nossa equipe!</p>
+                <p>Atendimento ao cliente</p>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
+            <p>Feito com carinho para você. ♡</p>
+        </div>
+
     </footer>
 
     <script src="finalizar.js"></script>

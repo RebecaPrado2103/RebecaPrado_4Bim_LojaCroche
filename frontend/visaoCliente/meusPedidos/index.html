@@ -7,35 +7,53 @@
 
     <title>Meus pedidos | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../inicio/inicio.css">
     <link rel="stylesheet" href="meusPedidos.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO (CLARINHO IGUAL AO DA PÁGINA MINHA CONTA) -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <a href="../inicio/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
+        </a>
+
+        <nav class="menu">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../produto/index.html">Produtos</a>
+            <a href="../minhaConta/minhaConta.html">Minha Conta</a>
+        </nav>
+
+        <div class="acoes">
+            <!-- Botão para voltar (mantém o id usado pelo meusPedidos.js) -->
+            <button type="button" id="botao-voltar">
+                ← Voltar
+            </button>
         </div>
 
-        <!-- Botão para voltar -->
-        <button type="button" id="botao-voltar">
-            ← Voltar
-        </button>
-        
     </header>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="pagina-pedidos">
 
+        <!-- Faixa superior elegante -->
         <section class="introducao">
+            <span>HISTÓRICO DE COMPRAS</span>
             <h2>Meus pedidos</h2>
-
             <p>
-                Acompanhe suas compras e veja todos os detalhes
-                dos seus pedidos.
+                Acompanhe suas compras e veja todos os detalhes dos seus pedidos.
             </p>
         </section>
 
+        <!-- Lista de pedidos -->
         <section class="lista-pedidos">
 
             <div id="mensagem-pedidos">
@@ -47,6 +65,53 @@
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+
+        <div class="rodape-conteudo">
+
+            <div class="rodape-marca">
+                <h2>Entre Laços</h2>
+                <p>
+                    Peças feitas à mão com carinho,
+                    criatividade e dedicação.
+                </p>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Navegação</h3>
+
+                <a href="../inicio/index.html">Início</a>
+                <a href="../produto/index.html">Produtos</a>
+                <a href="../minhaConta/minhaConta.html">Minha conta</a>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Categorias</h3>
+
+                <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+                <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+                <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+                <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h3>Fale conosco</h3>
+
+                <p>Entre em contato com nossa equipe!</p>
+                <p>Atendimento ao cliente</p>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
+            <p>Feito com carinho para você. ♡</p>
+        </div>
+
+    </footer>
 
     <script src="meusPedidos.js"></script>
 

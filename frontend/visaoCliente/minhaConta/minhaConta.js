@@ -135,6 +135,37 @@ formulario.addEventListener('submit', async (evento) => {
     }
 });
 
-
 // CARREGAR OS DADOS ASSIM QUE A PÁGINA ABRIR
 carregarMinhaConta();
+
+// =================================
+// CONTROLE DO CARRINHO LATERAL
+// =================================
+const botaoAbrirCarrinho = document.getElementById('abrir-carrinho');
+const botaoFecharCarrinho = document.getElementById('fechar-carrinho');
+const carrinhoLateral = document.getElementById('carrinho-lateral');
+const fundoCarrinho = document.getElementById('fundo-carrinho');
+const botaoCancelarCarrinho = document.querySelector('.botao-cancelar');
+
+function abrirCarrinho() {
+    carrinhoLateral.classList.add('aberto');
+    fundoCarrinho.classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+}
+
+function fecharCarrinho() {
+    carrinhoLateral.classList.remove('aberto');
+    fundoCarrinho.classList.remove('aberto');
+    document.body.style.overflow = '';
+}
+
+if (botaoAbrirCarrinho) botaoAbrirCarrinho.addEventListener('click', abrirCarrinho);
+if (botaoFecharCarrinho) botaoFecharCarrinho.addEventListener('click', fecharCarrinho);
+if (botaoCancelarCarrinho) botaoCancelarCarrinho.addEventListener('click', fecharCarrinho);
+if (fundoCarrinho) fundoCarrinho.addEventListener('click', fecharCarrinho);
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        fecharCarrinho();
+    }
+});

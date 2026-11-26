@@ -7,6 +7,11 @@
 
     <title>Login | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="login.css">
 </head>
 
@@ -14,82 +19,131 @@
 
     <main class="pagina-login">
 
-        <section class="cartao-login">
+        <div class="login-container">
 
-            <!-- IDENTIDADE DA LOJA -->
-            <div class="logo">
-                <h1>Entre Laços</h1>
-                <p>Feito à mão, com carinho.</p>
+            <!-- COLUNA ESQUERDA: ARTE EXCLUSIVA ENTRE LAÇOS -->
+            <div class="login-col-imagem">
+
+                <!-- Formas orgânicas decorativas -->
+                <div class="forma-topo"></div>
+                <div class="forma-base"></div>
+                <div class="forma-rosa"></div>
+
+                <!-- Ilustração delicada de novelo e fios de lã no topo -->
+                <svg class="ilustracao-la" viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <!-- Fio ondulado -->
+                    <path d="M12 88 C 48 64, 72 104, 112 78 C 145 56, 175 86, 208 62" stroke="#5B744B" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4"/>
+                    <path d="M22 96 C 60 76, 86 112, 126 84" stroke="#E6A8B0" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Novelo de lã -->
+                    <circle cx="110" cy="48" r="28" fill="#FDFBF9" stroke="#5B744B" stroke-width="2"/>
+                    <path d="M88 36 C 102 26, 122 30, 134 42" stroke="#5B744B" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M84 48 C 102 38, 124 44, 136 56" stroke="#778D68" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M90 62 C 106 52, 124 58, 130 66" stroke="#5B744B" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M104 22 C 94 38, 96 58, 108 74" stroke="#778D68" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M118 22 C 110 38, 112 58, 122 72" stroke="#E6A8B0" stroke-width="1.8" stroke-linecap="round"/>
+                    <!-- Agulha de crochê cruzada -->
+                    <line x1="72" y1="74" x2="152" y2="20" stroke="#384930" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M152 20 C 156 17, 159 20, 156 24" stroke="#384930" stroke-width="2.2" stroke-linecap="round"/>
+                </svg>
+
+                <!-- Texto principal da arte -->
+                <div class="arte-texto">
+                    <span class="arte-tag">FEITO À MÃO, COM CARINHO</span>
+                    <h2>SEJA BEM-VINDO<br>À ENTRE LAÇOS</h2>
+                    <p>Peças artesanais criadas ponto a ponto para aquecer e encantar o seu dia.</p>
+                </div>
+
+                <!-- Selo circular inferior -->
+                <div class="arte-selo">
+                    <span>♡</span>
+                    <small>CROCHÊ ARTESANAL</small>
+                </div>
+
             </div>
 
-            <!-- TÍTULO -->
-            <div class="titulo-login">
-                <h2>Bem-vindo de volta!</h2>
-                <p>Entre na sua conta para continuar suas compras.</p>
+            <!-- COLUNA DIREITA: FORMULÁRIO DE LOGIN -->
+            <div class="login-col-formulario">
+
+                <div class="cartao-login">
+
+                    <!-- IDENTIDADE DA LOJA -->
+                    <div class="logo">
+                        <h1>Entre Laços</h1>
+                        <p>Feito à mão, com carinho.</p>
+                    </div>
+
+                    <!-- TÍTULO -->
+                    <div class="titulo-login">
+                        <h2>Bem-vindo de volta!</h2>
+                        <p>Entre na sua conta para continuar suas compras.</p>
+                    </div>
+
+                    <!-- FORMULÁRIO -->
+                    <form id="form-login">
+
+                        <div id="mensagem-login" class="mensagem-login" role="status"></div>
+
+                        <div class="grupo-campo">
+                            <label for="cpf">CPF</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                        </div>
+
+                        <button type="submit" class="botao-entrar">
+                            Entrar
+                        </button>
+
+                    </form>
+
+                    <!-- ESCOLHA DO TIPO DE ACESSO -->
+                    <section id="escolha-acesso" class="escolha-acesso" hidden>
+
+                        <div class="titulo-login">
+                            <h2>Que bom ter você aqui!</h2>
+                            <p>Como deseja acessar a Entre Laços?</p>
+                        </div>
+
+                        <div class="opcoes-acesso">
+
+                            <button type="button" id="entrar-cliente" class="botao-acesso">
+                                <span class="icone-acesso">♡</span>
+                                <span>
+                                    <strong>Entrar como cliente</strong>
+                                    <small>Explore nossos produtos e faça suas compras.</small>
+                                </span>
+                            </button>
+
+                            <button type="button" id="entrar-funcionario" class="botao-acesso">
+                                <span class="icone-acesso">✿</span>
+                                <span>
+                                    <strong>Entrar como funcionário</strong>
+                                    <small>Acesse as funcionalidades de gerenciamento.</small>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                    <!-- LINKS ÚTEIS -->
+                    <div class="link-cadastro">
+                        <p>Ainda não possui uma conta?</p>
+                        <a href="../cadastro/index.html">Crie sua conta</a>
+                    </div>
+
+                    <a href="../esqueciSenha/index.html" class="link-esqueci-senha">
+                        Esqueci minha senha
+                    </a>
+
+                </div>
+
             </div>
 
-            <!-- FORMULÁRIO -->
-            <form id="form-login">
-
-                <div id="mensagem-login" class="mensagem-login" role="status"></div>
-
-                <div class="grupo-campo">
-                    <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
-                </div>
-
-                <div class="grupo-campo">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-                </div>
-
-                <button type="submit" class="botao-entrar">
-                    Entrar
-                </button>
-
-            </form>
-
-            <!-- ESCOLHA DO TIPO DE ACESSO -->
-            <section id="escolha-acesso" class="escolha-acesso" hidden>
-
-                <div class="titulo-login">
-                    <h2>Que bom ter você aqui!</h2>
-                    <p>Como deseja acessar a Entre Laços?</p>
-                </div>
-
-                <div class="opcoes-acesso">
-
-                    <button type="button" id="entrar-cliente" class="botao-acesso">
-                        <span class="icone-acesso">♡</span>
-                        <span>
-                            <strong>Entrar como cliente</strong>
-                            <small>Explore nossos produtos e faça suas compras.</small>
-                        </span>
-                    </button>
-
-                    <button type="button" id="entrar-funcionario" class="botao-acesso">
-                        <span class="icone-acesso">✿</span>
-                        <span>
-                            <strong>Entrar como funcionário</strong>
-                            <small>Acesse as funcionalidades de gerenciamento.</small>
-                        </span>
-                    </button>
-
-                </div>
-
-            </section>
-
-            <!-- LINK PARA CADASTRO -->
-            <div class="link-cadastro">
-                <p>Ainda não possui uma conta?</p>
-                <a href="../cadastro/index.html">Crie sua conta</a>
-            </div>
-
-            <a href="../esqueciSenha/index.html" class="link-esqueci-senha">
-                Esqueci minha senha
-            </a>
-
-        </section>
+        </div>
 
     </main>
 

@@ -7,113 +7,224 @@
 
     <title>Minha Conta | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../inicio/inicio.css">
     <link rel="stylesheet" href="minhaConta.css">
 </head>
 
 <body>
 
-    <!-- CABEÇALHO -->
+    <!-- CABEÇALHO (CLARINHO IGUAL AO DA PÁGINA DOS PRODUTOS) -->
     <header class="cabecalho">
 
-        <div class="logo">
+        <a href="../inicio/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
+        </a>
 
         <nav class="menu">
             <a href="../inicio/index.html">Início</a>
+            <a href="../produto/index.html">Produtos</a>
             <a href="../meusPedidos/index.html">Meus Pedidos</a>
-            <a href="../carrinho/carrinho.html">Carrinho</a>
         </nav>
 
+        <div class="acoes">
+
+            <button type="button" class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+            </button>
+
+            <a href="../inicio/index.html" class="voltar-inicio">
+                ← Voltar ao início
+            </a>
+
+        </div>
+
     </header>
+
+    <!-- FUNDO ESCURO DO CARRINHO -->
+    <div class="fundo-carrinho" id="fundo-carrinho"></div>
+
+    <!-- BARRA LATERAL DO CARRINHO (IGUAL ÀS OUTRAS PÁGINAS) -->
+    <aside class="carrinho-lateral" id="carrinho-lateral">
+
+        <div class="carrinho-cabecalho">
+            <h2>Meu carrinho</h2>
+
+            <button type="button" class="fechar-carrinho" id="fechar-carrinho" aria-label="Fechar carrinho">
+                &times;
+            </button>
+        </div>
+
+        <div class="carrinho-itens" id="itens-carrinho">
+            <p>Seu carrinho está vazio.</p>
+        </div>
+
+        <div class="carrinho-rodape">
+
+            <div class="carrinho-total">
+                <span>Total:</span>
+                <strong id="total-carrinho">R$ 0,00</strong>
+            </div>
+
+            <button type="button" class="botao-comprar">Comprar</button>
+            <button type="button" class="botao-cancelar">Cancelar</button>
+
+        </div>
+
+    </aside>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo">
 
-        <section class="cartao-conta">
-
-            <h2>Minha Conta</h2>
-
+        <!-- Cabeçalho da página -->
+        <div class="conta-cabecalho">
+            <span>ÁREA DO CLIENTE</span>
+            <h1>Minha Conta</h1>
             <p class="descricao">
-                Consulte e mantenha seus dados atualizados.
+                Consulte e mantenha seus dados pessoais atualizados.
             </p>
+        </div>
 
-            <!-- MENSAGEM DE RETORNO -->
-            <p id="mensagem-conta" role="status"></p>
+        <div class="conta-container">
 
-            <!-- DADOS DO CLIENTE -->
-            <form id="form-minha-conta">
+            <section class="cartao-conta">
 
-                <div class="campo">
-                    <label for="nome-pessoa">Nome</label>
-                    <input
-                        type="text"
-                        id="nome-pessoa"
-                        name="nome_pessoa"
-                        required
-                    >
-                </div>
+                <h2>Dados cadastrais</h2>
 
-                <div class="campo">
-                    <label for="cpf-pessoa">CPF</label>
-                    <input
-                        type="text"
-                        id="cpf-pessoa"
-                        name="cpf_pessoa"
-                        readonly
-                    >
-                </div>
+                <!-- MENSAGEM DE RETORNO -->
+                <p id="mensagem-conta" role="status"></p>
 
-                <div class="campo">
-                    <label for="email-pessoa">E-mail</label>
-                    <input
-                        type="email"
-                        id="email-pessoa"
-                        name="email_pessoa"
-                        required
-                    >
-                </div>
+                <!-- DADOS DO CLIENTE -->
+                <form id="form-minha-conta">
 
-                <div class="campo">
-                    <label for="data-nascimento-pessoa">
-                        Data de nascimento
-                    </label>
-                    <input
-                        type="date"
-                        id="data-nascimento-pessoa"
-                        name="data_nascimento_pessoa"
-                        required
-                    >
-                </div>
+                    <div class="campo">
+                        <label for="nome-pessoa">Nome completo</label>
+                        <input
+                            type="text"
+                            id="nome-pessoa"
+                            name="nome_pessoa"
+                            required
+                        >
+                    </div>
 
-                <div class="campo">
-                    <label for="endereco-pessoa">Endereço</label>
-                    <textarea
-                        id="endereco-pessoa"
-                        name="endereco_pessoa"
-                        rows="3"
-                        required
-                    ></textarea>
-                </div>
+                    <div class="campo-duplo">
 
-                <!-- BOTÃO DE SALVAR -->
-                <button type="submit" id="btn-salvar-conta">
-                    Salvar alterações
-                </button>
+                        <div class="campo">
+                            <label for="cpf-pessoa">CPF</label>
+                            <input
+                                type="text"
+                                id="cpf-pessoa"
+                                name="cpf_pessoa"
+                                readonly
+                            >
+                        </div>
 
-            </form>
+                        <div class="campo">
+                            <label for="data-nascimento-pessoa">
+                                Data de nascimento
+                            </label>
+                            <input
+                                type="date"
+                                id="data-nascimento-pessoa"
+                                name="data_nascimento_pessoa"
+                                required
+                            >
+                        </div>
 
-        </section>
+                    </div>
+
+                    <div class="campo">
+                        <label for="email-pessoa">E-mail</label>
+                        <input
+                            type="email"
+                            id="email-pessoa"
+                            name="email_pessoa"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="endereco-pessoa">Endereço</label>
+                        <textarea
+                            id="endereco-pessoa"
+                            name="endereco_pessoa"
+                            rows="3"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- BOTÃO DE SALVAR -->
+                    <button type="submit" id="btn-salvar-conta">
+                        Salvar alterações
+                    </button>
+
+                </form>
+
+            </section>
+
+        </div>
 
     </main>
 
     <!-- RODAPÉ -->
     <footer class="rodape">
-        <p>Entre Laços — Feito à mão, com carinho.</p>
+
+        <div class="rodape-conteudo">
+
+            <div class="rodape-marca">
+                <h2>Entre Laços</h2>
+                <p>
+                    Peças feitas à mão com carinho,
+                    criatividade e dedicação.
+                </p>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Navegação</h3>
+
+                <a href="../inicio/index.html">Início</a>
+                <a href="../produto/index.html">Produtos</a>
+                <a href="../meusPedidos/index.html">Meus Pedidos</a>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Categorias</h3>
+
+                <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+                <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+                <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+                <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h3>Fale conosco</h3>
+
+                <p>Entre em contato com nossa equipe!</p>
+                <p>Atendimento ao cliente</p>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
+            <p>Feito com carinho para você. ♡</p>
+        </div>
+
     </footer>
 
     <script src="minhaConta.js"></script>
+    <script src="../carrinho/carrinho.js"></script>
 
 </body>
 

@@ -7,6 +7,12 @@
 
     <title>Pagamento | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../inicio/inicio.css">
     <link rel="stylesheet" href="pagamento.css">
 </head>
 
@@ -14,81 +20,147 @@
 
     <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <!-- Identidade da loja -->
+        <a href="../inicio/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
+        </a>
+
+        <!-- Menu de navegação -->
+        <nav class="menu">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../produto/index.html">Produtos</a>
+            <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+            <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+            <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+            <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+            <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+        </nav>
+
+        <!-- Botão voltar no canto direito -->
+        <div class="acoes">
+            <a href="../finalizar/index.html" class="voltar-inicio">
+                ← Voltar
+            </a>
         </div>
 
-        <a href="../finalizar/index.html">Voltar</a>
     </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo-pagamento">
 
-        <h1>Forma de pagamento</h1>
-
-        <p class="subtitulo">
-            Escolha uma ou mais formas de pagamento para sua compra.
-        </p>
-
-        <!-- RESUMO DA COMPRA -->
-        <section class="resumo-pagamento">
-
-            <h2>Resumo da compra</h2>
-
-            <div class="valor-total">
-                <span>Total do pedido:</span>
-                <strong id="total-pagamento">R$ 0,00</strong>
-            </div>
-
-        </section>
-
-        <!-- FORMAS DE PAGAMENTO -->
-        <section class="opcoes-pagamento">
-
-            <h2>Escolha como deseja pagar</h2>
-
-            <form id="form-pagamento">
-
-                <!-- FORMAS CARREGADAS DO BANCO DE DADOS -->
-                <div id="lista-formas-pagamento">
-
-                    <p>Carregando formas de pagamento...</p>
-
-                </div>
-
-                <!-- VALORES -->
-                <div class="resumo-divisao">
-
-                    <p>
-                        Valor restante:
-                        <strong id="valor-restante">R$ 0,00</strong>
-                    </p>
-
-                    <p id="mensagem-pagamento">
-                        Selecione uma forma de pagamento.
-                    </p>
-
-                </div>
-
-                <button type="submit" class="botao-confirmar">
-                    Confirmar pagamento
-                </button>
-
-            </form>
-
-            <p class="aviso-simulacao">
-                Esta é uma simulação acadêmica. Utilize somente dados fictícios.
-                Não informe dados de cartões reais.
+        <!-- Cabeçalho da etapa -->
+        <div class="pagamento-cabecalho">
+            <span>ETAPA DE PAGAMENTO</span>
+            <h1>Forma de pagamento</h1>
+            <p class="subtitulo">
+                Escolha uma ou mais formas de pagamento para concluir sua compra.
             </p>
+        </div>
 
-        </section>
+        <div class="pagamento-container">
+
+            <!-- RESUMO DA COMPRA -->
+            <section class="resumo-pagamento">
+
+                <h2>Resumo da compra</h2>
+
+                <div class="valor-total">
+                    <span>Total do pedido</span>
+                    <strong id="total-pagamento">R$ 0,00</strong>
+                </div>
+
+            </section>
+
+            <!-- FORMAS DE PAGAMENTO -->
+            <section class="opcoes-pagamento">
+
+                <h2>Escolha como deseja pagar</h2>
+
+                <form id="form-pagamento">
+
+                    <!-- FORMAS CARREGADAS DO BANCO DE DADOS -->
+                    <div id="lista-formas-pagamento">
+                        <p class="carregando-formas">Carregando formas de pagamento...</p>
+                    </div>
+
+                    <!-- VALORES -->
+                    <div class="resumo-divisao">
+
+                        <div class="linha-restante">
+                            <span>Valor restante:</span>
+                            <strong id="valor-restante">R$ 0,00</strong>
+                        </div>
+
+                        <p id="mensagem-pagamento">
+                            Selecione uma forma de pagamento.
+                        </p>
+
+                    </div>
+
+                    <button type="submit" class="botao-confirmar">
+                        Confirmar pagamento
+                    </button>
+
+                </form>
+
+                <p class="aviso-simulacao">
+                    Esta é uma simulação acadêmica. Utilize somente dados fictícios.
+                    Não informe dados de cartões reais.
+                </p>
+
+            </section>
+
+        </div>
 
     </main>
 
     <!-- RODAPÉ -->
     <footer class="rodape">
-        <p>Entre Laços — Feito à mão, com carinho em cada ponto.</p>
+
+        <div class="rodape-conteudo">
+
+            <div class="rodape-marca">
+                <h2>Entre Laços</h2>
+                <p>
+                    Peças feitas à mão com carinho,
+                    criatividade e dedicação.
+                </p>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Navegação</h3>
+
+                <a href="../inicio/index.html">Início</a>
+                <a href="../produto/index.html">Produtos</a>
+                <a href="../../login/index.html">Minha conta</a>
+            </div>
+
+            <div class="rodape-links">
+                <h3>Categorias</h3>
+
+                <a href="../produto/index.html?categoria=Bolsas">Bolsas</a>
+                <a href="../produto/index.html?categoria=Amigurumis">Amigurumis</a>
+                <a href="../produto/index.html?categoria=Decoração">Decoração</a>
+                <a href="../produto/index.html?categoria=Acessórios">Acessórios</a>
+                <a href="../produto/index.html?categoria=Roupas">Roupas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h3>Fale conosco</h3>
+
+                <p>Entre em contato com nossa equipe!</p>
+                <p>Atendimento ao cliente</p>
+            </div>
+
+        </div>
+
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços. Todos os direitos reservados.</p>
+            <p>Feito com carinho para você. ♡</p>
+        </div>
+
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
