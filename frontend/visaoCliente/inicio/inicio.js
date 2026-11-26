@@ -164,13 +164,11 @@ campoPesquisa.addEventListener('keydown', function (event) {
 
 });
 
- // ELEMENTOS DA CONTA
+// ELEMENTOS DA CONTA
 const linkLogin = document.getElementById('link-login');
-const botaoSaudacao = document.getElementById('botao-saudacao');
+const linkMinhaConta = document.getElementById('link-minha-conta');
 const nomeCliente = document.getElementById('nome-cliente');
-const menuConta = document.getElementById('menu-conta');
 const botaoSair = document.getElementById('botao-sair');
-
 
 // VERIFICAR SE O CLIENTE ESTÁ CONECTADO
 async function verificarContaCliente() {
@@ -185,17 +183,18 @@ async function verificarContaCliente() {
 
         const dados = await resposta.json();
 
-        // Se não estiver conectado, mantém o link de login
-        if (!resposta.ok || !dados.usuario || !dados.usuario.ehCliente) {
+        // Cliente não conectado
+        if (!resposta.ok || !dados.usuario?.ehCliente) {
             linkLogin.hidden = false;
-            botaoSaudacao.hidden = true;
-            menuConta.hidden = true;
+            linkMinhaConta.hidden = true;
+            botaoSair.hidden = true;
             return;
         }
 
-        // Cliente conectado: mostra o nome
+        // Cliente conectado
         linkLogin.hidden = true;
-        botaoSaudacao.hidden = false;
+        linkMinhaConta.hidden = false;
+        botaoSair.hidden = false;
 
         nomeCliente.textContent = dados.usuario.nome;
 
@@ -203,24 +202,12 @@ async function verificarContaCliente() {
         console.error('Erro ao verificar a conta:', error);
 
         linkLogin.hidden = false;
-        botaoSaudacao.hidden = true;
-        menuConta.hidden = true;
+        linkMinhaConta.hidden = true;
+        botaoSair.hidden = true;
+        console.log('Login oculto:', linkLogin.hidden);
+        console.log('Display do login:', getComputedStyle(linkLogin).display);
     }
 }
-
-
-// ABRIR E FECHAR O MENU DA CONTA
-botaoSaudacao.addEventListener('click', function () {
-    const menuAberto = !menuConta.hidden;
-
-    menuConta.hidden = menuAberto;
-
-    botaoSaudacao.setAttribute(
-        'aria-expanded',
-        String(!menuAberto)
-    );
-});
-
 
 // ENCERRAR A SESSÃO
 botaoSair.addEventListener('click', async function () {
@@ -240,15 +227,99 @@ botaoSair.addEventListener('click', async function () {
             return;
         }
 
-        // Volta para a página inicial sem login
         window.location.reload();
 
     } catch (error) {
         console.error('Erro ao sair da conta:', error);
+
         alert('Ocorreu um erro ao encerrar a sessão.');
     }
 });
 
-
-// EXECUTAR A VERIFICAÇÃO
+// VERIFICAR A CONTA AO ABRIR A PÁGINA
 verificarContaCliente();
+
+
+// =================================
+// CARROSSEL DO BANNER
+// =================================
+
+const slidesBanner = document.querySelectorAll('.banner-slide');
+const indicadoresBanner = document.querySelectorAll('.banner-indicador');
+const botaoBannerAnterior = document.querySelector('.banner-anterior');
+const botaoBannerProximo = document.querySelector('.banner-proximo');
+
+let indiceBannerAtual = 0;
+let intervaloBanner;
+
+// MOSTRAR UMA IMAGEM
+function mostrarBanner(indice) {
+
+    slidesBanner[indiceBannerAtual].classList.remove('ativo');
+    indicadoresBanner[indiceBannerAtual].classList.remove('ativo');
+
+    indiceBannerAtual = indice;
+
+    slidesBanner[indiceBannerAtual].classList.add('ativo');
+    indicadoresBanner[indiceBannerAtual].classList.add('ativo');
+}
+
+// PRÓXIMA IMAGEM
+function proximoBanner() {
+    let proximoIndice = indiceBannerAtual + 1;
+
+    if (proximoIndice >= slidesBanner.length) {
+        proximoIndice = 0;
+    }
+
+    mostrarBanner(proximoIndice);
+}
+
+// IMAGEM ANTERIOR
+function bannerAnterior() {
+    let indiceAnterior = indiceBannerAtual - 1;
+
+    if (indiceAnterior < 0) {
+        indiceAnterior = slidesBanner.length - 1;
+    }
+
+    mostrarBanner(indiceAnterior);
+}
+
+// INICIAR TROCA AUTOMÁTICA
+function iniciarCarrossel() {
+    intervaloBanner = setInterval(proximoBanner, 5000);
+}
+
+// REINICIAR O TEMPO APÓS CLIQUE
+function reiniciarCarrossel() {
+    clearInterval(intervaloBanner);
+    iniciarCarrossel();
+}
+
+// SETINHA PRÓXIMA
+botaoBannerProximo.addEventListener('click', function () {
+    proximoBanner();
+    reiniciarCarrossel();
+});
+
+// SETINHA ANTERIOR
+botaoBannerAnterior.addEventListener('click', function () {
+    bannerAnterior();
+    reiniciarCarrossel();
+});
+
+// CLICAR NOS INDICADORES
+indicadoresBanner.forEach((indicador, indice) => {
+
+    indicador.addEventListener('click', function () {
+        mostrarBanner(indice);
+        reiniciarCarrossel();
+    });
+
+});
+
+// INICIAR O CARROSSEL
+if (slidesBanner.length > 1) {
+    iniciarCarrossel();
+}

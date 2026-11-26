@@ -40,12 +40,47 @@ document.addEventListener('DOMContentLoaded', async function () {
     // IDENTIFICA O TIPO DE COMPRA
     const itensCompraDireta = sessionStorage.getItem('itensCompra');
 
+    // IDENTIFICAR PEDIDO JÁ CRIADO
+    const idPedidoPendente = sessionStorage.getItem('idPedidoPendente');
+
     // BUSCAR OS PRODUTOS DA COMPRA
     let totalCompra = 0;
 
     try {
 
-        if (itensCompraDireta) {
+        if (idPedidoPendente) {
+
+            // PAGAMENTO DE UM PEDIDO JÁ EXISTENTE
+            const respostaPedido = await fetch(
+                `http://127.0.0.1:3001/api/pedidos/meus/${idPedidoPendente}/detalhes`,
+                {
+                    credentials: 'include'
+                }
+            );
+
+            const resultadoPedido = await respostaPedido.json();
+
+            if (!respostaPedido.ok || !resultadoPedido.sucesso) {
+                throw new Error(
+                    resultadoPedido.mensagem || 'Não foi possível carregar o pedido.'
+                );
+            }
+
+            const pedido = resultadoPedido.pedido;
+
+            // VERIFICAR SE O PEDIDO AINDA ESTÁ AGUARDANDO PAGAMENTO
+            if (pedido.status_pedido !== 'Aguardando pagamento') {
+                throw new Error('Este pedido não está aguardando pagamento.');
+            }
+
+            // CONVERTER O TOTAL DO PEDIDO PARA CENTAVOS
+            totalCompra = Math.round(Number(pedido.valor_total) * 100);
+
+            if (!Number.isFinite(totalCompra) || totalCompra <= 0) {
+                throw new Error('O valor deste pedido é inválido.');
+            }
+
+        } else if (itensCompraDireta) {
 
             // COMPRA DIRETA
             const itens = JSON.parse(itensCompraDireta);
@@ -274,15 +309,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                                         id="parcelas-forma-${forma.id}"
                                     >
                                         ${Array.from(
-                                            { length: forma.maxParcelas },
-                                            (_, indice) => indice + 1
-                                        ).map(function (parcela) {
-                                        return `
+                    { length: forma.maxParcelas },
+                    (_, indice) => indice + 1
+                ).map(function (parcela) {
+                    return `
                                         <option value="${parcela}">
                                             ${parcela}x
                                         </option>
                                         `;
-                                        }).join('')}
+                }).join('')}
                                     </select>
 
                                 </div>
@@ -695,27 +730,32 @@ document.addEventListener('DOMContentLoaded', async function () {
             return;
         }
 
-        // RECUPERA OS DADOS DE ENTREGA
-        let dadosEntrega;
+        // RECUPERAR OS DADOS DE ENTREGA
+        // Apenas para pedidos que ainda serão criados
+        if (!idPedidoPendente) {
 
-        try {
+            let dadosEntrega;
 
-            dadosEntrega = JSON.parse(
-                sessionStorage.getItem('dadosEntrega')
-            );
+            try {
 
-        } catch (error) {
+                dadosEntrega = JSON.parse(
+                    sessionStorage.getItem('dadosEntrega')
+                );
 
-            alert('Não foi possível recuperar os dados de entrega.');
-            window.location.href = '../finalizar/index.html';
-            return;
+            } catch (error) {
 
-        }
+                alert('Não foi possível recuperar os dados de entrega.');
+                window.location.href = '../finalizar/index.html';
+                return;
 
-        if (!dadosEntrega) {
-            alert('Os dados de entrega não foram encontrados. Preencha-os novamente.');
-            window.location.href = '../finalizar/index.html';
-            return;
+            }
+
+            if (!dadosEntrega) {
+                alert('Os dados de entrega não foram encontrados. Preencha-os novamente.');
+                window.location.href = '../finalizar/index.html';
+                return;
+            }
+
         }
 
         // ORGANIZAR AS FORMAS DE PAGAMENTO SELECIONADAS
@@ -746,11 +786,23 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return pagamento;
             });
 
-        // ENVIAR O PEDIDO PARA O BACKEND
+        // IDENTIFICAR O PEDIDO PENDENTE
+
+        if (!idPedidoPendente) {
+            alert('Não encontramos um pedido pendente. Faça seu pedido novamente.');
+            if (idPedidoPendente) {
+                window.location.href = '../meusPedidos/index.html';
+            } else {
+                window.location.href = '../finalizar/index.html';
+            }
+            return;
+        }
+
+        // ENVIAR O PAGAMENTO PARA O BACKEND
         try {
 
             const resposta = await fetch(
-                'http://127.0.0.1:3001/api/pedidos/confirmar',
+                `http://127.0.0.1:3001/api/pedidos/${idPedidoPendente}/pagar`,
                 {
                     method: 'POST',
                     headers: {
@@ -758,11 +810,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     },
                     credentials: 'include',
                     body: JSON.stringify({
-                        dadosEntrega: dadosEntrega,
-                        pagamentos: pagamentos,
-                        itensCompra: itensCompraDireta
-                            ? JSON.parse(itensCompraDireta)
-                            : undefined
+                        pagamentos: pagamentos
                     })
                 }
             );
@@ -771,9 +819,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             if (!resposta.ok || !resultado.sucesso) {
                 throw new Error(
-                    resultado.mensagem || 'Não foi possível concluir a compra.'
+                    resultado.mensagem || 'Não foi possível concluir o pagamento.'
                 );
             }
+
+            // LIMPAR O ID DO PEDIDO PENDENTE
+            sessionStorage.removeItem('idPedidoPendente');
 
             // LIMPAR OS DADOS DE ENTREGA
             sessionStorage.removeItem('dadosEntrega');
@@ -789,9 +840,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         } catch (error) {
 
-            console.error('Erro ao confirmar pedido:', error);
+            console.error('Erro ao confirmar pagamento:', error);
 
-            alert(error.message || 'Ocorreu um erro ao realizar sua compra. Tente novamente.');
+            alert(error.message || 'Ocorreu um erro ao realizar seu pagamento. Tente novamente.');
 
         }
 

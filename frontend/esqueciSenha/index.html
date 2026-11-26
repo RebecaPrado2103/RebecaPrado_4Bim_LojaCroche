@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recuperar senha | Entre Laços</title>
+
+    <link rel="stylesheet" href="esqueciSenha.css">
+</head>
+
+<body>
+
+    <main class="pagina-recuperacao">
+
+        <section class="caixa-recuperacao">
+
+            <!-- Identidade da loja -->
+            <div class="logo">
+                <h1>Entre Laços</h1>
+                <p>Feito à mão, com carinho.</p>
+            </div>
+
+            <!-- Título e explicação -->
+            <div class="conteudo-recuperacao">
+
+                <h2>Esqueceu sua senha?</h2>
+
+                <p>
+                    Não se preocupe! Informe o e-mail cadastrado
+                    em sua conta para receber um código de recuperação.
+                </p>
+
+            </div>
+
+
+            <!-- FORMULÁRIO PARA SOLICITAR O CÓDIGO -->
+            <form id="form-recuperacao">
+
+                <div class="campo">
+                    <label for="email-recuperacao">
+                        E-mail cadastrado
+                    </label>
+
+                    <input type="email" id="email-recuperacao" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <button type="submit" id="botao-recuperacao">
+                    Enviar código
+                </button>
+
+                <p id="mensagem-recuperacao" aria-live="polite"></p>
+
+            </form>
+
+
+            <!-- FORMULÁRIO PARA DEFINIR A NOVA SENHA -->
+            <form id="form-nova-senha" hidden>
+
+                <div class="campo">
+                    <label for="codigo-recuperacao">
+                        Código recebido por e-mail
+                    </label>
+
+                    <input type="text" id="codigo-recuperacao" name="codigo" placeholder="Digite o código de 6 dígitos"
+                        inputmode="numeric" maxlength="6" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nova-senha">
+                        Nova senha
+                    </label>
+
+                    <input type="password" id="nova-senha" name="novaSenha" placeholder="Digite sua nova senha"
+                        required>
+                </div>
+
+                <div class="campo">
+                    <label for="confirmar-senha">
+                        Confirmar nova senha
+                    </label>
+
+                    <input type="password" id="confirmar-senha" name="confirmarSenha"
+                        placeholder="Digite a senha novamente" required>
+                </div>
+
+                <button type="submit" id="botao-nova-senha">
+                    Redefinir senha
+                </button>
+
+                <p id="mensagem-nova-senha" aria-live="polite"></p>
+
+            </form>
+
+
+            <!-- Voltar para o login -->
+            <a href="../login/index.html" class="link-voltar">
+                Voltar para o login
+            </a>
+
+        </section>
+
+    </main>
+
+    <script src="esqueciSenha.js"></script>
+
+</body>
+
+</html>

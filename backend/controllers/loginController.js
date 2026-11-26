@@ -36,11 +36,20 @@ exports.entrar = async (req, res) => {
             [cpf]
         );
 
+        // Verifica se o CPF está cadastrado
+        if (resultado.rows.length === 0) {
+            return res.status(404).json({
+                codigo: 'CPF_NAO_CADASTRADO',
+                mensagem: 'CPF não cadastrado.'
+            });
+        }
+
         // Verificar se a pessoa existe
         if (resultado.rows.length === 0) {
-            return res.status(401).json({
+            return res.status(404).json({
                 sucesso: false,
-                mensagem: 'CPF ou senha incorretos.'
+                codigo: 'CPF_NAO_CADASTRADO',
+                mensagem: 'CPF não cadastrado.'
             });
         }
 
@@ -132,7 +141,7 @@ exports.entrar = async (req, res) => {
 };
 
 
- 
+
 // ESCOLHER O TIPO DE ACESSO
 exports.selecionarAcesso = async (req, res) => {
 

@@ -1,0 +1,290 @@
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faf6f1;
+    color: #4b3b32;
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background-color: #fffaf5;
+    padding: 25px 8%;
+    border-bottom: 1px solid #eaded2;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo h1 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: #8b5e4b;
+}
+
+.logo p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #9b8172;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.pagina-pedidos {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 25px;
+}
+
+/* INTRODUÇÃO */
+.introducao {
+    margin-bottom: 35px;
+}
+
+.introducao h2 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: #8b5e4b;
+    margin-bottom: 12px;
+}
+
+.introducao p {
+    color: #8b7a6e;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* LISTA DE PEDIDOS */
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+#mensagem-pedidos {
+    color: #8b7a6e;
+    font-size: 16px;
+    padding: 20px 0;
+}
+
+/* ESPAÇO DOS CARTÕES */
+#pedidos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+
+    .cabecalho {
+        padding: 20px 6%;
+    }
+
+    .logo h1 {
+        font-size: 27px;
+    }
+
+    .pagina-pedidos {
+        margin: 35px auto;
+        padding: 0 18px;
+    }
+
+    .introducao h2 {
+        font-size: 27px;
+    }
+
+}
+
+/* CARTÕES DOS PEDIDOS */
+.cartao-pedido {
+    background-color: #fffaf5;
+    border: 1px solid #eaded2;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(75, 59, 50, 0.05);
+}
+
+.pedido-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.pedido-cabecalho h3 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: #8b5e4b;
+}
+
+.pedido-status {
+    background-color: #f0e4d8;
+    color: #8b5e4b;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.cartao-pedido p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #6d5a4d;
+}
+
+.prazo-pagamento {
+    background-color: #f7eee5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.prazo-pagamento p {
+    margin-bottom: 5px;
+}
+
+.contador-pedido {
+    color: #8b5e4b;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+
+    .cartao-pedido {
+        padding: 18px;
+    }
+
+    .pedido-cabecalho h3 {
+        font-size: 20px;
+    }
+
+}
+
+/* BOTÃO DE DETALHES */
+.botao-detalhes {
+    margin-top: 20px;
+    padding: 11px 18px;
+    border: 1px solid #b58a72;
+    border-radius: 8px;
+    background-color: #fffaf5;
+    color: #8b5e4b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-detalhes:hover {
+    background-color: #f0e4d8;
+}
+
+/* ÁREA DOS DETALHES */
+.detalhes-pedido {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f7eee5;
+    border-radius: 10px;
+}
+
+.detalhes-pedido h4 {
+    font-family: Georgia, serif;
+    color: #8b5e4b;
+    font-size: 18px;
+    margin: 20px 0 12px;
+}
+
+.detalhes-pedido h4:first-child {
+    margin-top: 0;
+}
+
+.detalhes-pedido p {
+    margin-bottom: 8px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.detalhe-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eaded2;
+}
+
+.detalhe-item:last-child {
+    border-bottom: none;
+}
+
+
+/* BOTÃO PAGAR PEDIDO */
+.botao-pagar-pedido {
+    background-color: #E8A9B8;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.botao-pagar-pedido:hover {
+    background-color: #D98FA3;
+    transform: translateY(-2px);
+}
+
+/* BOTÃO CANCELAR PEDIDO */
+.botao-cancelar-pedido {
+    background-color: #F7E9EC;
+    color: #9B5267;
+    border: 1px solid #E8C5CE;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.botao-cancelar-pedido:hover {
+    background-color: #F0D8DF;
+    transform: translateY(-2px);
+}
+
+/* BOTÃO DESABILITADO */
+.botao-pagar-pedido:disabled,
+.botao-cancelar-pedido:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* BOTÃO VOLTAR DO CABEÇALHO */
+#botao-voltar {
+    background-color: #F3E6DC;
+    color: #95634F;
+    border: 1px solid #E8D5C8;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* EFEITO AO PASSAR O MOUSE */
+#botao-voltar:hover {
+    background-color: #EAD5C7;
+    transform: translateY(-2px);
+}
+
+/* EFEITO AO CLICAR */
+#botao-voltar:active {
+    transform: translateY(0);
+}

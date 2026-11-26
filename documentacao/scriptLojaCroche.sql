@@ -467,6 +467,53 @@ FROM (
 INNER JOIN produto p
     ON p.nome_produto = v.nome_produto;
 
+SELECT *
+FROM forma_pagamento
+ORDER BY id_forma_pagamento;
+
+SELECT
+    table_name,
+    column_name,
+    data_type,
+    is_nullable
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name IN ('pedido', 'item_pedido', 'pagamento')
+ORDER BY
+    table_name,
+    ordinal_position;
+
+SELECT
+    table_name,
+    column_name,
+    column_default
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name IN ('pedido', 'item_pedido', 'pagamento')
+ORDER BY table_name, ordinal_position;
+
+ALTER TABLE pedido
+ADD COLUMN nome_entrega VARCHAR(150),
+ADD COLUMN cep_entrega VARCHAR(9),
+ADD COLUMN endereco_entrega VARCHAR(200),
+ADD COLUMN numero_entrega VARCHAR(20),
+ADD COLUMN complemento_entrega VARCHAR(100),
+ADD COLUMN cidade_entrega VARCHAR(100),
+ADD COLUMN estado_entrega VARCHAR(2);
+
+SELECT
+    conrelid::regclass AS tabela,
+    conname AS nome_restricao,
+    pg_get_constraintdef(oid) AS definicao
+FROM pg_constraint
+WHERE conrelid IN (
+    'pedido'::regclass,
+    'item_pedido'::regclass,
+    'pagamento'::regclass,
+    'produto'::regclass
+)
+ORDER BY tabela, nome_restricao;
+
 
 -- =========================================
 -- 9. TABELA DE MOVIMENTAÇÕES DE ESTOQUE
@@ -503,5 +550,167 @@ CREATE TABLE movimentacao_estoque (
             'Saída',
             'Venda'
         )
+    )
+);
+
+-- INDICAR SE O CARGO ESTÁ ATIVO
+ALTER TABLE cargo
+ADD COLUMN ativo_cargo BOOLEAN NOT NULL DEFAULT TRUE;
+
+
+-- CADASTRO DAS PERMISSÕES
+CREATE TABLE permissao (
+    id_permissao SERIAL PRIMARY KEY,
+    codigo_permissao VARCHAR(100) NOT NULL UNIQUE,
+    descricao_permissao VARCHAR(150) NOT NULL
+);
+
+
+-- RELACIONAMENTO ENTRE CARGOS E PERMISSÕES
+CREATE TABLE cargo_has_permissao (
+    cargo_id_cargo INTEGER NOT NULL,
+    permissao_id_permissao INTEGER NOT NULL,
+
+    PRIMARY KEY (cargo_id_cargo, permissao_id_permissao),
+
+    FOREIGN KEY (cargo_id_cargo)
+        REFERENCES cargo(id_cargo),
+
+    FOREIGN KEY (permissao_id_permissao)
+        REFERENCES permissao(id_permissao)
+);
+
+INSERT INTO permissao (codigo_permissao, descricao_permissao)
+VALUES
+    ('produtos_visualizar', 'Visualizar produtos'),
+    ('produtos_cadastrar', 'Cadastrar produtos'),
+    ('produtos_editar', 'Editar produtos'),
+    ('produtos_desativar', 'Desativar produtos'),
+
+    ('estoque_visualizar', 'Visualizar estoque'),
+    ('estoque_atualizar', 'Atualizar estoque'),
+
+    ('pedidos_atualizar', 'Atualizar pedidos'),
+
+    ('clientes_visualizar', 'Visualizar clientes'),
+
+    ('funcionarios_visualizar', 'Visualizar funcionários'),
+    ('funcionarios_cadastrar', 'Cadastrar funcionários'),
+    ('funcionarios_editar', 'Editar funcionários'),
+
+    ('formas_pagamento_visualizar', 'Visualizar formas de pagamento'),
+    ('formas_pagamento_cadastrar', 'Cadastrar formas de pagamento'),
+    ('formas_pagamento_editar', 'Editar formas de pagamento'),
+    ('formas_pagamento_desativar', 'Desativar formas de pagamento');
+
+INSERT INTO permissao (codigo_permissao, descricao_permissao)
+VALUES
+    ('devolucoes_visualizar', 'Visualizar devoluções'),
+    ('devolucoes_atualizar', 'Analisar e atualizar devoluções'),
+
+    ('cargos_visualizar', 'Visualizar cargos'),
+    ('cargos_cadastrar', 'Cadastrar cargos'),
+    ('cargos_editar', 'Editar cargos'),
+    ('cargos_desativar', 'Desativar cargos'),
+    ('cargos_reativar', 'Reativar cargos'),
+    ('cargos_permissoes_editar', 'Editar permissões dos cargos');
+
+-- GERENTE: RECEBE TODAS AS PERMISSÕES
+INSERT INTO cargo_has_permissao (
+    cargo_id_cargo,
+    permissao_id_permissao
+)
+SELECT
+    1,
+    id_permissao
+FROM permissao;
+
+
+-- DEMAIS CARGOS: PERMISSÕES INICIAIS
+INSERT INTO cargo_has_permissao (
+    cargo_id_cargo,
+    permissao_id_permissao
+)
+SELECT
+    c.id_cargo,
+    p.id_permissao
+FROM cargo c
+CROSS JOIN permissao p
+WHERE
+    (
+        c.id_cargo IN (2, 3, 4, 6, 7)
+        AND p.codigo_permissao IN (
+            'produtos_visualizar',
+            'estoque_visualizar'
+        )
+    )
+    OR
+    (
+        c.id_cargo = 5
+        AND p.codigo_permissao IN (
+            'produtos_visualizar',
+            'estoque_visualizar',
+            'estoque_atualizar'
+        )
+    );
+
+ALTER TABLE forma_pagamento
+ADD COLUMN max_parcelas_forma_pagamento INTEGER
+NOT NULL DEFAULT 1
+CHECK (max_parcelas_forma_pagamento >= 1);
+
+ALTER TABLE pagamento
+ADD COLUMN quantidade_parcelas_pagamento INTEGER
+NOT NULL DEFAULT 1
+CHECK (quantidade_parcelas_pagamento BETWEEN 1 AND 12);
+
+
+-- 1. Adicionar o prazo limite para pagamento
+ALTER TABLE pedido
+ADD COLUMN data_limite_pagamento TIMESTAMP;
+
+
+-- 2. Permitir status de pedido um pouco maiores
+ALTER TABLE pedido
+ALTER COLUMN status_pedido TYPE VARCHAR(50);
+
+
+-- 3. A data do pagamento só será registrada
+-- quando o pagamento for realmente confirmado
+ALTER TABLE pagamento
+ALTER COLUMN data_pagamento DROP DEFAULT;
+
+ALTER TABLE movimentacao_estoque
+DROP CONSTRAINT IF EXISTS movimentacao_estoque_tipo_movimentacao_check;
+
+ALTER TABLE movimentacao_estoque
+DROP CONSTRAINT IF EXISTS chk_movimentacao_tipo;
+
+ALTER TABLE movimentacao_estoque
+ADD CONSTRAINT chk_movimentacao_tipo
+CHECK (
+    tipo_movimentacao IN (
+        'Entrada',
+        'Saída',
+        'Venda',
+        'Cancelamento',
+        'Devolução',
+        'Reserva'
+    )
+);
+
+ALTER TABLE pedido
+DROP CONSTRAINT pedido_status_check;
+
+ALTER TABLE pedido
+ADD CONSTRAINT pedido_status_check
+CHECK (
+    status_pedido IN (
+        'Aguardando pagamento',
+        'Pagamento aprovado',
+        'Em preparação',
+        'Enviado',
+        'Entregue',
+        'Cancelado'
     )
 );

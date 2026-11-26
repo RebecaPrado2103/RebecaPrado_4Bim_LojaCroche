@@ -1,0 +1,232 @@
+/* CONFIGURAÇÕES GERAIS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 20px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #fff5f7;
+    color: #514542;
+}
+
+/* CAIXINHA DE RECUPERAÇÃO */
+
+.caixa-recuperacao {
+    width: 100%;
+    max-width: 450px;
+
+    padding: 45px 35px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #f1dfe4;
+    border-radius: 24px;
+
+    box-shadow: 0 12px 35px rgba(120, 83, 92, 0.10);
+
+    text-align: center;
+}
+
+/* LOGO */
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.logo h1 {
+    font-size: 34px;
+    font-weight: 600;
+
+    color: #78917b;
+
+    letter-spacing: 1px;
+}
+
+.logo p {
+    margin-top: 8px;
+
+    font-size: 14px;
+    color: #a18b91;
+}
+
+/* TÍTULOS E TEXTOS */
+
+.caixa-recuperacao h2 {
+    margin-bottom: 12px;
+
+    font-size: 23px;
+    font-weight: 600;
+
+    color: #65534f;
+}
+
+.caixa-recuperacao > p {
+    margin-bottom: 28px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #8b777d;
+}
+
+/* FORMULÁRIOS */
+
+#form-recuperacao,
+#form-nova-senha {
+    width: 100%;
+    text-align: left;
+}
+
+/* CAMPOS */
+
+#form-recuperacao label,
+#form-nova-senha label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #76635f;
+}
+
+#form-recuperacao input,
+#form-nova-senha input {
+    width: 100%;
+
+    padding: 13px 15px;
+    margin-bottom: 20px;
+
+    border: 1px solid #eadde1;
+    border-radius: 12px;
+
+    background-color: #fffafb;
+
+    font-size: 15px;
+    color: #514542;
+
+    outline: none;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* EFEITO AO CLICAR NO CAMPO */
+
+#form-recuperacao input:focus,
+#form-nova-senha input:focus {
+    border-color: #91aa94;
+
+    box-shadow: 0 0 0 3px rgba(145, 170, 148, 0.15);
+
+    background-color: #ffffff;
+}
+
+/* BOTÕES */
+
+#form-recuperacao button,
+#form-nova-senha button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: #819b83;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+/* EFEITO AO PASSAR O MOUSE */
+
+#form-recuperacao button:hover,
+#form-nova-senha button:hover {
+    background-color: #6f896f;
+    transform: translateY(-2px);
+}
+
+/* BOTÃO DESABILITADO */
+
+#form-recuperacao button:disabled,
+#form-nova-senha button:disabled {
+    background-color: #b8c7b9;
+
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* MENSAGENS */
+
+#mensagem-recuperacao,
+#mensagem-nova-senha {
+    margin-top: 18px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #78917b;
+}
+
+/* LINK PARA VOLTAR AO LOGIN */
+
+.caixa-recuperacao a {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #819b83;
+
+    text-decoration: none;
+
+    transition: color 0.2s;
+}
+
+.caixa-recuperacao a:hover {
+    color: #5e785f;
+    text-decoration: underline;
+}
+
+/* RESPEITAR O ATRIBUTO HIDDEN */
+
+[hidden] {
+    display: none !important;
+}
+
+/* ADAPTAÇÃO PARA CELULARES */
+
+@media (max-width: 480px) {
+    .caixa-recuperacao {
+        padding: 35px 23px;
+
+        border-radius: 20px;
+    }
+
+    .logo h1 {
+        font-size: 30px;
+    }
+
+    .caixa-recuperacao h2 {
+        font-size: 21px;
+    }
+}

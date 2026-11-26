@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entre Laços — Crochê Feito à Mão</title>
 
-    <title>Loja de Crochê</title>
+    <!-- Fontes delicadas e profissionais -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="inicio.css">
 </head>
@@ -36,32 +40,26 @@
 
             <input type="text" id="campo-pesquisa" placeholder="O que você procura?">
 
+
             <div class="area-conta" id="area-conta">
 
-                <!-- Cliente ainda não conectado -->
+                <!-- Aparece quando o cliente não está conectado -->
                 <a href="../../login/index.html" id="link-login">
                     Minha conta
                 </a>
 
-                <!-- Nome do cliente conectado -->
-                <button type="button" id="botao-saudacao" hidden aria-expanded="false">
-                    Olá, <span id="nome-cliente"></span> ▾
+                <!-- Aparece quando o cliente está conectado -->
+                <a href="../minhaConta/minhaConta.html" id="link-minha-conta" hidden>
+                    Olá, <span id="nome-cliente"></span>
+                </a>
+
+                <!-- Sair da conta -->
+                <button type="button" id="botao-sair" hidden>
+                    Sair da conta
                 </button>
 
-                <!-- Menu da conta -->
-                <div class="menu-conta" id="menu-conta" hidden>
-
-                    <a href="../minhaConta/minhaConta.html">
-                        Minha Conta
-                    </a>
-
-                    <button type="button" id="botao-sair">
-                        Sair da conta
-                    </button>
-
-                </div>
-
             </div>
+
 
             <button type="button" class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
 
@@ -124,30 +122,86 @@
 
     <main>
 
-        <section class="banner">
 
-            <div class="banner-conteudo">
+        <section class="banner-carrossel">
 
-                <span class="subtitulo">
-                    PEÇAS ARTESANAIS
-                </span>
+            <!-- PRIMEIRA IMAGEM -->
+            <div class="banner-slide ativo">
 
-                <h2>
-                    Um toque de carinho em cada detalhe.
-                </h2>
+                <img src="imagens/banner-1.jpg" alt="Peça artesanal de crochê feita à mão" class="banner-imagem">
 
-                <p>
-                    Descubra peças feitas à mão para deixar
-                    seus momentos ainda mais especiais.
-                </p>
+                <div class="banner-conteudo">
 
-                <a href="../produto/index.html" class="botao-banner">
-                    Conheça nossos produtos
-                </a>
+                    <span class="subtitulo">
+                        PEÇAS ARTESANAIS
+                    </span>
+
+                    <h2>
+                        Um toque de carinho em cada detalhe.
+                    </h2>
+
+                    <p>
+                        Descubra peças feitas à mão para deixar
+                        seus momentos ainda mais especiais.
+                    </p>
+
+                    <a href="../produto/index.html" class="botao-banner">
+                        Conheça nossos produtos
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- SEGUNDA IMAGEM -->
+            <div class="banner-slide">
+
+                <img src="imagens/banner-2.jpg" alt="Coleção de peças artesanais da Entre Laços" class="banner-imagem">
+
+                <div class="banner-conteudo">
+
+                    <span class="subtitulo">
+                        FEITO À MÃO, COM AMOR
+                    </span>
+
+                    <h2>
+                        Pequenos detalhes, grandes encantos.
+                    </h2>
+
+                    <p>
+                        Encontre peças únicas que tornam
+                        cada momento ainda mais especial.
+                    </p>
+
+                    <a href="../produto/index.html" class="botao-banner">
+                        Explore nossa coleção
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- SETA PARA A IMAGEM ANTERIOR -->
+            <button type="button" class="banner-seta banner-anterior" aria-label="Imagem anterior">
+                &#10094;
+            </button>
+
+            <!-- SETA PARA A PRÓXIMA IMAGEM -->
+            <button type="button" class="banner-seta banner-proximo" aria-label="Próxima imagem">
+                &#10095;
+            </button>
+
+            <!-- INDICADORES DAS IMAGENS -->
+            <div class="banner-indicadores">
+
+                <button type="button" class="banner-indicador ativo" aria-label="Mostrar primeira imagem"></button>
+
+                <button type="button" class="banner-indicador" aria-label="Mostrar segunda imagem"></button>
 
             </div>
 
         </section>
+
 
         <!-- CATEGORIAS DE PRODUTOS -->
 
@@ -235,7 +289,7 @@
                 <a href="index.html">Início</a>
                 <a href="../produto/index.html">Produtos</a>
                 <a href="../../login/index.html">Minha conta</a>
-                <a href="#" id="link-carrinho-rodape">Carrinho</a>
+                <a href="../carrinho/index.htm" id="link-carrinho-rodape">Carrinho</a>
             </div>
 
             <!-- Categorias -->
@@ -297,7 +351,6 @@
 
     <script src="inicio.js"></script>
     <script src="../carrinho/carrinho.js"></script>
-    <script src="conta.js"></script>
     <script src="cookies.js"></script>
 
 </body>

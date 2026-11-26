@@ -20,6 +20,7 @@ const funcionarioRoutes = require('./routes/funcionarioRoutes');
 const cargoRoutes = require('./routes/cargoRoutes');
 const formaPagamentoRoutes = require('./routes/formaPagamentoRoutes');
 const devolucaoRoutes = require('./routes/devolucaoRoutes');
+const recuperacaoRoutes = require('./routes/recuperacaoRoutes');
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use('/api/funcionarios', funcionarioRoutes);
 app.use('/api/cargos', cargoRoutes);
 app.use('/api/formas-pagamento', formaPagamentoRoutes);
 app.use('/api/devolucoes', devolucaoRoutes);
+app.use('/api/recuperacao', recuperacaoRoutes);
 
 // Rota inicial de teste
 app.get('/', (req, res) => {

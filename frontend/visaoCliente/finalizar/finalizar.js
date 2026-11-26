@@ -209,17 +209,17 @@ document.addEventListener('DOMContentLoaded', async function () {
     exibirResumoPedido();
 
     // FORMULÁRIO DE ENTREGA
-    formEntrega.addEventListener('submit', function (event) {
+    formEntrega.addEventListener('submit', async function (event) {
 
         event.preventDefault();
 
-        // VERIFICA SE EXISTEM PRODUTOS NO CARRINHO
+        // VERIFICAR SE EXISTEM PRODUTOS NO CARRINHO
         if (produtosCarrinho.length === 0) {
             alert('Adicione produtos ao carrinho antes de continuar.');
             return;
         }
 
-        // ORGANIZA OS DADOS DE ENTREGA
+        // ORGANIZAR OS DADOS DE ENTREGA
         const dadosEntrega = {
             nome: document.getElementById('nome').value.trim(),
             cep: document.getElementById('cep').value.trim(),
@@ -230,33 +230,76 @@ document.addEventListener('DOMContentLoaded', async function () {
             estado: document.getElementById('estado').value.trim()
         };
 
-        // SALVA OS DADOS TEMPORARIAMENTE
-        sessionStorage.setItem(
-            'dadosEntrega',
-            JSON.stringify(dadosEntrega)
-        );
+        // PREPARAR OS DADOS DA COMPRA DIRETA
+        let itensCompra = null;
 
-        // PREPARA OS DADOS DA COMPRA DIRETA, SE NECESSÁRIO
         if (compraDireta) {
-
-            sessionStorage.setItem(
-                'itensCompra',
-                JSON.stringify([{
-                    idProduto: compraDireta.idProduto,
-                    quantidade: compraDireta.quantidade
-                }])
-            );
-
-        } else {
-
-            // GARANTE QUE UMA COMPRA PELO CARRINHO NÃO USE DADOS ANTIGOS
-            sessionStorage.removeItem('itensCompra');
-
+            itensCompra = [{
+                idProduto: compraDireta.idProduto,
+                quantidade: compraDireta.quantidade
+            }];
         }
 
-        alert('Dados de entrega registrados com sucesso!');
+        try {
 
-        window.location.href = '../pagamento/index.html';
+            // CRIAR O PEDIDO NO BACKEND
+            const resposta = await fetch(
+                'http://127.0.0.1:3001/api/pedidos/confirmar',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        dadosEntrega,
+                        itensCompra
+                    })
+                }
+            );
+
+            const resultado = await resposta.json();
+
+            // VERIFICAR SE O PEDIDO FOI CRIADO
+            if (!resposta.ok || !resultado.sucesso) {
+                alert(resultado.mensagem || 'Não foi possível confirmar o pedido.');
+                return;
+            }
+
+            // SALVAR O ID DO PEDIDO PENDENTE
+            sessionStorage.setItem(
+                'idPedidoPendente',
+                resultado.idPedido
+            );
+
+            // SALVAR OS DADOS DE ENTREGA TEMPORARIAMENTE
+            sessionStorage.setItem(
+                'dadosEntrega',
+                JSON.stringify(dadosEntrega)
+            );
+
+            // SALVAR OS ITENS DA COMPRA DIRETA, SE NECESSÁRIO
+            if (compraDireta) {
+                sessionStorage.setItem(
+                    'itensCompra',
+                    JSON.stringify(itensCompra)
+                );
+            } else {
+                sessionStorage.removeItem('itensCompra');
+            }
+
+            alert(resultado.mensagem);
+
+            // IR PARA A PÁGINA DE PAGAMENTO
+            window.location.href = '../pagamento/index.html';
+
+        } catch (error) {
+
+            console.error('Erro ao confirmar pedido:', error);
+
+            alert('Não foi possível conectar ao servidor para confirmar o pedido.');
+
+        }
 
     });
 

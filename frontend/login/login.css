@@ -219,3 +219,21 @@ body {
 .escolha-acesso[hidden] {
     display: none;
 }
+
+.link-esqueci-senha {
+    display: block;
+
+    width: 100%;
+    text-align: center;
+
+    margin-top: 18px;
+
+    color: #c47b8c;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.2s;
+}

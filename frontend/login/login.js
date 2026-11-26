@@ -37,9 +37,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const resultado = await resposta.json();
 
+            // VERIFICAR SE O CPF NÃO ESTÁ CADASTRADO
+            if (
+                resposta.status === 404 &&
+                resultado.mensagem === 'CPF não cadastrado.'
+            ) {
+                window.location.assign('../cadastro/index.html');
+                return;
+            }
+
+            // VERIFICAR SE O LOGIN FOI REALIZADO
             if (!resposta.ok) {
                 throw new Error(resultado.mensagem || 'Não foi possível realizar o login.');
             }
+
 
             // RECEBER AS OPÇÕES DE ACESSO
             const opcoes = resultado.usuario.opcoesAcesso;
