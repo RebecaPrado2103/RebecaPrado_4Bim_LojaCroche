@@ -1,5 +1,29 @@
-/* CONFIGURAÇÕES GERAIS */
+/* =========================================================
+   VARIÁVEIS DA IDENTIDADE VISUAL - ENTRE LAÇOS
+   ========================================================= */
+:root {
+    --cor-fundo: #FDFBF9;
+    --cor-superficie: #F7F4F0;
+    --cor-branco: #FFFFFF;
+    --cor-borda: #E6E0D8;
 
+    --verde-escuro: #384930;
+    --verde-profundo: #495E3E;
+    --verde-natural: #778D68;
+    --verde-salvia: #A3B198;
+
+    --rosa-principal: #E6A8B0;
+    --rosa-claro: #F5D5D9;
+    --cor-fundo-rosa: #F9EBEB;
+
+    --cor-texto: #4E584A;
+    --cor-texto-suave: #889283;
+
+    --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+    --fonte-corpo: 'DM Sans', sans-serif;
+}
+
+/* CONFIGURAÇÕES GERAIS */
 * {
     margin: 0;
     padding: 0;
@@ -7,226 +31,331 @@
 }
 
 body {
+    background-color: var(--cor-fundo);
+    font-family: var(--fonte-corpo);
+    color: var(--verde-escuro);
+    min-height: 100vh;
+}
+
+/* CONTAINER DIVIDIDO EM DUAS COLUNAS */
+.pagina-recuperacao {
+    width: 100%;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 30px 20px;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    background-color: #fff5f7;
-    color: #514542;
 }
 
-/* CAIXINHA DE RECUPERAÇÃO */
-
-.caixa-recuperacao {
+.recuperacao-container {
+    display: flex;
     width: 100%;
-    max-width: 450px;
+    max-width: 1000px;
+    min-height: 620px;
+    background-color: var(--cor-branco);
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 14px 42px rgba(56, 73, 48, 0.08);
+    border: 1px solid var(--cor-borda);
+}
 
-    padding: 45px 35px;
-
-    background-color: #ffffff;
-
-    border: 1px solid #f1dfe4;
-    border-radius: 24px;
-
-    box-shadow: 0 12px 35px rgba(120, 83, 92, 0.10);
-
+/* =========================================================
+   COLUNA ESQUERDA: PAINEL ARTESANAL ENTRE LAÇOS
+   ========================================================= */
+.recuperacao-col-imagem {
+    flex: 1.05;
+    position: relative;
+    overflow: hidden;
+    background-color: #EAE9E1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
     text-align: center;
 }
 
-/* LOGO */
+.forma-topo {
+    position: absolute;
+    top: -60px;
+    right: -50px;
+    width: 230px;
+    height: 210px;
+    background-color: #93A486;
+    border-radius: 48% 52% 62% 38% / 45% 42% 58% 55%;
+    opacity: 0.75;
+    pointer-events: none;
+}
 
+.forma-base {
+    position: absolute;
+    bottom: -75px;
+    left: -55px;
+    width: 260px;
+    height: 220px;
+    background-color: var(--verde-escuro);
+    border-radius: 58% 42% 48% 52% / 52% 60% 40% 48%;
+    pointer-events: none;
+}
+
+.forma-rosa {
+    position: absolute;
+    top: 32%;
+    left: -65px;
+    width: 140px;
+    height: 190px;
+    background-color: var(--rosa-claro);
+    border-radius: 50%;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.ilustracao-la {
+    position: relative;
+    z-index: 2;
+    width: 185px;
+    height: auto;
+    margin-bottom: 18px;
+}
+
+.arte-texto {
+    position: relative;
+    z-index: 2;
+    max-width: 340px;
+}
+
+.arte-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.2px;
+    color: var(--verde-profundo);
+    margin-bottom: 14px;
+}
+
+.arte-texto h2 {
+    font-family: var(--fonte-titulo);
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--verde-escuro);
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+
+.arte-texto p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cor-texto);
+}
+
+.arte-selo {
+    position: absolute;
+    bottom: 26px;
+    right: 28px;
+    z-index: 2;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    border: 1px dashed var(--verde-natural);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: var(--verde-escuro);
+    background-color: rgba(253, 251, 249, 0.55);
+}
+
+.arte-selo span {
+    font-size: 16px;
+    color: var(--rosa-principal);
+}
+
+.arte-selo small {
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+/* =========================================================
+   COLUNA DIREITA: FORMULÁRIO DE RECUPERAÇÃO
+   ========================================================= */
+.recuperacao-col-formulario {
+    flex: 0.95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 46px 48px;
+    background-color: var(--cor-branco);
+}
+
+.caixa-recuperacao {
+    width: 100%;
+    max-width: 375px;
+}
+
+/* LOGO */
 .logo {
-    margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 22px;
 }
 
 .logo h1 {
-    font-size: 34px;
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 36px;
     font-weight: 600;
-
-    color: #78917b;
-
-    letter-spacing: 1px;
+    margin-bottom: 2px;
 }
 
 .logo p {
-    margin-top: 8px;
-
-    font-size: 14px;
-    color: #a18b91;
+    color: var(--verde-natural);
+    font-size: 13px;
 }
 
-/* TÍTULOS E TEXTOS */
+/* TÍTULO E DESCRIÇÃO */
+.conteudo-recuperacao {
+    text-align: center;
+    margin-bottom: 26px;
+}
 
-.caixa-recuperacao h2 {
-    margin-bottom: 12px;
-
-    font-size: 23px;
+.conteudo-recuperacao h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 27px;
     font-weight: 600;
-
-    color: #65534f;
-}
-
-.caixa-recuperacao > p {
-    margin-bottom: 28px;
-
-    font-size: 14px;
-    line-height: 1.6;
-
-    color: #8b777d;
-}
-
-/* FORMULÁRIOS */
-
-#form-recuperacao,
-#form-nova-senha {
-    width: 100%;
-    text-align: left;
-}
-
-/* CAMPOS */
-
-#form-recuperacao label,
-#form-nova-senha label {
-    display: block;
-
     margin-bottom: 8px;
+}
 
-    font-size: 14px;
+.conteudo-recuperacao p {
+    color: var(--cor-texto-suave);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+/* CAMPOS DOS FORMULÁRIOS */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-size: 13px;
     font-weight: 600;
-
-    color: #76635f;
+    color: var(--verde-escuro);
 }
 
-#form-recuperacao input,
-#form-nova-senha input {
+.campo input {
     width: 100%;
-
-    padding: 13px 15px;
-    margin-bottom: 20px;
-
-    border: 1px solid #eadde1;
+    padding: 13px 16px;
+    border: 1px solid var(--cor-borda);
     border-radius: 12px;
-
-    background-color: #fffafb;
-
-    font-size: 15px;
-    color: #514542;
-
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    font-family: var(--fonte-corpo);
+    font-size: 14px;
     outline: none;
-
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* EFEITO AO CLICAR NO CAMPO */
+.campo input:focus {
+    background-color: var(--cor-branco);
+    border-color: var(--verde-salvia);
+    box-shadow: 0 0 0 3px rgba(163, 177, 152, 0.22);
+}
 
-#form-recuperacao input:focus,
-#form-nova-senha input:focus {
-    border-color: #91aa94;
-
-    box-shadow: 0 0 0 3px rgba(145, 170, 148, 0.15);
-
-    background-color: #ffffff;
+.campo input::placeholder {
+    color: var(--cor-texto-suave);
 }
 
 /* BOTÕES */
-
 #form-recuperacao button,
 #form-nova-senha button {
     width: 100%;
-
     padding: 14px;
-
+    margin-top: 4px;
     border: none;
-    border-radius: 12px;
-
-    background-color: #819b83;
-    color: #ffffff;
-
+    border-radius: 999px;
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    font-family: var(--fonte-corpo);
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 6px 16px rgba(119, 141, 104, 0.24);
+    transition: all 0.25s ease;
 }
-
-/* EFEITO AO PASSAR O MOUSE */
 
 #form-recuperacao button:hover,
 #form-nova-senha button:hover {
-    background-color: #6f896f;
-    transform: translateY(-2px);
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
 }
-
-/* BOTÃO DESABILITADO */
 
 #form-recuperacao button:disabled,
 #form-nova-senha button:disabled {
-    background-color: #b8c7b9;
-
+    opacity: 0.7;
     cursor: not-allowed;
     transform: none;
 }
 
-/* MENSAGENS */
-
+/* MENSAGENS DE RETORNO */
 #mensagem-recuperacao,
 #mensagem-nova-senha {
-    margin-top: 18px;
-
+    margin-top: 14px;
     font-size: 13px;
+    font-weight: 500;
     line-height: 1.5;
-
-    color: #78917b;
+    text-align: center;
+    color: var(--verde-profundo);
 }
 
-/* LINK PARA VOLTAR AO LOGIN */
+#mensagem-recuperacao:empty,
+#mensagem-nova-senha:empty {
+    display: none;
+}
 
-.caixa-recuperacao a {
-    display: inline-block;
-
-    margin-top: 25px;
-
-    font-size: 14px;
+/* LINK VOLTAR PARA O LOGIN */
+.link-voltar {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 24px;
+    color: var(--rosa-principal);
+    font-size: 13px;
     font-weight: 600;
-
-    color: #819b83;
-
     text-decoration: none;
-
-    transition: color 0.2s;
+    transition: color 0.25s ease;
 }
 
-.caixa-recuperacao a:hover {
-    color: #5e785f;
+.link-voltar:hover {
+    color: var(--verde-natural);
     text-decoration: underline;
 }
 
 /* RESPEITAR O ATRIBUTO HIDDEN */
-
 [hidden] {
     display: none !important;
 }
 
-/* ADAPTAÇÃO PARA CELULARES */
-
-@media (max-width: 480px) {
-    .caixa-recuperacao {
-        padding: 35px 23px;
-
-        border-radius: 20px;
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 820px) {
+    .recuperacao-col-imagem {
+        display: none;
     }
 
-    .logo h1 {
-        font-size: 30px;
+    .recuperacao-container {
+        max-width: 460px;
+        min-height: auto;
     }
 
-    .caixa-recuperacao h2 {
-        font-size: 21px;
+    .recuperacao-col-formulario {
+        padding: 40px 32px;
     }
 }
