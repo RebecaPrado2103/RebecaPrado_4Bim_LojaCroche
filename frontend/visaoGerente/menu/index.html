@@ -7,85 +7,197 @@
 
     <title>Menu do Gerente | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="menu.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO ADMINISTRATIVO -->
     <header class="cabecalho">
 
-        <div class="logo">
+        <a href="../../visaoCliente/inicio/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
+        </a>
 
         <div class="informacoes-gerente">
-            <span>Área administrativa</span>
-            <p>Bem-vinda, <strong id="nome-gerente">Gerente</strong>!</p>
+            <span>ÁREA ADMINISTRATIVA</span>
+            <div class="saudacao-gerente">
+                <span class="ponto-ativo" aria-hidden="true"></span>
+                <p>Bem-vinda, <strong id="nome-gerente">Gerente</strong>!</p>
+            </div>
         </div>
 
     </header>
 
-    <main class="conteudo">
+    <!-- FAIXA DE BOAS-VINDAS -->
+    <section class="faixa-topo">
+        <span>PAINEL DE GESTÃO</span>
+        <h2>Menu de gerenciamento</h2>
+        <p>Escolha uma opção abaixo para administrar os produtos, pedidos e equipe da loja.</p>
+    </section>
 
-        <section class="introducao">
-            <h2>Menu de gerenciamento</h2>
-            <p>Escolha uma opção para administrar nossa loja.</p>
-        </section>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="conteudo">
 
         <section class="menu-cards">
 
+            <!-- 1. Produtos -->
             <a href="../produtos/index.html" class="card">
-                <h3>Produtos</h3>
-                <p>Cadastrar, consultar e editar produtos.</p>
+                <div class="card-icone icone-verde" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                        <path d="M3 6h18" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Produtos</h3>
+                    <p>Cadastrar, consultar e editar produtos.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 2. Estoque -->
             <a href="../estoque/index.html" class="card">
-                <h3>Estoque</h3>
-                <p>Acompanhar e atualizar o estoque.</p>
+                <div class="card-icone icone-rosa" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                        <path d="m3.3 7 8.7 5 8.7-5" />
+                        <path d="M12 22V12" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Estoque</h3>
+                    <p>Acompanhar e atualizar o estoque.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 3. Pedidos -->
             <a href="../pedido/index.html" class="card">
-                <h3>Pedidos</h3>
-                <p>Consultar e gerenciar pedidos.</p>
+                <div class="card-icone icone-verde" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                        <path d="M12 11h4" />
+                        <path d="M12 16h4" />
+                        <path d="M8 11h.01" />
+                        <path d="M8 16h.01" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Pedidos</h3>
+                    <p>Consultar e gerenciar pedidos.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 4. Clientes -->
             <a href="../cliente/index.html" class="card">
-                <h3>Clientes</h3>
-                <p>Consultar os clientes cadastrados.</p>
+                <div class="card-icone icone-rosa" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Clientes</h3>
+                    <p>Consultar os clientes cadastrados.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 5. Funcionários -->
             <a href="../funcionario/index.html" class="card">
-                <h3>Funcionários</h3>
-                <p>Gerenciar os funcionários da loja.</p>
+                <div class="card-icone icone-verde" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 10h2" />
+                        <path d="M16 14h2" />
+                        <path d="M6.17 15a3 3 0 0 1 5.66 0" />
+                        <circle cx="9" cy="11" r="2" />
+                        <rect x="2" y="5" width="20" height="14" rx="2" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Funcionários</h3>
+                    <p>Gerenciar os funcionários da loja.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 6. Devoluções -->
             <a href="../devolucoes/index.html" class="card">
-                <h3>Devoluções</h3>
-                <p>Analisar solicitações de devolução.</p>
+                <div class="card-icone icone-rosa" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Devoluções</h3>
+                    <p>Analisar solicitações de devolução.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 7. Formas de pagamento -->
             <a href="../formaPagamento/index.html" class="card">
-                <h3>Formas de pagamento</h3>
-                <p>Consultar as formas de pagamento.</p>
+                <div class="card-icone icone-verde" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="5" rx="2" />
+                        <line x1="2" x2="22" y1="10" y2="10" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Formas de pagamento</h3>
+                    <p>Consultar as formas de pagamento.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
+            <!-- 8. Cargos -->
             <a href="../cargos/index.html" class="card">
-                <h3>Cargos</h3>
-                <p>Gerenciar os cargos da loja</p>
+                <div class="card-icone icone-rosa" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="6" />
+                        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                    </svg>
+                </div>
+                <div class="card-corpo">
+                    <h3>Cargos</h3>
+                    <p>Gerenciar os cargos da loja.</p>
+                </div>
+                <span class="card-seta">Acessar →</span>
             </a>
 
         </section>
 
+        <!-- BARRA DE ATALHOS -->
         <section class="atalhos">
-            <a href="../../visaoCliente/inicio/index.html">
-                Voltar à visão do cliente
+            <a href="../../visaoCliente/inicio/index.html" class="botao-voltar-cliente">
+                ← Voltar à visão do cliente
             </a>
 
-            <button id="botao-sair">Sair da conta</button>
+            <button type="button" id="botao-sair">Sair da conta</button>
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="menu.js"></script>
 
