@@ -5,44 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Estoque | Entre Laços</title>
+
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="estoque.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <a href="../menu/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
-
-        <div class="informacoes-pagina">
-            <h2>Gerenciamento de Estoque</h2>
-            <p>Controle as quantidades dos nossos produtos.</p>
-        </div>
-
-        <a href="../menu/index.html" class="voltar-menu">
-            Voltar ao menu
         </a>
+
+        <div class="acoes-cabecalho">
+            <a href="../menu/index.html" class="voltar-menu">
+                ← Voltar ao menu
+            </a>
+        </div>
+
     </header>
+
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>CONTROLE DE INVENTÁRIO</span>
+        <h2>Gerenciamento de Estoque</h2>
+        <p>Acompanhe as quantidades disponíveis, registre entradas e saídas e consulte o histórico.</p>
+    </section>
 
     <main class="container-principal">
 
+        <!-- RESUMO DO ESTOQUE -->
         <section class="resumo-estoque">
-            <div class="card-resumo">
+
+            <div class="card-resumo card-total">
+                <span class="resumo-etiqueta">CATÁLOGO ATIVO</span>
                 <h3>Total de produtos</h3>
                 <p id="total-produtos">0</p>
             </div>
 
-            <div class="card-resumo">
+            <div class="card-resumo card-baixo">
+                <span class="resumo-etiqueta">ATENÇÃO (1 A 5 UN.)</span>
                 <h3>Estoque baixo</h3>
                 <p id="produtos-estoque-baixo">0</p>
             </div>
 
-            <div class="card-resumo">
+            <div class="card-resumo card-zerado">
+                <span class="resumo-etiqueta">INDISPONÍVEL</span>
                 <h3>Sem estoque</h3>
                 <p id="produtos-sem-estoque">0</p>
             </div>
+
         </section>
 
         <!-- REGISTRO DE MOVIMENTAÇÕES -->
@@ -50,16 +69,19 @@
 
             <div class="titulo-secao">
                 <h2>Movimentações de estoque</h2>
-                <p>Registre entradas e saídas de produtos.</p>
+                <p>Registre entradas de reposição e saídas manuais de produtos.</p>
             </div>
 
             <div class="formularios-movimentacao">
 
                 <!-- FORMULÁRIO DE ENTRADA -->
-                <form id="form-entrada" class="formulario-movimentacao">
+                <form id="form-entrada" class="formulario-movimentacao form-tipo-entrada">
 
-                    <h3>Registrar entrada</h3>
-                    <p>Adicione unidades ao estoque.</p>
+                    <div class="form-topo">
+                        <span class="badge-movimento badge-entrada">+ Entrada</span>
+                        <h3>Registrar entrada</h3>
+                        <p>Adicione unidades ao estoque da loja.</p>
+                    </div>
 
                     <label for="produto-entrada">Produto</label>
                     <select id="produto-entrada" required>
@@ -67,21 +89,24 @@
                     </select>
 
                     <label for="quantidade-entrada">Quantidade</label>
-                    <input type="number" id="quantidade-entrada" min="1" step="1" required>
+                    <input type="number" id="quantidade-entrada" min="1" step="1" placeholder="Ex.: 5" required>
 
                     <label for="observacao-entrada">Observação (opcional)</label>
                     <textarea id="observacao-entrada" maxlength="200"
-                        placeholder="Ex.: Reposição de produtos"></textarea>
+                        placeholder="Ex.: Reposição de produtos artesanais"></textarea>
 
                     <button type="submit">Registrar entrada</button>
 
                 </form>
 
                 <!-- FORMULÁRIO DE SAÍDA -->
-                <form id="form-saida" class="formulario-movimentacao">
+                <form id="form-saida" class="formulario-movimentacao form-tipo-saida">
 
-                    <h3>Registrar saída</h3>
-                    <p>Retire unidades do estoque.</p>
+                    <div class="form-topo">
+                        <span class="badge-movimento badge-saida">− Saída</span>
+                        <h3>Registrar saída</h3>
+                        <p>Retire unidades do estoque da loja.</p>
+                    </div>
 
                     <label for="produto-saida">Produto</label>
                     <select id="produto-saida" required>
@@ -89,7 +114,7 @@
                     </select>
 
                     <label for="quantidade-saida">Quantidade</label>
-                    <input type="number" id="quantidade-saida" min="1" step="1" required>
+                    <input type="number" id="quantidade-saida" min="1" step="1" placeholder="Ex.: 1" required>
 
                     <label for="observacao-saida">Observação (opcional)</label>
                     <textarea id="observacao-saida" maxlength="200"
@@ -103,11 +128,12 @@
 
         </section>
 
+        <!-- PRODUTOS EM ESTOQUE -->
         <section class="area-estoque">
 
             <div class="titulo-secao">
                 <h2>Produtos em estoque</h2>
-                <p>Consulte e atualize as quantidades disponíveis.</p>
+                <p>Pesquise por nome ou código e filtre pelo nível de disponibilidade.</p>
             </div>
 
             <div class="filtros">
@@ -158,6 +184,14 @@
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="estoque.js"></script>
 

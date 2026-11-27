@@ -1,183 +1,288 @@
-
-/* =========================================
-   ENTRE LAÇOS — GERENCIAMENTO DE CARGOS
-========================================= */
-
-/* PALETA E CONFIGURAÇÕES GERAIS */
-
+/* =========================================================
+   VARIÁVEIS DA IDENTIDADE VISUAL - ENTRE LAÇOS
+   ========================================================= */
 :root {
-    --rosa: #bd858c;
-    --rosa-escuro: #a96f78;
-    --rosa-claro: #f5e8e6;
-    --creme: #fcf8f5;
-    --branco: #ffffff;
-    --marrom: #795d55;
-    --marrom-escuro: #60473f;
-    --texto: #51413d;
-    --texto-suave: #927e77;
-    --borda: #eee2dc;
-    --verde: #63866d;
-    --verde-claro: #eaf2eb;
-    --vermelho: #a85f5f;
-    --vermelho-claro: #f8eaea;
-    --sombra: 0 5px 20px rgba(105, 73, 62, 0.06);
+    --cor-fundo: #FDFBF9;
+    --cor-superficie: #F7F4F0;
+    --cor-branco: #FFFFFF;
+    --cor-borda: #E6E0D8;
+
+    --verde-escuro: #384930;
+    --verde-profundo: #495E3E;
+    --verde-natural: #778D68;
+    --verde-salvia: #A3B198;
+
+    --rosa-principal: #E6A8B0;
+    --rosa-claro: #F5D5D9;
+    --cor-fundo-rosa: #F9EBEB;
+
+    --cor-texto: #4E584A;
+    --cor-texto-suave: #889283;
+
+    --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+    --fonte-corpo: 'DM Sans', sans-serif;
 }
 
+/* =========================================================
+   CONFIGURAÇÕES GERAIS
+   ========================================================= */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    background: var(--creme);
-    color: var(--texto);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* CABEÇALHO */
+button,
+input,
+select {
+    font-family: inherit;
+}
 
+button {
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* =========================================================
+   CABEÇALHO ADMINISTRATIVO
+   ========================================================= */
 .cabecalho {
-    width: 100%;
-    min-height: 78px;
-    padding: 16px 7%;
-    background: var(--branco);
-    border-bottom: 1px solid var(--borda);
-
+    background-color: var(--cor-branco);
+    padding: 20px 7%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-borda);
 }
 
-.logo h1,
-.cabecalho h1 {
-    margin: 0;
-    color: var(--rosa);
-    font-family: Georgia, serif;
-    font-size: 27px;
-}
-
-.logo p {
-    margin: 3px 0 0;
-    color: var(--texto-suave);
-    font-size: 12px;
-}
-
-.cabecalho a {
-    color: var(--marrom);
-    font-size: 13px;
-    font-weight: bold;
+.identidade {
     text-decoration: none;
-    transition: color 0.2s;
+    display: block;
 }
 
-.cabecalho a:hover {
-    color: var(--rosa);
-}
-
-/* CONTEÚDO PRINCIPAL */
-
-.conteudo {
-    width: min(1100px, 86%);
-    margin: 40px auto 65px;
-}
-
-.introducao {
-    margin-bottom: 30px;
-}
-
-.introducao h2 {
-    margin: 8px 0;
-    color: var(--marrom);
-    font-family: Georgia, serif;
+.identidade h1 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
     font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
 }
 
-.introducao p {
-    margin: 0;
-    color: var(--texto-suave);
-    font-size: 14px;
-    line-height: 1.6;
+.identidade p {
+    color: var(--verde-natural);
+    font-size: 12.5px;
+    margin-top: 3px;
 }
 
-/* ÁREA DE FILTROS E AÇÕES */
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    background-color: var(--cor-fundo-rosa);
+    color: var(--verde-escuro);
+    border: 1px solid var(--rosa-claro);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
 
-.acoes,
-.filtros,
-.barra-acoes {
+.voltar:hover {
+    background-color: var(--rosa-claro);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(56, 73, 48, 0.08);
+}
+
+/* =========================================================
+   FAIXA SUPERIOR
+   ========================================================= */
+.faixa-topo {
+    background-color: var(--cor-fundo-rosa);
+    border-bottom: 1px solid var(--rosa-claro);
+    text-align: center;
+    padding: 42px 6% 38px;
+}
+
+.faixa-topo span {
+    display: inline-block;
+    color: var(--verde-natural);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.faixa-topo h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 42px;
+    font-weight: 600;
+    margin: 8px 0;
+    line-height: 1.1;
+}
+
+.faixa-topo p {
+    color: var(--cor-texto);
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+.conteudo {
+    flex: 1;
+    width: 88%;
+    max-width: 1180px;
+    margin: 44px auto 64px;
+}
+
+/* =========================================================
+   CARTÕES PRINCIPAIS
+   ========================================================= */
+.lista-cargos,
+.area-formulario,
+.area-permissoes {
+    background-color: var(--cor-branco);
+    padding: 32px 34px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(56, 73, 48, 0.04);
+}
+
+.area-formulario,
+.area-permissoes {
+    margin-top: 32px;
+    border-color: var(--rosa-principal);
+    box-shadow: 0 12px 32px rgba(230, 168, 176, 0.14);
+}
+
+.secao-cabecalho,
+.cabecalho-formulario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.titulo-lista {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 24px;
 }
 
-label {
-    color: var(--marrom);
+.titulo-lista h3,
+.cabecalho-formulario h3 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.identificador {
+    color: var(--verde-natural);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+#quantidade-cargos {
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    color: var(--verde-profundo);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* FILTRO E BOTÃO NOVO CARGO */
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.filtro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filtro label {
+    color: var(--cor-texto);
     font-size: 13px;
     font-weight: 600;
 }
 
 select,
-input {
-    min-height: 42px;
-    padding: 10px 13px;
-    border: 1px solid var(--borda);
-    border-radius: 9px;
-    background: var(--branco);
-    color: var(--texto);
-    font-family: inherit;
-    font-size: 13px;
+input[type="text"] {
+    padding: 10px 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    font-size: 13.5px;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 select:focus,
-input:focus {
-    border-color: var(--rosa);
-    box-shadow: 0 0 0 3px rgba(189, 133, 140, 0.12);
+input[type="text"]:focus {
+    background-color: var(--cor-branco);
+    border-color: var(--verde-salvia);
+    box-shadow: 0 0 0 3px rgba(163, 177, 152, 0.2);
 }
 
-/* BOTÕES */
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-    transition:
-        background 0.2s,
-        transform 0.2s,
-        box-shadow 0.2s;
-}
-
-#botao-novo-cargo,
 .botao-principal {
-    min-height: 42px;
-    padding: 0 20px;
+    padding: 11px 22px;
     border: none;
-    border-radius: 9px;
-    background: var(--rosa);
-    color: var(--branco);
-    font-size: 13px;
-    font-weight: bold;
+    border-radius: 999px;
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    font-size: 13.5px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(119, 141, 104, 0.22);
+    white-space: nowrap;
 }
 
-#botao-novo-cargo:hover,
 .botao-principal:hover {
-    background: var(--rosa-escuro);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(169, 111, 120, 0.2);
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
 }
 
-/* CARTÃO PRINCIPAL */
-
+/* =========================================================
+   GRADE DE CARGOS
+   ========================================================= */
 #container-cargos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 17px;
+    gap: 18px;
 }
-
-/* CARTÕES INDIVIDUAIS DOS CARGOS */
 
 .cargo-card {
     display: flex;
@@ -185,257 +290,311 @@ button {
     justify-content: space-between;
     gap: 18px;
     min-width: 0;
-    padding: 22px;
-    border: 1px solid var(--borda);
-    border-radius: 14px;
-    background: var(--branco);
-    box-shadow: var(--sombra);
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 22px 24px;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-left: 4px solid var(--rosa-principal);
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .cargo-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 9px 25px rgba(105, 73, 62, 0.10);
+    background-color: var(--cor-branco);
+    border-color: var(--verde-salvia);
+    border-left-color: var(--verde-natural);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(56, 73, 48, 0.06);
 }
 
 .cargo-informacoes {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 9px 12px;
+    gap: 8px 12px;
 }
 
 .cargo-informacoes h4 {
-    margin: 0;
-    color: var(--marrom-escuro);
-    font-family: Georgia, serif;
-    font-size: 19px;
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 23px;
+    font-weight: 600;
     overflow-wrap: anywhere;
 }
 
 .cargo-informacoes p {
     grid-column: 1 / -1;
-    margin: 0;
-    color: var(--texto-suave);
-    font-size: 12px;
+    color: var(--cor-texto-suave);
+    font-size: 13px;
 }
 
 /* ETIQUETAS DE STATUS */
-
 .status {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: fit-content;
-    padding: 6px 11px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
 }
 
 .status.ativo {
-    background: var(--verde-claro);
-    color: var(--verde);
+    background-color: #ebf2e8;
+    color: var(--verde-profundo);
+    border: 1px solid #d1e0cb;
 }
 
 .status.inativo {
-    background: var(--vermelho-claro);
-    color: var(--vermelho);
+    background-color: var(--cor-fundo-rosa);
+    color: #9e4752;
+    border: 1px solid var(--rosa-claro);
 }
 
 /* BOTÕES DE AÇÃO DOS CARGOS */
-
 .cargo-acoes {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--cor-borda);
 }
 
 .botao-secundario,
 .botao-perigo {
-    min-height: 36px;
-    padding: 0 13px;
-    border: 1px solid var(--borda);
-    border-radius: 8px;
-    background: var(--rosa-claro);
-    color: var(--marrom);
-    font-size: 12px;
-    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.botao-secundario {
+    background-color: var(--cor-superficie);
+    color: var(--verde-escuro);
+    border: 1px solid var(--cor-borda);
 }
 
 .botao-secundario:hover {
-    border-color: var(--rosa);
-    background: #f0dcda;
+    background-color: var(--verde-natural);
+    border-color: var(--verde-natural);
+    color: var(--cor-branco);
+    transform: translateY(-1px);
 }
 
 .botao-perigo {
-    border-color: #f0dada;
-    background: var(--vermelho-claro);
-    color: var(--vermelho);
+    background-color: var(--cor-fundo-rosa);
+    color: #9e4752;
+    border: 1px solid var(--rosa-claro);
 }
 
 .botao-perigo:hover {
-    background: #f0dada;
+    background-color: var(--rosa-claro);
+    transform: translateY(-1px);
 }
 
-/* FORMULÁRIO DE CARGO */
-
-#area-formulario,
-#area-permissoes {
-    margin-top: 22px;
-    padding: 27px;
-    border: 1px solid var(--borda);
-    border-radius: 14px;
-    background: var(--branco);
-    box-shadow: var(--sombra);
+/* =========================================================
+   BOTÃO FECHAR (X) NO CANTO SUPERIOR DIREITO
+   ========================================================= */
+.botao-fechar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--rosa-claro);
+    background-color: var(--cor-fundo-rosa);
+    color: #9e4752;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-#area-formulario[hidden],
-#area-permissoes[hidden] {
-    display: none;
+.botao-fechar:hover {
+    background-color: var(--rosa-claro);
+    transform: scale(1.06);
 }
 
-#area-formulario h3,
-#area-permissoes h3 {
-    margin: 0 0 20px;
-    color: var(--marrom);
-    font-family: Georgia, serif;
-    font-size: 23px;
-}
-
+/* =========================================================
+   FORMULÁRIO DE CADASTRO / EDIÇÃO DE CARGO
+   ========================================================= */
 #formulario-cargo {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
 }
 
-#formulario-cargo input {
-    width: 100%;
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
-#salvar-cargo,
-#salvar-permissoes {
-    min-height: 40px;
-    padding: 0 18px;
-    border: none;
-    border-radius: 8px;
-    background: var(--rosa);
-    color: var(--branco);
+.campo label {
+    color: var(--verde-escuro);
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
-#salvar-cargo:hover,
-#salvar-permissoes:hover {
-    background: var(--rosa-escuro);
+.campo input {
+    width: 100%;
+    padding: 13px 16px;
 }
 
-#fechar-formulario,
-#cancelar-formulario,
-#fechar-permissoes {
-    min-height: 38px;
-    padding: 0 15px;
-    border: 1px solid var(--borda);
-    border-radius: 8px;
-    background: var(--creme);
-    color: var(--marrom);
-    font-size: 12px;
-    font-weight: bold;
+.botoes-formulario {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-/* GRUPOS DE PERMISSÕES */
+.botao-cancelar {
+    padding: 11px 22px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    background-color: var(--cor-superficie);
+    color: var(--verde-escuro);
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.botao-cancelar:hover {
+    background-color: var(--cor-fundo-rosa);
+    border-color: var(--rosa-claro);
+}
+
+/* =========================================================
+   PERMISSÕES DO CARGO
+   ========================================================= */
+.descricao-permissoes {
+    color: var(--cor-texto);
+    font-size: 14px;
+    margin-bottom: 22px;
+}
 
 #container-permissoes {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
-    margin: 20px 0;
+    gap: 18px;
+    margin-bottom: 26px;
 }
 
 .grupo-permissoes {
-    padding: 18px;
-    border: 1px solid var(--borda);
-    border-radius: 11px;
-    background: var(--creme);
+    padding: 20px 22px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    background-color: var(--cor-fundo);
 }
 
 .grupo-permissoes h4 {
-    margin: 0 0 14px;
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 22px;
+    font-weight: 600;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--borda);
-    color: var(--marrom);
-    font-family: Georgia, serif;
-    font-size: 16px;
+    margin-bottom: 14px;
+    border-bottom: 1px dashed var(--cor-borda);
 }
 
 .permissao-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     margin: 11px 0;
-    color: var(--texto);
-    font-size: 12px;
-    font-weight: normal;
-    line-height: 1.5;
+    color: var(--cor-texto);
+    font-size: 13.5px;
+    line-height: 1.45;
     cursor: pointer;
+}
+
+.permissao-item:last-child {
+    margin-bottom: 0;
 }
 
 .permissao-item input {
-    width: 16px;
-    min-height: 16px;
-    height: 16px;
-    margin: 0;
-    accent-color: var(--rosa);
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--verde-natural);
     cursor: pointer;
 }
 
-/* MENSAGENS E CARREGAMENTO */
+.acoes-permissoes {
+    display: flex;
+    justify-content: flex-start;
+}
 
+/* MENSAGENS E CARREGAMENTO */
 .carregando {
     grid-column: 1 / -1;
-    padding: 25px;
-    color: var(--texto-suave);
+    padding: 22px;
+    background-color: var(--cor-fundo);
+    border: 1px dashed var(--cor-borda);
+    border-radius: 14px;
+    color: var(--cor-texto-suave);
     text-align: center;
+    font-size: 14px;
+}
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+.rodape {
+    background-color: var(--verde-escuro);
+    color: rgba(253, 251, 249, 0.85);
+    padding: 22px 7%;
+}
+
+.rodape-final {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
     font-size: 13px;
 }
 
-/* RESPONSIVIDADE */
-
-@media (max-width: 760px) {
-    .cabecalho {
-        padding: 15px 6%;
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 820px) {
+    .conteudo {
+        width: 92%;
     }
 
-    .conteudo {
-        width: 90%;
-        margin-top: 28px;
+    .secao-cabecalho {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     #container-cargos,
     #container-permissoes {
         grid-template-columns: 1fr;
     }
-
-    .introducao h2 {
-        font-size: 27px;
-    }
 }
 
-@media (max-width: 480px) {
-    .cargo-card {
-        padding: 17px;
+@media (max-width: 600px) {
+    .cabecalho {
+        padding: 18px 6%;
     }
 
-    .cargo-acoes {
-        gap: 6px;
+    .faixa-topo h2 {
+        font-size: 34px;
     }
 
-    .cargo-acoes button {
-        flex: 1;
+    .lista-cargos,
+    .area-formulario,
+    .area-permissoes {
+        padding: 24px 20px;
     }
 
-    #area-formulario,
-    #area-permissoes {
-        padding: 19px;
+    .botoes-formulario {
+        flex-direction: column;
+    }
+
+    .rodape-final {
+        flex-direction: column;
+        text-align: center;
     }
 }

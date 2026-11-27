@@ -7,6 +7,11 @@
 
     <title>Gerenciar cargos | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="cargos.css">
 </head>
 
@@ -14,71 +19,72 @@
 
     <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="identidade">
+
+        <a href="../menu/index.html" class="identidade">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
+        </a>
 
         <a href="../menu/index.html" class="voltar">
-            Voltar ao menu
+            ← Voltar ao menu
         </a>
+
     </header>
+
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>ADMINISTRAÇÃO E ACESSOS</span>
+        <h2>Gerenciamento de Cargos</h2>
+        <p>Organize os cargos da equipe e defina as permissões de acesso de cada função na Entre Laços.</p>
+    </section>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo">
 
-        <section class="introducao">
-            <p class="identificador">ADMINISTRAÇÃO</p>
-            <h2>Gerenciamento de cargos</h2>
-            <p>
-                Organize os cargos da equipe e defina as permissões
-                de acesso de cada função.
-            </p>
-        </section>
-
-        <!-- AÇÕES E FILTRO -->
-        <section class="acoes">
-
-            <div class="filtro">
-                <label for="filtro-status">Exibir:</label>
-
-                <select id="filtro-status">
-                    <option value="todos">Todos os cargos</option>
-                    <option value="ativos">Cargos ativos</option>
-                    <option value="inativos">Cargos desativados</option>
-                </select>
-            </div>
-
-            <button id="botao-novo-cargo" class="botao-principal">
-                + Novo cargo
-            </button>
-
-        </section>
-
         <!-- LISTA DE CARGOS -->
         <section class="lista-cargos">
-            <div class="titulo-lista">
-                <h3>Cargos cadastrados</h3>
-                <span id="quantidade-cargos">0 cargos</span>
+
+            <div class="secao-cabecalho">
+                <div class="titulo-lista">
+                    <h3>Cargos cadastrados</h3>
+                    <span id="quantidade-cargos">0 cargos</span>
+                </div>
+
+                <div class="acoes">
+                    <div class="filtro">
+                        <label for="filtro-status">Exibir:</label>
+
+                        <select id="filtro-status">
+                            <option value="todos">Todos os cargos</option>
+                            <option value="ativos">Cargos ativos</option>
+                            <option value="inativos">Cargos desativados</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="botao-novo-cargo" class="botao-principal">
+                        + Novo cargo
+                    </button>
+                </div>
             </div>
 
             <div id="container-cargos">
                 <p class="carregando">Carregando cargos...</p>
             </div>
+
         </section>
 
-        <!-- ÁREA DE FORMULÁRIO -->
+        <!-- ÁREA DE FORMULÁRIO (NOVO CARGO / EDITAR CARGO) -->
         <section id="area-formulario" class="area-formulario" hidden>
 
             <div class="cabecalho-formulario">
                 <div>
-                    <p class="identificador">CONFIGURAÇÕES</p>
+                    <p class="identificador">CONFIGURAÇÕES DO CARGO</p>
                     <h3 id="titulo-formulario">Novo cargo</h3>
                 </div>
 
                 <button id="fechar-formulario" class="botao-fechar"
-                    type="button" aria-label="Fechar formulário">
-                    ×
+                    type="button" aria-label="Fechar formulário" title="Fechar formulário">
+                    ✕
                 </button>
             </div>
 
@@ -97,18 +103,19 @@
                 </div>
 
                 <div class="botoes-formulario">
-                    <button type="button" id="cancelar-formulario"
-                        class="botao-secundario">
-                        Cancelar
-                    </button>
-
                     <button type="submit" id="salvar-cargo"
                         class="botao-principal">
                         Salvar cargo
                     </button>
+
+                    <button type="button" id="cancelar-formulario"
+                        class="botao-cancelar">
+                        Cancelar
+                    </button>
                 </div>
 
             </form>
+
         </section>
 
         <!-- ÁREA DE PERMISSÕES -->
@@ -121,27 +128,36 @@
                 </div>
 
                 <button id="fechar-permissoes" class="botao-fechar"
-                    type="button" aria-label="Fechar permissões">
-                    ×
+                    type="button" aria-label="Fechar permissões" title="Fechar permissões">
+                    ✕
                 </button>
             </div>
 
             <p class="descricao-permissoes">
-                Selecione as operações que os funcionários deste cargo
-                poderão realizar.
+                Selecione as operações que os funcionários deste cargo poderão realizar no sistema.
             </p>
 
             <div id="container-permissoes">
                 <p class="carregando">Carregando permissões...</p>
             </div>
 
-            <button id="salvar-permissoes" class="botao-principal">
-                Salvar permissões
-            </button>
+            <div class="acoes-permissoes">
+                <button type="button" id="salvar-permissoes" class="botao-principal">
+                    Salvar permissões
+                </button>
+            </div>
 
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="cargos.js"></script>
 

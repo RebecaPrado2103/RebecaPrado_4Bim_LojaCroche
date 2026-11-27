@@ -7,16 +7,38 @@
 
     <title>Gerenciamento de Produtos | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="produtos.css">
 </head>
 
 <body onload="inicializar()">
 
     <!-- CABEÇALHO -->
-    <header>
-        <h1>Entre Laços</h1>
-        <p>Gerencie os produtos da nossa loja.</p>
+    <header class="cabecalho">
+
+        <a href="../menu/index.html" class="logo">
+            <h1>Entre Laços</h1>
+            <p>Feito à mão, com carinho.</p>
+        </a>
+
+        <div class="acoes-cabecalho">
+            <a href="../menu/index.html" class="botao-voltar">
+                ← Voltar ao menu
+            </a>
+        </div>
+
     </header>
+
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>CATÁLOGO DA LOJA</span>
+        <h2>Gerenciamento de Produtos</h2>
+        <p>Cadastre novas peças, consulte itens existentes e atualize informações da loja.</p>
+    </section>
 
     <main class="container-master">
 
@@ -41,20 +63,26 @@
                 </div>
 
                 <label for="inputNome_produto">Nome do Produto</label>
-                <input type="text" id="inputNome_produto">
+                <input type="text" id="inputNome_produto" placeholder="Ex: Bolsa de Crochê Floral">
 
-                <label for="inputQuantidade_produto">Quantidade em Estoque</label>
-                <input type="number" id="inputQuantidade_produto" min="0">
+                <div class="linha-dupla">
+                    <div class="campo-coluna">
+                        <label for="inputQuantidade_produto">Quantidade em Estoque</label>
+                        <input type="number" id="inputQuantidade_produto" min="0" placeholder="0">
+                    </div>
 
-                <label for="inputPreco_produto">Preço Unitário (R$)</label>
-                <input type="number" id="inputPreco_produto" min="0.01" step="0.01">
+                    <div class="campo-coluna">
+                        <label for="inputPreco_produto">Preço Unitário (R$)</label>
+                        <input type="number" id="inputPreco_produto" min="0.01" step="0.01" placeholder="0,00">
+                    </div>
+                </div>
 
                 <label for="inputCategoria_produto">Categoria</label>
-                <input type="text" id="inputCategoria_produto">
+                <input type="text" id="inputCategoria_produto" placeholder="Ex: Bolsas, Amigurumis, Decoração...">
 
-                <label>
+                <label class="label-checkbox">
                     <input type="checkbox" id="inputDestaque_produto">
-                    Produto em destaque
+                    Produto em destaque na página inicial
                 </label>
 
                 <div id="divAviso">
@@ -74,7 +102,7 @@
                 <h2>Imagem do Produto</h2>
 
                 <p class="instrucao-imagem">
-                    Clique na imagem para selecionar uma PNG.
+                    Clique na área abaixo para selecionar uma imagem PNG.
                 </p>
 
                 <div class="img-container">
@@ -92,7 +120,10 @@
         <!-- LISTAGEM -->
         <section class="lista-produtos">
 
-            <h3>Produtos Cadastrados</h3>
+            <div class="lista-cabecalho">
+                <h3>Produtos Cadastrados</h3>
+                <span>Visão geral do catálogo</span>
+            </div>
 
             <div id="outputSaida">
                 Carregando produtos...
@@ -101,6 +132,14 @@
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="produtos.js"></script>
 

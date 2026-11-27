@@ -304,5 +304,18 @@ document.getElementById('registrar-devolucao').addEventListener(
     registrarDevolucao
 );
 
+// FECHAR ÁREA DE REGISTRO DE DEVOLUÇÃO
+const botaoFecharDevolucao = document.getElementById('fechar-secao-devolucao');
+
+if (botaoFecharDevolucao) {
+    botaoFecharDevolucao.addEventListener('click', () => {
+        secaoDevolucao.hidden = true;
+        document.getElementById('motivo-devolucao').value = '';
+        informacoesPedido.innerHTML = '';
+        listaProdutos.innerHTML = '';
+        pedidoSelecionadoId = null;
+    });
+}
+
 // CARREGAR OS PEDIDOS AO ABRIR A PÁGINA
 carregarPedidos();

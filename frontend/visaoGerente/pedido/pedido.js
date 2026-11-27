@@ -16,7 +16,6 @@ const mensagemPedidos = document.getElementById('mensagem-pedidos');
 // ARMAZENAR OS PEDIDOS
 let pedidos = [];
 
-
 // CARREGAR PEDIDOS DO BANCO
 async function carregarPedidos() {
 
@@ -53,7 +52,6 @@ async function carregarPedidos() {
 
 }
 
-
 // ATUALIZAR OS CARTÕES DE RESUMO
 function atualizarResumo() {
 
@@ -69,7 +67,6 @@ function atualizarResumo() {
     ).length;
 
 }
-
 
 // EXIBIR OS PEDIDOS
 function exibirPedidos(lista) {
@@ -128,7 +125,6 @@ function exibirPedidos(lista) {
     });
 
 }
-
 
 // BUSCAR E EXIBIR DETALHES DO PEDIDO
 async function visualizarDetalhesPedido(idPedido) {
@@ -390,7 +386,6 @@ async function visualizarDetalhesPedido(idPedido) {
 
 }
 
-
 // FILTRAR PEDIDOS
 function filtrarPedidos() {
 
@@ -416,12 +411,23 @@ function filtrarPedidos() {
 
 }
 
-
 // EVENTOS DOS FILTROS
 pesquisaPedido.addEventListener('input', filtrarPedidos);
 
 filtroStatus.addEventListener('change', filtrarPedidos);
 
+// FECHAR PAINEL DE DETALHES DO PEDIDO
+const botaoFecharDetalhes = document.getElementById('fechar-detalhes');
+
+if (botaoFecharDetalhes) {
+    botaoFecharDetalhes.addEventListener('click', () => {
+        const areaDetalhes = document.getElementById('detalhes-pedido');
+        const conteudoDetalhes = document.getElementById('conteudo-detalhes-pedido');
+
+        areaDetalhes.hidden = true;
+        conteudoDetalhes.innerHTML = '';
+    });
+}
 
 // INICIAR A PÁGINA
 carregarPedidos();

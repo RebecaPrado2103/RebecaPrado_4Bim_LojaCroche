@@ -1,28 +1,31 @@
-
-/* ========================================
-   IDENTIDADE VISUAL - ENTRE LAÇOS
-======================================== */
-
+/* =========================================================
+   VARIÁVEIS DA IDENTIDADE VISUAL - ENTRE LAÇOS
+   ========================================================= */
 :root {
-    --rosa: #d99a9d;
-    --rosa-claro: #f8e9e7;
-    --rosa-escuro: #bd777c;
-    --creme: #fffaf5;
-    --bege: #f1e5d8;
-    --marrom: #795d55;
-    --marrom-escuro: #59443e;
-    --texto: #51423d;
-    --branco: #ffffff;
-    --verde-claro: #e4f1e5;
-    --verde-escuro: #527c59;
-    --cinza: #817873;
-    --sombra: 0 4px 16px rgba(89, 68, 62, 0.08);
+    --cor-fundo: #FDFBF9;
+    --cor-superficie: #F7F4F0;
+    --cor-branco: #FFFFFF;
+    --cor-borda: #E6E0D8;
+
+    --verde-escuro: #384930;
+    --verde-profundo: #495E3E;
+    --verde-natural: #778D68;
+    --verde-salvia: #A3B198;
+
+    --rosa-principal: #E6A8B0;
+    --rosa-claro: #F5D5D9;
+    --cor-fundo-rosa: #F9EBEB;
+
+    --cor-texto: #4E584A;
+    --cor-texto-suave: #889283;
+
+    --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+    --fonte-corpo: 'DM Sans', sans-serif;
 }
 
-/* ========================================
+/* =========================================================
    CONFIGURAÇÕES GERAIS
-======================================== */
-
+   ========================================================= */
 * {
     margin: 0;
     padding: 0;
@@ -30,10 +33,12 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--creme);
-    color: var(--texto);
-    line-height: 1.6;
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 button,
@@ -44,175 +49,370 @@ select {
 
 button {
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: all 0.25s ease;
 }
 
 [hidden] {
     display: none !important;
 }
 
-/* ========================================
-   CABEÇALHO
-======================================== */
-
+/* =========================================================
+   CABEÇALHO ADMINISTRATIVO
+   ========================================================= */
 .cabecalho {
-    background-color: var(--marrom);
-    color: var(--branco);
-    text-align: center;
-    padding: 28px 20px;
-    box-shadow: var(--sombra);
-}
-
-.cabecalho h1 {
-    font-size: 2rem;
-    margin-bottom: 4px;
-    letter-spacing: 1px;
-}
-
-.cabecalho p {
-    font-size: 1rem;
-    color: #f5e8df;
-}
-
-/* ========================================
-   CONTEÚDO PRINCIPAL
-======================================== */
-
-.conteudo {
-    width: min(1200px, 92%);
-    margin: 40px auto;
-}
-
-.introducao {
-    margin-bottom: 28px;
-}
-
-.introducao h2 {
-    color: var(--marrom-escuro);
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-}
-
-.introducao p {
-    color: var(--cinza);
-}
-
-/* ========================================
-   PESQUISA E AÇÕES
-======================================== */
-
-.acoes {
+    background-color: var(--cor-branco);
+    padding: 20px 7%;
     display: flex;
     justify-content: space-between;
-    align-items: end;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 25px;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-borda);
 }
 
-.pesquisa {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    flex: 1;
-    max-width: 450px;
+.identidade {
+    text-decoration: none;
+    display: block;
 }
 
-.pesquisa label,
-.campo label {
+.identidade h1 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 32px;
     font-weight: 600;
-    color: var(--marrom-escuro);
-    font-size: 0.92rem;
+    line-height: 1.1;
+}
+
+.identidade p {
+    color: var(--verde-natural);
+    font-size: 12.5px;
+    margin-top: 3px;
+}
+
+.botao-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    background-color: var(--cor-fundo-rosa);
+    color: var(--verde-escuro);
+    border: 1px solid var(--rosa-claro);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.botao-voltar:hover {
+    background-color: var(--rosa-claro);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(56, 73, 48, 0.08);
+}
+
+/* =========================================================
+   FAIXA SUPERIOR
+   ========================================================= */
+.faixa-topo {
+    background-color: var(--cor-fundo-rosa);
+    border-bottom: 1px solid var(--rosa-claro);
+    text-align: center;
+    padding: 42px 6% 38px;
+}
+
+.faixa-topo span {
+    display: inline-block;
+    color: var(--verde-natural);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.faixa-topo h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 42px;
+    font-weight: 600;
+    margin: 8px 0;
+    line-height: 1.1;
+}
+
+.faixa-topo p {
+    color: var(--cor-texto);
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================= */
+.conteudo {
+    flex: 1;
+    width: 88%;
+    max-width: 1180px;
+    margin: 44px auto 64px;
+}
+
+/* =========================================================
+   CARTÕES PRINCIPAIS
+   ========================================================= */
+.lista-funcionarios,
+.formulario-funcionario,
+.detalhes-funcionario {
+    background-color: var(--cor-branco);
+    border: 1px solid var(--cor-borda);
+    border-radius: 22px;
+    padding: 32px 34px;
+    box-shadow: 0 10px 30px rgba(56, 73, 48, 0.04);
+}
+
+.formulario-funcionario,
+.detalhes-funcionario {
+    margin-top: 32px;
+}
+
+.cabecalho-listagem,
+.secao-cabecalho,
+.detalhes-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho-listagem h3,
+.secao-cabecalho h3,
+.detalhes-cabecalho h3 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.cabecalho-listagem p,
+.secao-cabecalho p,
+.detalhes-cabecalho p {
+    color: var(--cor-texto-suave);
+    font-size: 13.5px;
+}
+
+/* AÇÕES E RESUMO */
+.acoes-listagem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.resumo {
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    padding: 9px 16px;
+    white-space: nowrap;
+}
+
+.resumo p {
+    color: var(--verde-profundo);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.resumo strong {
+    color: var(--verde-escuro);
+    font-weight: 700;
+}
+
+.botao-cadastrar {
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(119, 141, 104, 0.22);
+    white-space: nowrap;
+}
+
+.botao-cadastrar:hover {
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
+}
+
+/* PESQUISA */
+.pesquisa {
+    margin-bottom: 24px;
+}
+
+.pesquisa label {
+    display: none;
 }
 
 .pesquisa input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--bege);
-    border-radius: 9px;
-    background-color: var(--branco);
-    color: var(--texto);
+    padding: 13px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    font-size: 14px;
     outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pesquisa input::placeholder {
+    color: var(--cor-texto-suave);
 }
 
 .pesquisa input:focus {
-    border-color: var(--rosa);
-    box-shadow: 0 0 0 3px var(--rosa-claro);
+    background-color: var(--cor-branco);
+    border-color: var(--verde-salvia);
+    box-shadow: 0 0 0 3px rgba(163, 177, 152, 0.2);
 }
 
-/* BOTÃO CADASTRAR */
+/* =========================================================
+   TABELA DE FUNCIONÁRIOS
+   ========================================================= */
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+}
 
-.botao-cadastrar {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 9px;
-    background-color: var(--rosa);
-    color: var(--branco);
+.tabela-container table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 780px;
+}
+
+.tabela-container thead {
+    background-color: var(--cor-superficie);
+}
+
+.tabela-container th {
+    padding: 15px 16px;
+    color: var(--verde-escuro);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabela-container td {
+    padding: 15px 16px;
+    border-bottom: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    font-size: 13.5px;
+}
+
+.tabela-container tbody tr td:first-child {
+    color: var(--verde-escuro);
     font-weight: 600;
 }
 
-.botao-cadastrar:hover {
-    background-color: var(--rosa-escuro);
-    transform: translateY(-2px);
+.tabela-container tbody tr:hover {
+    background-color: var(--cor-fundo);
 }
 
-/* ========================================
-   RESUMO DE FUNCIONÁRIOS
-======================================== */
+.tabela-container tbody tr:last-child td {
+    border-bottom: none;
+}
 
-.resumo {
+/* SITUAÇÃO DO FUNCIONÁRIO */
+.tabela-container td:nth-child(5) {
+    font-weight: 600;
+}
+
+.situacao-ativa {
+    color: var(--verde-profundo) !important;
+}
+
+.situacao-inativa {
+    color: #9e4752 !important;
+}
+
+/* BOTÕES DE AÇÃO DA TABELA */
+.botao-detalhes,
+.botao-desativar,
+.botao-reativar {
+    padding: 8px 16px;
+    margin-right: 6px;
+    border: none;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.botao-detalhes {
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    box-shadow: 0 4px 10px rgba(119, 141, 104, 0.18);
+}
+
+.botao-detalhes:hover {
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
+}
+
+.botao-desativar {
+    background-color: var(--cor-fundo-rosa);
+    color: #9e4752;
+    border: 1px solid var(--rosa-claro);
+}
+
+.botao-desativar:hover {
     background-color: var(--rosa-claro);
-    border: 1px solid #f0d8d6;
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 25px;
+    transform: translateY(-1px);
 }
 
-.resumo p {
-    color: var(--marrom-escuro);
+.botao-reativar {
+    background-color: var(--cor-superficie);
+    color: var(--verde-escuro);
+    border: 1px solid var(--cor-borda);
 }
 
-.resumo strong {
-    color: var(--rosa-escuro);
-    font-size: 1.15rem;
-    margin-left: 5px;
+.botao-reativar:hover {
+    background-color: var(--verde-salvia);
+    color: var(--cor-branco);
+    transform: translateY(-1px);
 }
 
-
-/* ========================================
-   FORMULÁRIO DE CADASTRO
-======================================== */
-
-.formulario-funcionario,
-#formulario-edicao-funcionario {
-    background-color: var(--branco);
-    padding: 28px;
-    margin: 25px 0;
-    border: 1px solid var(--bege);
-    border-radius: 15px;
-    box-shadow: var(--sombra);
-}
-
-.formulario-funcionario h3,
-.detalhes-funcionario h3 {
-    color: var(--marrom-escuro);
-    font-size: 1.35rem;
-    margin-bottom: 22px;
-}
-
+/* =========================================================
+   FORMULÁRIOS DE CADASTRO E EDIÇÃO
+   ========================================================= */
 .formulario-funcionario h4,
-#formulario-edicao-funcionario h4 {
-    color: var(--rosa-escuro);
-    font-size: 1.05rem;
+#formulario-edicao-funcionario h5 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 22px;
+    font-weight: 600;
     margin: 22px 0 14px;
 }
 
-/* ORGANIZAÇÃO DOS CAMPOS */
+.formulario-funcionario form > h4:first-of-type,
+#formulario-edicao-funcionario form > h5:first-of-type {
+    margin-top: 0;
+}
 
 .grupo-campos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
+}
+
+.grupo-profissional {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.campo-largo {
+    grid-column: 1 / -1;
 }
 
 .campo {
@@ -221,211 +421,116 @@ button {
     gap: 7px;
 }
 
+.campo label {
+    font-weight: 600;
+    color: var(--verde-escuro);
+    font-size: 13px;
+}
+
 .campo input,
 .campo select {
     width: 100%;
-    padding: 11px 13px;
-    border: 1px solid var(--bege);
-    border-radius: 8px;
-    background-color: var(--creme);
-    color: var(--texto);
+    padding: 12px 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    background-color: var(--cor-fundo);
+    color: var(--verde-escuro);
+    font-size: 14px;
     outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.campo input::placeholder {
+    color: var(--cor-texto-suave);
 }
 
 .campo input:focus,
 .campo select:focus {
-    border-color: var(--rosa);
-    box-shadow: 0 0 0 3px var(--rosa-claro);
+    background-color: var(--cor-branco);
+    border-color: var(--verde-salvia);
+    box-shadow: 0 0 0 3px rgba(163, 177, 152, 0.2);
 }
 
 .campo input[readonly] {
-    background-color: #f1eeeb;
-    color: var(--cinza);
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto-suave);
     cursor: not-allowed;
 }
 
 /* BOTÕES DOS FORMULÁRIOS */
-
 .botoes-formulario {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin-top: 25px;
+    margin-top: 26px;
 }
 
 .botao-salvar {
-    padding: 11px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 8px;
-    background-color: var(--rosa);
-    color: var(--branco);
+    border-radius: 999px;
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    font-size: 13.5px;
     font-weight: 600;
+    box-shadow: 0 6px 16px rgba(119, 141, 104, 0.22);
 }
 
 .botao-salvar:hover {
-    background-color: var(--rosa-escuro);
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
 }
 
 .botoes-formulario button[type="button"] {
-    padding: 11px 20px;
-    border: 1px solid var(--bege);
-    border-radius: 8px;
-    background-color: var(--creme);
-    color: var(--marrom);
+    padding: 12px 24px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    background-color: var(--cor-superficie);
+    color: var(--verde-escuro);
+    font-size: 13.5px;
+    font-weight: 600;
 }
 
 .botoes-formulario button[type="button"]:hover {
-    background-color: var(--bege);
+    background-color: var(--cor-fundo-rosa);
+    border-color: var(--rosa-claro);
 }
 
 /* MENSAGENS DOS FORMULÁRIOS */
-
 #mensagem-cadastro-funcionario,
 #mensagem-edicao-funcionario {
-    margin-top: 15px;
-    font-size: 0.92rem;
-}
-
-/* ========================================
-   LISTA DE FUNCIONÁRIOS
-======================================== */
-
-.lista-funcionarios {
-    background-color: var(--branco);
-    padding: 25px;
-    margin-top: 25px;
-    border: 1px solid var(--bege);
-    border-radius: 15px;
-    box-shadow: var(--sombra);
-}
-
-.lista-funcionarios h3 {
-    color: var(--marrom-escuro);
-    font-size: 1.35rem;
-    margin-bottom: 20px;
-}
-
-/* ÁREA DE ROLAGEM DA TABELA */
-
-.tabela-container {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 10px;
-}
-
-/* TABELA */
-
-.tabela-container table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.tabela-container thead {
-    background-color: var(--rosa-claro);
-}
-
-.tabela-container th {
-    padding: 14px 12px;
-    color: var(--marrom-escuro);
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.tabela-container td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #f0e9e3;
-    color: var(--texto);
-    font-size: 0.9rem;
-}
-
-.tabela-container tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.tabela-container tbody tr:hover {
-    background-color: #fffaf8;
-}
-
-.tabela-container tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* SITUAÇÃO DO FUNCIONÁRIO */
-
-.tabela-container td:nth-child(5) {
+    margin-top: 16px;
+    font-size: 13.5px;
     font-weight: 600;
 }
 
-/* BOTÕES DE AÇÃO */
+#mensagem-cadastro-funcionario:empty,
+#mensagem-edicao-funcionario:empty {
+    display: none;
+}
 
-.botao-detalhes,
-.botao-desativar,
-.botao-reativar {
-    padding: 8px 12px;
-    margin: 3px;
-    border: none;
-    border-radius: 7px;
-    font-size: 0.82rem;
+/* =========================================================
+   DETALHES DO FUNCIONÁRIO E EDIÇÃO INTERNA
+   ========================================================= */
+#fechar-detalhes-funcionario {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--rosa-claro);
+    background-color: var(--cor-fundo-rosa);
+    color: #9e4752;
+    font-size: 15px;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.botao-detalhes {
-    background-color: var(--bege);
-    color: var(--marrom-escuro);
-}
-
-.botao-detalhes:hover {
-    background-color: #e6d4c4;
-}
-
-.botao-desativar {
+#fechar-detalhes-funcionario:hover {
     background-color: var(--rosa-claro);
-    color: var(--rosa-escuro);
+    transform: scale(1.06);
 }
-
-.botao-desativar:hover {
-    background-color: #f1d5d3;
-}
-
-.botao-reativar {
-    background-color: var(--verde-claro);
-    color: var(--verde-escuro);
-}
-
-.botao-reativar:hover {
-    background-color: #d0e7d2;
-}
-
-.situacao-ativa {
-    color: var(--verde-escuro) !important;
-}
-
-.situacao-inativa {
-    color: var(--rosa-escuro) !important;
-}
-
-/* ========================================
-   DETALHES DO FUNCIONÁRIO
-======================================== */
-
-.detalhes-funcionario {
-    background-color: var(--branco);
-    padding: 28px;
-    margin-top: 30px;
-    border: 1px solid var(--bege);
-    border-radius: 15px;
-    box-shadow: var(--sombra);
-}
-
-.detalhes-funcionario h3 {
-    color: var(--marrom-escuro);
-    font-size: 1.4rem;
-    margin-bottom: 22px;
-}
-
-/* INFORMAÇÕES DO FUNCIONÁRIO */
 
 #informacoes-funcionario {
     display: grid;
@@ -434,71 +539,129 @@ button {
 }
 
 #informacoes-funcionario p {
-    background-color: var(--creme);
-    border: 1px solid var(--bege);
-    border-radius: 9px;
-    padding: 13px 15px;
-    color: var(--texto);
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--cor-texto);
+    line-height: 1.5;
     overflow-wrap: anywhere;
 }
 
 #informacoes-funcionario strong {
-    color: var(--marrom-escuro);
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--verde-natural);
+    margin-bottom: 4px;
 }
-
-/* BOTÃO EDITAR */
 
 .botao-editar {
     grid-column: 1 / -1;
     justify-self: start;
-    padding: 11px 20px;
+    padding: 12px 24px;
     margin-top: 8px;
     border: none;
-    border-radius: 8px;
-    background-color: var(--rosa);
-    color: var(--branco);
+    border-radius: 999px;
+    background-color: var(--verde-natural);
+    color: var(--cor-branco);
+    font-size: 13.5px;
     font-weight: 600;
+    box-shadow: 0 6px 16px rgba(119, 141, 104, 0.22);
 }
 
 .botao-editar:hover {
-    background-color: var(--rosa-escuro);
-    transform: translateY(-2px);
+    background-color: var(--verde-escuro);
+    transform: translateY(-1px);
 }
 
-/* BOTÃO FECHAR DETALHES */
-
-#fechar-detalhes-funcionario {
-    padding: 11px 20px;
-    margin-top: 20px;
-    border: 1px solid var(--bege);
-    border-radius: 8px;
-    background-color: var(--creme);
-    color: var(--marrom);
+#formulario-edicao-funcionario {
+    margin-top: 28px;
+    padding-top: 26px;
+    border-top: 1px dashed var(--cor-borda);
 }
 
-#fechar-detalhes-funcionario:hover {
-    background-color: var(--bege);
-}
-/* ========================================
-   BOTÃO VOLTAR AO MENU
-======================================== */
-
-.botao-voltar {
-    display: inline-block;
-    padding: 10px 17px;
-    margin-bottom: 25px;
-
-    background-color: var(--bege);
-    color: var(--marrom-escuro);
-
-    text-decoration: none;
+#formulario-edicao-funcionario h4 {
+    font-family: var(--fonte-titulo);
+    color: var(--verde-escuro);
+    font-size: 25px;
     font-weight: 600;
-
-    border-radius: 8px;
-    transition: 0.2s ease;
+    margin-bottom: 4px;
 }
 
-.botao-voltar:hover {
-    background-color: #e6d4c4;
-    transform: translateX(-3px);
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+.rodape {
+    background-color: var(--verde-escuro);
+    color: rgba(253, 251, 249, 0.85);
+    padding: 22px 7%;
+}
+
+.rodape-final {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 850px) {
+    .grupo-profissional {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 750px) {
+    .conteudo {
+        width: 92%;
+    }
+
+    .cabecalho-listagem {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .acoes-listagem {
+        flex-wrap: wrap;
+    }
+
+    .grupo-campos,
+    .grupo-profissional,
+    #informacoes-funcionario {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .cabecalho {
+        padding: 18px 6%;
+    }
+
+    .faixa-topo h2 {
+        font-size: 34px;
+    }
+
+    .lista-funcionarios,
+    .formulario-funcionario,
+    .detalhes-funcionario {
+        padding: 24px 20px;
+    }
+
+    .botoes-formulario {
+        flex-direction: column;
+    }
+
+    .rodape-final {
+        flex-direction: column;
+        text-align: center;
+    }
 }

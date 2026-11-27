@@ -7,6 +7,11 @@
 
     <title>Formas de pagamento | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="formaPagamento.css">
 </head>
 
@@ -15,50 +20,48 @@
     <!-- CABEÇALHO -->
     <header class="cabecalho">
 
-        <div class="logo">
+        <a href="../menu/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
-
-    </header>
-
-    <main class="conteudo">
+        </a>
 
         <a href="../menu/index.html" class="botao-voltar">
             ← Voltar ao menu
         </a>
 
-        <!-- INTRODUÇÃO -->
-        <section class="introducao">
+    </header>
 
-            <h2>Gerenciamento das formas de pagamento</h2>
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>FINANCEIRO E CHECKOUT</span>
+        <h2>Formas de Pagamento</h2>
+        <p>Cadastre, pesquise, edite o parcelamento e controle os meios de pagamento disponíveis na loja.</p>
+    </section>
 
-            <p>
-                Cadastre, pesquise e controle as formas de pagamento
-                disponíveis na loja.
-            </p>
-
-        </section>
+    <main class="conteudo">
 
         <!-- CADASTRO -->
         <section class="cadastro">
 
-            <h3>Cadastrar forma de pagamento</h3>
+            <div class="secao-cabecalho">
+                <div>
+                    <h3>Cadastrar forma de pagamento</h3>
+                    <p>Adicione uma nova opção de pagamento para os clientes da Entre Laços.</p>
+                </div>
+            </div>
 
-            <form id="form-cadastro">
+            <form id="form-cadastro" class="form-linha">
 
                 <div class="campo">
-
                     <label for="nome-forma">
                         Nome da forma de pagamento
                     </label>
 
-                    <input type="text" id="nome-forma" name="nome" placeholder="Ex.: PIX" required>
-
+                    <input type="text" id="nome-forma" name="nome" placeholder="Ex.: PIX, Cartão de crédito, Boleto..." required>
                 </div>
 
                 <button type="submit" class="botao-cadastrar">
-                    Cadastrar forma de pagamento
+                    + Cadastrar forma de pagamento
                 </button>
 
             </form>
@@ -68,23 +71,32 @@
         <!-- EDIÇÃO -->
         <section class="edicao" id="area-edicao" hidden>
 
-            <h3>Editar forma de pagamento</h3>
+            <div class="secao-cabecalho">
+                <div>
+                    <h3>Editar forma de pagamento</h3>
+                    <p>Atualize o nome exibido no checkout e o limite máximo de parcelas permitidas.</p>
+                </div>
+            </div>
 
             <form id="form-edicao">
 
-                <div class="campo">
+                <div class="grade-edicao">
 
-                    <label for="nome-forma-edicao">
-                        Nome da forma de pagamento
-                    </label>
+                    <div class="campo">
+                        <label for="nome-forma-edicao">
+                            Nome da forma de pagamento
+                        </label>
 
-                    <input type="text" id="nome-forma-edicao" required>
+                        <input type="text" id="nome-forma-edicao" placeholder="Ex.: Cartão de crédito" required>
+                    </div>
 
-                    <label for="max-parcelas-forma-edicao">
-                        Máximo de parcelas
-                    </label>
+                    <div class="campo">
+                        <label for="max-parcelas-forma-edicao">
+                            Máximo de parcelas (1 a 12)
+                        </label>
 
-                    <input type="number" id="max-parcelas-forma-edicao" min="1" max="12" value="1" required>
+                        <input type="number" id="max-parcelas-forma-edicao" min="1" max="12" value="1" required>
+                    </div>
 
                 </div>
 
@@ -107,11 +119,16 @@
         <!-- LISTAGEM -->
         <section class="lista-formas">
 
-            <h3>Formas de pagamento cadastradas</h3>
+            <div class="secao-cabecalho">
+                <div>
+                    <h3>Formas de pagamento cadastradas</h3>
+                    <p>Gerencie a situação e os parâmetros de cada meio de pagamento.</p>
+                </div>
 
-            <p id="total-formas">
-                Total de formas cadastradas: 0
-            </p>
+                <p id="total-formas">
+                    Total de formas cadastradas: 0
+                </p>
+            </div>
 
             <!-- PESQUISA -->
             <div class="campo pesquisa">
@@ -120,7 +137,7 @@
                     Pesquisar forma de pagamento
                 </label>
 
-                <input type="search" id="pesquisa-forma" placeholder="Digite o nome da forma de pagamento...">
+                <input type="search" id="pesquisa-forma" placeholder="Pesquisar por nome da forma de pagamento...">
 
             </div>
 
@@ -155,6 +172,14 @@
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="formaPagamento.js"></script>
 

@@ -7,6 +7,11 @@
 
     <title>Gerenciar Pedidos | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="pedido.css">
 </head>
 
@@ -14,36 +19,46 @@
 
     <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div>
+
+        <a href="../menu/index.html" class="logo">
             <h1>Entre Laços</h1>
-            <p>Gerenciamento de pedidos</p>
+            <p>Feito à mão, com carinho.</p>
+        </a>
+
+        <div class="acoes-cabecalho">
+            <a href="../menu/index.html" class="voltar-menu">
+                ← Voltar ao menu
+            </a>
         </div>
 
-        <a href="../menu/index.html">Voltar ao menu</a>
     </header>
 
-    <main class="conteudo">
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>ACOMPANHAMENTO DE VENDAS</span>
+        <h2>Gerenciamento de Pedidos</h2>
+        <p>Acompanhe, filtre e atualize o andamento dos pedidos realizados na loja.</p>
+    </section>
 
-        <!-- APRESENTAÇÃO -->
-        <section class="apresentacao">
-            <h2>Pedidos</h2>
-            <p>Acompanhe e organize os pedidos realizados na loja.</p>
-        </section>
+    <main class="conteudo">
 
         <!-- RESUMO DOS PEDIDOS -->
         <section class="resumo">
 
-            <div class="card-resumo">
+            <div class="card-resumo card-total">
+                <span class="resumo-etiqueta">HISTÓRICO GERAL</span>
                 <h3>Total de pedidos</h3>
                 <p id="total-pedidos">0</p>
             </div>
 
-            <div class="card-resumo">
+            <div class="card-resumo card-andamento">
+                <span class="resumo-etiqueta">EM PROCESSAMENTO</span>
                 <h3>Em andamento</h3>
                 <p id="pedidos-andamento">0</p>
             </div>
 
-            <div class="card-resumo">
+            <div class="card-resumo card-entregues">
+                <span class="resumo-etiqueta">CONCLUÍDOS</span>
                 <h3>Entregues</h3>
                 <p id="pedidos-entregues">0</p>
             </div>
@@ -53,7 +68,7 @@
         <!-- PESQUISA E FILTRO -->
         <section class="filtros">
 
-            <input type="text" id="pesquisa-pedido" placeholder="Pesquisar por número ou cliente...">
+            <input type="text" id="pesquisa-pedido" placeholder="Pesquisar por número do pedido ou nome do cliente...">
 
             <select id="filtro-status">
                 <option value="">Todos os status</option>
@@ -69,7 +84,10 @@
         <!-- LISTA DE PEDIDOS -->
         <section class="lista-pedidos">
 
-            <h2>Pedidos realizados</h2>
+            <div class="lista-cabecalho">
+                <h2>Pedidos realizados</h2>
+                <span>Clique em "Ver detalhes" para gerenciar a entrega e o status</span>
+            </div>
 
             <div id="mensagem-pedidos"></div>
 
@@ -79,11 +97,15 @@
 
         </section>
 
-
         <!-- DETALHES DO PEDIDO -->
         <section id="detalhes-pedido" hidden>
 
-            <h2>Detalhes do pedido</h2>
+            <div class="detalhes-cabecalho">
+                <h2>Detalhes do pedido</h2>
+                <button type="button" id="fechar-detalhes" class="botao-fechar-detalhes" aria-label="Fechar detalhes do pedido" title="Fechar detalhes">
+                    ✕
+                </button>
+            </div>
 
             <div id="conteudo-detalhes-pedido">
                 <!-- Os detalhes serão carregados pelo JavaScript -->
@@ -91,8 +113,15 @@
 
         </section>
 
-
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="pedido.js"></script>
 

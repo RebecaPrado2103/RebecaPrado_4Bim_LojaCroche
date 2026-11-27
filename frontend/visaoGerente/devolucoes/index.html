@@ -7,49 +7,73 @@
 
     <title>Devoluções | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="devolucoes.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <a href="../menu/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
+        </a>
 
         <a href="../menu/index.html" class="voltar-menu">
-            Voltar ao menu
+            ← Voltar ao menu
         </a>
+
     </header>
+
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>PÓS-VENDA E TROCAS</span>
+        <h2>Gerenciamento de Devoluções</h2>
+        <p>Registre devoluções realizadas presencialmente em nossa loja e acompanhe o histórico de solicitações.</p>
+    </section>
 
     <main class="conteudo">
 
-        <section class="introducao">
-            <h2>Devoluções</h2>
-            <p>
-                Gerencie as devoluções realizadas presencialmente
-                em nossa loja.
-            </p>
-        </section>
-
-        <!-- ACESSO AO HISTÓRICO -->
-        <section class="secao-historico">
-            <a href="historico.html" class="botao-historico">
-                Consultar histórico de devoluções
-            </a>
-        </section>
-
+        <!-- PEDIDOS DISPONÍVEIS -->
         <section class="secao-pedidos">
-            <h3>Pedidos disponíveis</h3>
+
+            <div class="secao-cabecalho">
+                <div>
+                    <h3>Pedidos disponíveis</h3>
+                    <p>Selecione um pedido elegível para iniciar o registro de devolução.</p>
+                </div>
+
+                <a href="historico.html" class="botao-historico">
+                    Consultar histórico de devoluções
+                </a>
+            </div>
 
             <div id="lista-pedidos">
                 <p>Carregando pedidos...</p>
             </div>
+
         </section>
 
+        <!-- REGISTRAR DEVOLUÇÃO -->
         <section class="secao-devolucao" id="secao-devolucao" hidden>
-            <h3>Registrar devolução</h3>
+
+            <div class="devolucao-cabecalho">
+                <div>
+                    <h3>Registrar devolução</h3>
+                    <p>Informe as quantidades recebidas, o estado das peças e o motivo da devolução.</p>
+                </div>
+
+                <button type="button" id="fechar-secao-devolucao" class="botao-fechar-devolucao"
+                    aria-label="Fechar registro de devolução" title="Fechar registro">
+                    ✕
+                </button>
+            </div>
 
             <div id="informacoes-pedido"></div>
 
@@ -67,12 +91,23 @@
                 ></textarea>
             </div>
 
-            <button id="registrar-devolucao">
-                Registrar devolução
-            </button>
+            <div class="acoes-registro">
+                <button type="button" id="registrar-devolucao">
+                    Registrar devolução
+                </button>
+            </div>
+
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="devolucoes.js"></script>
 

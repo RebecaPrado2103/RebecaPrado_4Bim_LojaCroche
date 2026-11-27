@@ -195,6 +195,7 @@ function abrirCadastro() {
     areaPermissoes.hidden = true;
     areaFormulario.hidden = false;
 
+    areaFormulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
     campoNomeCargo.focus();
 }
 
@@ -208,6 +209,7 @@ function abrirEdicao(cargo) {
     areaPermissoes.hidden = true;
     areaFormulario.hidden = false;
 
+    areaFormulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
     campoNomeCargo.focus();
 }
 
@@ -312,6 +314,7 @@ async function abrirPermissoes(cargo) {
 
     areaFormulario.hidden = true;
     areaPermissoes.hidden = false;
+    areaPermissoes.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     containerPermissoes.textContent = 'Carregando permissões...';
 

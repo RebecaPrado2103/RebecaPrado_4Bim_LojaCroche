@@ -7,39 +7,63 @@
 
     <title>Histórico de Devoluções | Entre Laços</title>
 
+    <!-- Fontes da identidade visual Entre Laços -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="historico.css">
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
     <header class="cabecalho">
-        <div class="logo">
+
+        <a href="../menu/index.html" class="logo">
             <h1>Entre Laços</h1>
             <p>Feito à mão, com carinho.</p>
-        </div>
+        </a>
 
         <a href="index.html" class="voltar-devolucoes">
-            Voltar às devoluções
+            ← Voltar às devoluções
         </a>
+
     </header>
+
+    <!-- FAIXA SUPERIOR -->
+    <section class="faixa-topo">
+        <span>REGISTROS DE PÓS-VENDA</span>
+        <h2>Histórico de Devoluções</h2>
+        <p>Consulte todas as devoluções registradas presencialmente e acompanhe o status de cada item.</p>
+    </section>
 
     <main class="conteudo">
 
-        <section class="introducao">
-            <h2>Histórico de devoluções</h2>
-            <p>
-                Consulte todas as devoluções registradas
-                em nossa loja.
-            </p>
-        </section>
-
         <section class="secao-historico">
+
+            <div class="secao-cabecalho">
+                <div>
+                    <h3>Devoluções registradas</h3>
+                    <p>Listagem completa das ocorrências organizadas da mais recente para a mais antiga.</p>
+                </div>
+            </div>
+
             <div id="lista-devolucoes">
                 <p>Carregando histórico...</p>
             </div>
+
         </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="rodape-final">
+            <p>© 2026 Entre Laços — Painel Administrativo.</p>
+            <p>Feito à mão, com carinho. ♡</p>
+        </div>
+    </footer>
 
     <script src="historico.js"></script>
 

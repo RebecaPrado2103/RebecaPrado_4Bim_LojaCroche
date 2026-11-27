@@ -319,5 +319,18 @@ formularioCadastro.addEventListener('submit', async (evento) => {
 
 });
 
+// FECHAR DETALHES DO CLIENTE
+const botaoFecharDetalhesCliente = document.getElementById('fechar-detalhes-cliente');
+
+if (botaoFecharDetalhesCliente) {
+    botaoFecharDetalhesCliente.addEventListener('click', () => {
+        const secaoDetalhes = document.getElementById('detalhes-cliente');
+        const conteudoDetalhes = document.getElementById('conteudo-detalhes-cliente');
+
+        secaoDetalhes.hidden = true;
+        conteudoDetalhes.innerHTML = '';
+    });
+}
+
 // CARREGAR CLIENTES AO ABRIR A PÁGINA
 carregarClientes();
